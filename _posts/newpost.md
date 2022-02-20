@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Welcome to Jekyll2!
+title: 차시명 안ㄴ여!
 subtitle: A awesome static site generator.
 author: Jeffrey
 categories: jekyll
@@ -16,7 +16,7 @@ height: "100vh"
 min_height: "38vh"
 heading_style: "font-size: 4.25em; font-weight: bold; text-decoration: underline"
 subheading_style: "color: gold"
-tags: new tag
+tags: newtag
 sidebar: []
 ---
 
