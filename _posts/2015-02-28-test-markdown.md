@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 오신엽 
+title: 오신엽2
 subtitle: Each post also has a subtitle
 categories: markdown
 tags: [test]
