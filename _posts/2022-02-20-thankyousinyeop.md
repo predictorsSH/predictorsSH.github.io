@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 차시명 안ㄴ여!
+title: 차시명 안여!
 subtitle: A awesome static site generator.
 author: Jeffrey
 categories: jekyll
