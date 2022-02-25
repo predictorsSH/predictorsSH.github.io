@@ -6,6 +6,8 @@ subtitle: about who I am
 
 
 ## History
+-2022 (주)시큐레이어
+
 
 ## Study
 
