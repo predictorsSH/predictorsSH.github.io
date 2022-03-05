@@ -16,13 +16,14 @@ subtitle: about who I am
 
 ## certificate
 
-- 진행중 : 정보처리기사 필기
+- 진행중 : 정보처리기사 실시
 - 진행중 : ADP 실기
 - 2021.12 : 빅데이터분석기사
 - 2020.08 : OPIc IM2
 - 2020.07 : adsp  
 - 2020.02 : 한경 TESAT2급
 
+## Portfolio
 
 ## Sports
 
