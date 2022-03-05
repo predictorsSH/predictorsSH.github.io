@@ -10,8 +10,7 @@ tags: 문장기록, book
 
 ## 창백한 푸른 점 
 
-![img](../assets/images/contents/palebluedot.jpg)
-
+![img](/assets/images/contents/bluedot.jpg)
 
 위 사진은 1990년 2월 14일 보이저 1호가 촬영했다. <br>
 빨간색 광선위에 푸르게 빛나는 점이 바로 지구다. <br>
