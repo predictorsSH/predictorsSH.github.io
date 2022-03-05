@@ -10,7 +10,7 @@ tags: 문장기록, book
 
 ## 창백한 푸른 점 
 
-![img](../assets/images/contents/palebluedot.jfif)
+![img](../assets/images/contents/palebluedot.jpg)
 
 
 위 사진은 1990년 2월 14일 보이저 1호가 촬영했다. <br>
