@@ -1,11 +1,11 @@
 ---
 layout: post
 title: ADP-Statistics-기초통계량-1
-subtitle: ADP 공부 항목 모음
+subtitle: 실전 기초통계량 
 author: san9hyun
 categories: ADP
 banner : /assets/images/banners/data.jpg
-tags: ADP, statistics, 기초통계량, 평균, 중앙, 왜도, 첨도, EDA
+tags: ADP statistics 기초통계량 평균 중앙 왜도 첨도 EDA
 ---
 
 ## 🔑 기초 통계량
