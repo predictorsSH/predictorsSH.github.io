@@ -32,6 +32,8 @@ tags: ADP statistics 기초통계량 평균 중앙 왜도 첨도 EDA
 먼저 데이터 셋을 준비하여야한다.<br>
 나는 kaggel에 [Bike Sharing Demand](https://www.kaggle.com/c/bike-sharing-demand/overview) 대회에서 제공하는 데이터셋을 활용할 것이다.<br>
 
+해당 대회 대해서 간단하게 설명하자면, 시간, 날씨, 기온 등의 정보를 가지고 자전거 대여 건수를 예측하는 대회이다.
+
 이 데이터 셋을 준비한 이유는,<br>
 1. 시계열 데이터이기 때문이다. 시계열 데이터를 다루는 문제가 ADP에 자주 출제 되기 때문에 연습해 둘 필요가 있다고 생각하였다.
 2. 해당 데이터를 분석한 자료가 많다. 캐글 코드공유에만 해도 꽤 많은 정보가 있다.  
@@ -40,6 +42,9 @@ tags: ADP statistics 기초통계량 평균 중앙 왜도 첨도 EDA
 당분간은 이 데이터를 가지고 놀면서, ADP 준비를 해볼 것이다.
 그리고 분석 도구로는 python(colab)을 활용할 것이다.
 
+colab에서 작성한 코드를 포스트할때는, 코드블럭 'python' 으로 작성하였다.(당연)
+<br>
+그리고 그 코드의 output은 코드블럭 'text'로 작성하였다.
 
 ## 🐌 데이터 분석
 
@@ -170,10 +175,11 @@ casual, registered, count의 경우 중앙값과 평균값 차이가 크다는 �
 데이터 분석을 위해 더 확인해봐야 할 것은, 서로 다른 필드들의 관계이다. 특히 target 변수와의 관계를 파악하는 것이 중요하다.<br> 
 
 
-### 연도별로 target 변수 기초통계량 알아보기
+### 연도별로 target 변수의 평균, 중앙값, 최대값, 최소값, 표준편차 등 기초 통계량 알아보기
 특정 년, 월 별로 count 값의 평균을 알아보고자 한다. <br>
 먼저, 데이터를 년, 월로 구분하고 그룹화 할 수 있어야한다.
 object type의 'datetime'필드를 datetime type으로 변경하고, 년, 월, 일, 시간을 분리해 필드로 만들자.
+
 ```python
 # 데이터 타입 변경
 train['datetime'] = pd.to_datetime(train['datetime'])
@@ -188,7 +194,7 @@ train['hour'] = train['datetime'].dt.hour
 년, 월,일, 시간 컬럼을 생성해주었다.
 이제 년도별, 월별 count의 평균이 어떻게 다른지 확인해보자
 
-먼저, train['col'].unique() 로 특정 컬럼에 어떤 값들이 있는지 확인한 후,
+먼저, dataframe['col'].unique() 로 특정 컬럼에 어떤 값들이 있는지 확인한 후,
 조건절로 인덱싱하여 평균을 구할 수도 있다. 그러나 더 간단한 방법은 groupby를 활용하는 것이다.
 
 ```python
