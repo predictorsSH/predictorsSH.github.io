@@ -114,7 +114,7 @@ train.boxplot(column=["temp", "atemp", 'humidity', 'windspeed']).set_title('Boxp
 우선 이상데이터의 존재를 확인만 하자.
 
 ### weather - count box plot 그리기
-명목 데이터 weather에 따른 count의 box_plot 그래프를 그려볼수도 있다.
+명목 변수인 weather에 따라, count의 box_plot 그래프를 그려볼 수 도 있다.
 
 ```python
 plt.figure(figsize = (7, 3))
@@ -146,7 +146,8 @@ Q3: 16.9979
 max: 56.9969
 ```
 여기서 구해진 min, max는 box plot에서 정의한 최소, 최대값이 아니다.<br>
-단순히 전체 데이터 중 가장 큰 값과 가장 작은 값이다.
+box plot은 이상치를 제외한 데이터 중 최대값, 최소값을 찾는 반면,<br>
+여기서는 단순히 전체 데이터 중 가장 큰 값과 가장 작은 값이다.
 
 이렇게 하나씩 구하는 방법 말고도,<br>
 pd.describe()를 활용하면 사분위수와 최소, 최대값 모두를 자동으로 구해준다.<br>
@@ -162,7 +163,7 @@ IQR = Q3-Q1
 outlier=(train['windspeed']>Q3+1.5*IQR)|(train['windspeed']<Q1-1.5*IQR)
 ```
 위에 코드에서 정의한 변수 outlier는 이상치 조건에 만족하는 index에 True, 이상치 조건을 만족하지 못하는 index에 False의 값을 지니고 있다.
-따라서, 그 인덱스데이터를 활용해주면, windspeed에서 이상치를 추출할 수 있다.
+따라서, 그 인덱스 데이터를 활용해주면, windspeed에서 이상치를 추출할 수 있다.
 
 ```python
 train['windspeed'][outlier]
