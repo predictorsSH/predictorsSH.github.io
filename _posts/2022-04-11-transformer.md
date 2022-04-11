@@ -56,7 +56,7 @@ Multi-head Attention은 쉽게 말해서, 여러개의 Attention을 활용하는
 <br>
 ![아키텍처](/assets/images/contents/paper/transforemr/multi-head-attention.PNG)
 
-$$ Attention(Q,K,V) = softmax({QK^T \\over \\sqrt{d\_k}})V $$ 
+$$ Attention(Q,K,V) = softmax({QK^T \over \sqrt{d\_k}})V $$ 
 $$ head\_i = Attention(QW\_i^Q, KW\_i^K, VW\_i^V) $$ 
 $$ MultiHead(Q,K,V) = Concat(head\_1,...head\_h)W^o $$
 
