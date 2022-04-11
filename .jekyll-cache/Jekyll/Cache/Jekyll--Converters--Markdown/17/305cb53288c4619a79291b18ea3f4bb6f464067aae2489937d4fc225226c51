@@ -1,0 +1,21 @@
+I"}<h2 id="transformer-attention-is-all-you-need">Transformer: Attention Is All You Need</h2>
+
+<h3 id="paper"><a href="https://arxiv.org/abs/1706.03762">[paper]</a></h3>
+
+<h2 id="참고자료">참고자료</h2>
+
+<p><a href="https://youtu.be/AA621UofTUA">https://youtu.be/AA621UofTUA</a> <br /> 
+동빈나님의 유튜브강의를 듣고 정리한 내용입니다. <br /> 
+추가적으로 아래 자료들을 참고하여 공부하였습니다. <br /></p>
+
+<p><a href="https://youtu.be/AA621UofTUA">https://youtu.be/AA621UofTUA</a><br />
+<a href="https://wikidocs.net/31379">https://wikidocs.net/31379</a></p>
+
+<h2 id="transformer">Transformer</h2>
+
+<p>트랜스포머는 <a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a> 논문에서 소개된 모델이다.<br /> 
+논문에서는 sequnece to sequence 문제를 풀기 위해 순환신경망을 사용하지 않는 모델을 만들고자 했고, 그 결과물이 <br />
+Attention 메커니즘만을 활용한 Transformer 모델이다.</p>
+
+<p>트랜스포머 모델은 Encoder, Decoder, Multi-head Attention, Positional Encoding를 포함하는 구조로 이루어져있다.</p>
+:ET

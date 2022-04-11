@@ -5,7 +5,7 @@ subtitle: 실전 상관분석
 author: san9hyun
 categories: ADP
 banner : /assets/images/banners/data.jpg
-tags: ADP statistics 상관분석 상관계수 pytjon
+tags: ADP statistics 상관분석 상관계수 python
 ---
 
 ## 🚪 이전 게시글
@@ -82,7 +82,7 @@ p-value는 통계적 가설검정에서 매우 중요한 개념이기 때문이�
 를 검정하는 것이다.<br>
 
 가설검정과 p-value에 대해서 필자가 학부시절에 공부했던 내용을 기억해 조금 정리 해보겠다.<br>
-가설검정이란 내가 세운 가설(대립가설)이 통계적으로 맞는지 틀렸는지를 검정하는 것이다.<br>
+가설검정이란 내가 주장하는 가설(대립가설)이 통계적으로 맞는지 틀렸는지를 검정하는 것이다.<br>
 위에서 필자는 temp와 atemp가 선형관계가 있다고 가정하였고, 그것을 검정하는 것이 상관분석이라는 것이다.<br>
 <br>
 p-value를 간단하게 말하면, 검정에 사용된 통계량의 값이 그정도로 나올 확률이다. 이때, 검정에 사용되는 통계량의 값은, 귀무가설이 참이라는 가정하에 구해진 통계값이다. <br>
@@ -161,4 +161,4 @@ plt.scatter(train['registered'],train['count'], s=8, color='r')
 
 ## 🎬 다음 이야기
 
-다음 게시글에서는 ....을 진행할 것이다.
+다음 게시글부터는 가설검정에 대해서 공부해 보겠습니다!
