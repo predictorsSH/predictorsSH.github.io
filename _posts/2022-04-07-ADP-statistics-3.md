@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ADP-Statistics-가설검정(작성중)
+title: ADP-Statistics-가설검정
 subtitle: 평균에 대한 가설검정
 author: san9hyun
 categories: ADP
