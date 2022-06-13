@@ -45,9 +45,9 @@ tags: DataScience AI rnn neuralnet
     
 
 $$y_{(t)}= \phi(W_x^Tx_{(t)}+W_y^Ty_{(t-1)}+b)$$ 
-<br>
-또는
-<br>
+
+$$ or $$
+
 $$h\_{(t)}= \phi(W_x^Tx_{(t)}+W_h^Th_{(t-1)}+b)$$
 
 $$Y_t = W^T_y \cdot h_t$$
