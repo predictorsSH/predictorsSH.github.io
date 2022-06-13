@@ -44,8 +44,10 @@ tags: DataScience AI rnn neuralnet
 -   하나의 샘플에 대한 순환층의 출력은 아래 식과 같이 계산된다. $\phi$는 활성화 함수 
     
 
-$$y_{(t)}= \phi(W_x^Tx_{(t)}+W_y^Ty_{(t-1)}+b)$$ 또는
-
+$$y_{(t)}= \phi(W_x^Tx_{(t)}+W_y^Ty_{(t-1)}+b)$$ 
+<br>
+또는
+<br>
 $$h\_{(t)}= \phi(W_x^Tx_{(t)}+W_h^Th_{(t-1)}+b)$$
 
 $$Y_t = W^T_y \cdot h_t$$
