@@ -1,4 +1,4 @@
-I"�:<p>*&lt;핸즈온 머신러닝 2판&gt;을 참고하였습니다.<br />
+I"�I<p>*&lt;핸즈온 머신러닝 2판&gt;을 참고하였습니다.<br />
 *<a href="https://wikidocs.net/106473">위키독스</a>를 참고 하였습니다.
 *<a href="https://excelsior-cjh.tistory.com/183">참고블로그</a>를 참고하였습니다.</p>
 
@@ -35,7 +35,7 @@
   <li><strong>순환신경망에서 순환 뉴런은 새로운 input 데이터 $x$와 함께 이전 타임스텝의 출력인 $y_{(t-1)}$ 을 받는다. (핸즈온 머신러닝에서는 $h_{(t-1)}$ 대신 $y_{(t-1)}$을 받는다고 하였지만, 일반적인 RNN은 $h_{(t-1)}$을 받는것이 맞음)</strong></li>
   <li>각 순환뉴런은 두벌의 가중치를 가진다. 하나는 $x_{(t)}$를 위한 $w_x$이고 다른 하나는 $y_{(t-1)}$을 위한 $w_y$이다. (역시 $y_{(t-1)}$ 대신 $h_{(t-1)}$을 위한 $w_h$라고 표기하는 것이 일반적)</li>
   <li>
-    <p>하나의 샘플에 대한 순환층의 출력은 아래 식과 같이 계산된다. * $\phi$는 활성화 함수</p>
+    <p>하나의 샘플에 대한 순환층의 출력은 아래 식과 같이 계산된다. $\phi$는 활성화 함수</p>
 
     <p>$$y_{(t)}= \phi(W_x^Tx_{(t)}+W_y^Ty_{(t-1)}+b)$$ 또는<br />
 $$h_{(t)}= \phi(W_x^Tx_{(t)}+W_h^Th_{(t-1)}+b)$$<br />
@@ -126,7 +126,7 @@ text_vector는 위와 같이 (5,5) shape의 배열로 표현 될 수 있다.</p>
 
 <p>보통 text data를 벡터로 바꾸는 방법으로는 Word2Vec, 원핫인코딩, tfdf 등을 활용한다.</p>
 
-<h3 id="rnn-layer">rnn layer</h3>
+<h3 id="rnn-layer">RNN Layer</h3>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#rnn layer 생성
 </span><span class="n">rnn_layer</span> <span class="o">=</span> <span class="n">SimpleRNN</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -144,7 +144,12 @@ rnn은 input 데이터의 shape이 (배치크기, length, embedding_dim) 이렇�
 <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tf.Tensor([[ 0.7944882  -0.42401734]], shape=(1, 2), dtype=float32)
 </code></pre></div></div>
 <p>(1,2) 크기의 텐서가 출력되었다.
-이 텐서는 마지막 시점 즉, text_vector의 마지막 벡터까지 계산을 끝마친 시점의 은닉상태라는 말이다.</p>
+이 텐서는 마지막 시점 즉, text_vector의 마지막 벡터까지 계산을 끝마친 시점의 은닉상태이다.<br />
+그림으로 보면 다음과 같다.</p>
+
+<p><img src="/assets/images/contents/NN/RNN/sequence_vector.PNG" alt="Lstm structure" /></p>
+
+<p>마지막 시점에 대한 출력값만 필요하면 이렇게 return_sequences를 False로 주면 된다.<br /></p>
 
 <p>모든 시점에서의 은닉상태도 출력할 수 있다.</p>
 
@@ -159,5 +164,41 @@ rnn은 input 데이터의 shape이 (배치크기, length, embedding_dim) 이렇�
   [ 0.9253792  -0.84764284]
   [-0.95517516  0.8988166 ]]], shape=(1, 5, 2), dtype=float32)
 </code></pre></div></div>
-<p>(1,5,2) 크기의 텐서가 출력되었다. 총 5번의 입력이 있었으니 5개의 은닉 상태값이 출력 되었음을 알 수 있다.<br /></p>
+<p>(1,5,2) 크기의 텐서가 출력되었다. 총 5번의 입력이 있었으니 5개의 은닉 상태값이 출력 되었음을 알 수 있다.<br />
+그림으로 보면 다음과 같다.</p>
+
+<p><img src="/assets/images/contents/NN/RNN/sequence_sequence.PNG" alt="Lstm structure" /></p>
+
+<p>위 그림처럼 모든 시점에 대한 출력이 필요하면 return_sequences를 True로 주면 된다.</p>
+
+<h3 id="lstm-layer">LSTM Layer</h3>
+
+<p>마찬가지로 LSTM Layer에도 입력해보자!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lstm_layer</span> <span class="o">=</span> <span class="n">LSTM</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">return_state</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">hidden_state</span><span class="p">,</span> <span class="n">last_state</span><span class="p">,</span><span class="n">last_cell_state</span> <span class="o">=</span> <span class="n">lstm_layer</span><span class="p">(</span><span class="n">text_vector</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'hidden state : {}, shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">,</span> <span class="n">hidden_state</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'last hidden state : {}, shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">last_state</span><span class="p">,</span> <span class="n">last_state</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'last cell state : {}, shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">last_cell_state</span><span class="p">,</span> <span class="n">last_cell_state</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+</code></pre></div></div>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hidden state : [[[ 0.          0.        ]
+  [ 0.01993797  0.07217623]
+  [-0.06435854  0.04204876]
+  [ 0.04638523  0.13807252]
+  [ 0.07843614  0.15157618]]], shape: (1, 5, 2)
+last hidden state : [[0.07843614 0.15157618]], shape: (1, 2)
+last cell state : [[0.1976986  0.28913993]], shape: (1, 2)
+</code></pre></div></div>
+<p>위 last cell state를 주목하자. LSTM의 가장 큰 특징중 하나는 Cell State(삭제, 입력, 출력게이트로 이루어진)라고 했었다.<br />
+LSTM Layer는 return_state를 True로 했을때, hidden state 뿐 아니라, last cell state까지 출력할 수 있다.</p>
+
+<h2 id="마무리">마무리</h2>
+<p>이번 포스팅은 순환신경망에 대해서 간단하게 정리해봤다.<br />
+RNN은 Neural Network의 꽃이라고 한다.<br />
+인간의 말을 이해하고 구사하는 AI를 만들기 위해서는 RNN의 역할이 필수적일 수 있다.<br /></p>
+
+<p>최근 시퀀스 데이터 처리에 많이 사용하는 Transformer, bert 모델은, rnn 계열의 모델의 성능을 압도한다고 한다.<br />
+그러나 결국 transformer, bert 모델은 순환신경망 모델을 개선하기 위한 모델들이고<br />
+이러한 모델을 제대로 이해하려면 순환신경망에 대한 이해도 필요할 것이다.</p>
 :ET
