@@ -1,0 +1,8 @@
+I"�<h2 id="transformer-attention-is-all-you-need">Transformer: Attention Is All You Need</h2>
+
+<p><a href="https://arxiv.org/abs/1706.03762">paper</a><br /></p>
+
+<p>해당 논문을 글로만 읽었을때 남아있는 찝찝함, 가려운 부분을 해소하기 위해서 구현된 코드를 분석하며 공부하였습니다.</p>
+
+<p><a href="https://wikidocs.net/31379">코드</a> 딥러닝을 이용한 자연어 처리 입문</p>
+:ET

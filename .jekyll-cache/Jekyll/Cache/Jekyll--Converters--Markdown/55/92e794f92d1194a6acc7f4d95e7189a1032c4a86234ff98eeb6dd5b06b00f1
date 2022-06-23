@@ -1,0 +1,10 @@
+I")<h2 id="transformer-attention-is-all-you-need">Transformer: Attention Is All You Need</h2>
+
+<p><a href="https://arxiv.org/abs/1706.03762">paper</a><br /></p>
+
+<p>해당 논문을 글로만 읽었을때 남아있는 찝찝함, 가려운 부분을 해소하기 위해서 구현된 코드를 분석하며 공부하였습니다.<br />
+딥러닝을 이용한 자연어 처리 입문에서 keras로 구현된 <a href="https://wikidocs.net/31379">코드</a>를 활용하여 공부했습니다.<br /></p>
+
+<h2 id="positional-encoding">Positional Encoding</h2>
+
+:ET
