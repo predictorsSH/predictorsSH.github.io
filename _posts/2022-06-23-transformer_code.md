@@ -23,9 +23,12 @@ tags: DataScience transformer paper NLP
 positional encoding에 대해서 정리하기에 앞서서,해당 내용을 100% 이해하고 작성한 것이 아님을 알립니다.<br>
 
 #### 요약
+
+- positional encoding은 순서(위치)정보를 학습하기 위한 방법입니다. 
 - positional Encoding은 시퀀스 데이터에서 각 위치에대한 representation입니다.
-- d_model 차원으로 embedding된 시퀀스 데이터 벡터에, Positional Encoding 벡터를 합해준다.(위치 정보를 합해준다.) <br>
-- 단일 시퀀스 데이터에 대한 Postional Encoding의 출력은 (시퀀스 길이 x d_model(임베딩차원)) 크기의 벡터가 된다.<br>
+- 위치 정보를 함께 학습하기 위해서 d_model 차원으로 embedding된 시퀀스 데이터 벡터에, Positional Encoding 벡터를 합해줍니다.<br>
+- 단일 시퀀스 데이터에 대한 Postional Encoding의 출력은 (시퀀스 길이 x d_model(임베딩차원)) 크기의 벡터가 됩니다.<br>
+
 
 #### 설명
 Positional Encoding은 데이터의 순서정보를 학습하기 위해 사용하는 기법입니다.<br>
@@ -60,7 +63,7 @@ Positional Encoding은 결국, 시퀀스 데이터에서 특정 위치(인덱스
 또한 학습데이터에 비해 테스트 데이터가 길다면, 모델이 길이에 크게 영향을 받게되어 모델의 일반화가 어려워집니다.<br>
 
 그러나 sine cosine 함수를 이용하면 위와 같은 문제를 해결할 수 있게 됩니다.<br> 
-찾아보니 이상적인 positional encoding을 하기 위해서 지켜져야할 조건 등이 있었습니다.<br>
+찾아보니 이상적인 positional encoding을 하기 위해서 지켜져야할 조건이 있었습니다.<br>
 
 1. 각 위치마다 고유하고 일관된 벡터가 나와야함
 2. 서로 다른 길이의 시퀀스 데이터에 대해서도 적용가능해여함
