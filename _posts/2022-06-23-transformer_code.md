@@ -73,11 +73,11 @@ Positional Encoding은 결국, 시퀀스 데이터에서 특정 위치(인덱스
 #### 코드 설명
 Positional Encoding을 구현하는 것은 그렇게 어렵지 않습니다.<br>
 
-아래 PositionalEncoding 클래스에서, get_angles 함수는 위치 인덱스 i와 차원 d_model에 따라<br> sine 및 cosine 함수에 들어갈 값(각도)을 구해줍니다.<br>
+아래 PositionalEncoding 클래스에서, get_angles 함수는 위치 인덱스 pos와 차원 d_model에 따라<br> sine 및 cosine 함수에 들어갈 값(각도)을 구해줍니다.<br>
 즉, 논문의 positional encodig 식에서 $ pos/10000^{2i/dmodel} $ 을 구하는 함수입니다.
 
 positioanl_encoding 함수는 get_angles에서 얻은 각도에 따라,<br>
-i(시퀀스 인덱스)가 짝수일 때는 sine 함수를, i가 홀수 일때는 cosine 함수를 사용하여, positional encoding을 수행합니다.<br>
+i(임베딩벡터 내의 차원의 인덱스)가 짝수일 때는 sine 함수를, i가 홀수 일때는 cosine 함수를 사용하여, positional encoding을 수행합니다.<br>
 
 그리고 마지막으로 embedding된 벡터인 inputs과 positional encoding 벡터를 합해줍니다.
 
