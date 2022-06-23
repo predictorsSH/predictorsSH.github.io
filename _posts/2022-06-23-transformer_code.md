@@ -73,7 +73,9 @@ Positional Encoding은 결국, 시퀀스 데이터에서 특정 위치(인덱스
 #### 코드 설명
 Positional Encoding을 구현하는 것은 그렇게 어렵지 않습니다.<br>
 
-아래 PositionalEncoding 클래스에서, get_angles 함수는 위치 인덱스 pos와 차원 d_model에 따라<br> sine 및 cosine 함수에 들어갈 값(각도)을 구해줍니다.<br>
+아래 PositionalEncoding 클래스에서, get_angles 함수는 위치 인덱스 position과 차원 d_model에 따라<br> sine 및 cosine 함수에 들어갈 값(각도)을 구해줍니다.<br>
+- position은 데이터의 길이를 표현하는 매개변수입니다.  
+- d_model은 임베딩 차원입니다.
 즉, 논문의 positional encodig 식에서 $ pos/10000^{2i/dmodel} $ 을 구하는 함수입니다.
 
 positioanl_encoding 함수는 get_angles에서 얻은 각도에 따라,<br>
@@ -85,10 +87,10 @@ i(임베딩벡터 내의 차원의 인덱스)가 짝수일 때는 sine 함수를
 ```python
 class PositionalEncoding():
 
-  def __init__(self,position,d_model):                                           #position : 위치 인덱스, d_model : 임베딩 차원 
+  def __init__(self,position,d_model):                                           #position : 사용자가 지정하는 최대 데이터의 길이, d_model : 임베딩 차원 
     self.pos_encoding = self.positional_encoding(position, d_model)
 
-  def get_angles(self,position,i,d_model):
+  def get_angles(self,position,i,d_model):                                       
     power = (2 * (i // 2)) / tf.cast(d_model, tf.float32)                        # 2i/d_model ,  tf.cast는 tensor의 data type을 변경. i//2 해주는 이유는 짝수 차원 일때 i에 0123... 홀수 차원 일때 i에 0123.. 각각 대입 하기 때문
     angles = 1/tf.pow(10000,power)                                               # tf.pow는 거듭제곱 함수
     return position*angles
@@ -106,10 +108,9 @@ class PositionalEncoding():
     angle_rads = np.zeros(angle_rads.shape)
     angle_rads[:,0::2] = sines                                                   # 짝수일때 sines 함수 사용
     angle_rads[:,1::2] = cosines                                                 # 홀수일때 cosines 함수 사용
-    pos_encoding = tf.constant(angle_rads)                              
-    pos_encoding = pos_encoding[tf.newaxis, ...]                                 
-
-    print('pos_encoding_shape:', pos_encoding.shape)
+    pos_encoding = tf.constant(angle_rads)                                       # (문장길이, d_model)
+    pos_encoding = pos_encoding[tf.newaxis, ...]                                 # (1,문장길이,d_model) 크기로 변환
+                         
     return tf.cast(pos_encoding, tf.float32)
 
   def __call__ (self, inputs):
