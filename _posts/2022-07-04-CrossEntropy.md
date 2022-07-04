@@ -70,10 +70,10 @@ $$ Entropy = -\sum_i P(i)logP(i) $$
 
 예를들어 진분포가 [1,0,0] 이라 가정하면, 즉 1번 클래스가 정답이라면
 
- $$ Entropy = - \sum_{c=1}^C P(i=c)logP(i=c) $$
- $$ \qquad = - P(i=1)logP(i=1) $$
- $$ \quad= - 1 * log1 $$
- $$ = 0 $$
+ $$ Entropy = - \sum_{c=1}^C P(i=c)logP(i=c) $$   <br>
+ $$ \qquad = - P(i=1)logP(i=1) $$  <br>
+ $$ \quad= - 1 * log1 $$  <br>
+ $$ = 0 $$   <br>
 
 이렇게 정답이 하나밖에 없는 분류 뮨제에서 엔트로피는 0이 되어버려서, <br>
 크로스 엔트로피만 남게된다.
@@ -94,12 +94,12 @@ d여기서 $Y$ 는 진분포  $ \hat{Y} $는 모델이 예측한 분포이다.<b
 어떻게 위와 같은 식이 증멸될까?<br>
 볼록함수의 젠슨 부등식을 활용하면 가능하다.
 
-$$ CE = - \sum_{c=1}^C P(i=c)logQ(i=c) $$
-$$ \qquad = \sum_{c=1}^C p(c)(-logq(c)) $$
-$$ \quad =  \sum_{c=1}^C p(c)f(q(c)) $$
+$$ CE = - \sum_{c=1}^C P(i=c)logQ(i=c) $$      <br>
+$$ \qquad = \sum_{c=1}^C p(c)(-logq(c)) $$     <br>
+$$ \quad =  \sum_{c=1}^C p(c)f(q(c)) $$        <br>
 $$ \quad =  E_{c \simeq p}[f(q(c))] $$
-$$ \quad >=  f(E_{c \simeq p}[q(c)])   (Jensen) $$
-$$ \quad =  f(\sum_{c=1}^C p(c)q(c))   $$ 
+$$ \quad >=  f(E_{c \simeq p}[q(c)])   (Jensen) $$   <br>
+$$ \quad =  f(\sum_{c=1}^C p(c)q(c))   $$      <br>
 
 중간에 부등식으로 표현된 부분이 젠센부등식이다.<br>
 쉽게 말해 볼록함수에서는 항상 평균점의 함숫값보다 함숫값의 평균이 더 큰데. 그것을 부등식으로 표현한것이 젠센 부등식이다!
@@ -112,10 +112,10 @@ $$ f(\sum_{c=1}^C p(c)q(c)) = f(P(Y = \hat{Y})) $$
 
 위식을 아래와 같이 정리하면! <br>
 
-$$ CE >= f(P(Y = \hat{Y})) $$
-$$ CE >= -logP(Y = \hat{Y}) $$
-$$ -CE >= logP(Y = \hat{Y}) $$
-$$ e^{-CE} >= P(Y = \hat{Y}) $$
+$$ CE >= f(P(Y = \hat{Y})) $$     <br>
+$$ CE >= -logP(Y = \hat{Y}) $$    <br>
+$$ -CE >= logP(Y = \hat{Y}) $$     <br>
+$$ e^{-CE} >= P(Y = \hat{Y}) $$    <br>
 
 이렇게 엄청난 식이 나와버린다.<br>
 크로스 엔트로피를 나춘다는것이 더이상 추상적인 손실 함수가 아님을 알 수 있다.<br>
