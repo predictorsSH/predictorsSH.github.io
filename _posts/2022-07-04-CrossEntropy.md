@@ -72,14 +72,13 @@ $$ Entropy = -\sum_i P(i)logP(i) $$
   
  $$
  \begin{align}
-
-Entropy = - \sum_{c=1}^C P(i=c)logP(i=c)\\ 
- & = - P(i=1)logP(i=1)\\ 
- & = - 1 * log1\\ 
+Entropy = - \sum_{c=1}^C P(i=c)logP(i=c)
+ & = - P(i=1)logP(i=1)
+ & = - 1 * log1
  & = 0
-
  \end{align}
  $$
+
 이렇게 정답이 하나밖에 없는 분류 뮨제에서 엔트로피는 0이 되어버려서, <br>
 크로스 엔트로피만 남게된다.
 
