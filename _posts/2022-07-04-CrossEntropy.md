@@ -71,7 +71,7 @@ $$ Entropy = -\sum_i P(i)logP(i) $$
 예를들어 진분포가 [1,0,0] 이라 가정하면, 즉 1번 클래스가 정답이라면
 
  $$ Entropy = - \sum_{c=1}^C P(i=c)logP(i=c) $$   <br>
- $$ \qquad  = - P(i=1)logP(i=1) $$  <br>
+ $$ \\\\\\\ = - P(i=1)logP(i=1) $$  <br>
  $$ \quad   = - 1 * log1 $$  <br>
  $$         = 0 $$   <br>
 
