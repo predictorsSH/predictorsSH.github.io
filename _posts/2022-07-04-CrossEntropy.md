@@ -72,9 +72,9 @@ $$ Entropy = -\sum_i P(i)logP(i) $$
   
  $$
  \begin{align}
-Entropy = - \sum_{c=1}^C P(i=c)logP(i=c)
- & = - P(i=1)logP(i=1)
- & = - 1 * log1
+Entropy = - \sum_{c=1}^C P(i=c)logP(i=c)<br>
+ & = - P(i=1)logP(i=1)<br>
+ & = - 1 * log1<br>
  & = 0
  \end{align}
  $$
