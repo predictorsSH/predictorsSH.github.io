@@ -121,7 +121,7 @@ CE(Y,\hat{Y}) & = - \sum_{c=1}^C P(Y=c)logQ(\hat{Y}=c)
 
 $$ f(\sum_{c=1}^C p(c)q(c)) = f(P(Y = \hat{Y})) $$ 
 
-위식을 아래와 같이 정리하면! <br>
+위 식을 크로스엔트로피와 함꼐 다시 같이 정리하면! <br>
 \begin{align}
 \newline CE(Y,\hat{Y})& \ge f(P(Y = \hat{Y}))
 \newline CE(Y,\hat{Y}) & \ge -logP(Y = \hat{Y})
