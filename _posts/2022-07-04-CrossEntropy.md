@@ -28,15 +28,15 @@ tags: DataScience AI loss function deeplearning classification
 다시말해, 우리가 모델링한 모델이 출력하는 분포와 실제 값의 분포 차이가 없어야 좋은 모델이라고 할 수 있다. <br> 
 그런 점에서, 두 분포의 차이를 측정하는 크로스 엔트로피는 좋은 비용함수가 될 수 있는 것이다.<br> 
 
-조금더 자세히 설명하면, <br>
 
-$$ CE(p,q) = -\sum_i P(i)logQ(i) $$
+$$ CE(p,q) = -\sum_{i=1}^n P(x_i)logQ(x_i) $$
 
 크로스 엔트로피 식은 위와 같다. 여기서 $p$는 진분포(정답분포), $q$는 모델의 모사한 분포이다. <br> 
 
+예를 들어,<br>
 우리는 마지막 분류층에서 softmax, sigmoid 활성화 함수를 활용한다. <br>
 이 두가지 활성화 함수를 통과한 벡터는 합이 1인 확률 분포와 같아지게 되는데<br>
-이때 그 분포가 모델이 모사한 분포 $q$, [1,0,0] 과 같은 정답 레이블이 진분포 $p$가 된다.<br>
+이때 그 분포가 모델이 모사한 분포 $q$가 되고, [1,0,0] 과 같은 정답 레이블이 진분포 $p$가 된다.<br>
 
 
 ## Kullback-Leibler divergency (쿨백-라이블러 발산)
@@ -45,11 +45,11 @@ $$ CE(p,q) = -\sum_i P(i)logQ(i) $$
 KLD는 두 확률 분포의 차이를 계산하는데에 사용하는 함수다. <br>
 그 식은 다음과 같이 정의된다.<br>
 
-$$D_{KL} (P \parallel Q) = \sum_i P(i)log {P(i) \over Q(i)} $$
+$$D_{KL} (P \parallel Q) = \sum_{i=1}^n P(x_i)log {P(x_i) \over Q(x_i)} $$
 
 이식을 조금 다시 풀어 써보면,<br>
 
-$$  \sum_i P(i)logP(i)  - \sum_i P(i)logQ(i) $$
+$$  \sum_{i=1}^n P(x_i)logP(x_i)  - \sum_{i=1}^n P(x_i)logQ(x_i) $$
 
 가 된다. <br>
 
@@ -64,15 +64,21 @@ $$  \sum_i P(i)logP(i)  - \sum_i P(i)logQ(i) $$
 따라서 크로스 엔트로피를 최소화 하는것이 곧 KLD를 최소화 하는 것과 같아진다.<br>
 
 예를 들어, (제이미님의 예시를 그대로 가져옴) <br>
-3가지 클래스 분류 문제에서 진분포는 [1,0,0], [0,1,0], [0,0,1]와 같은 분포를 가진다.<br>
+3가지 클래스(C) 분류 문제에서 진분포는 [1,0,0], [0,1,0], [0,0,1]와 같은 분포를 가질 수 있다.<br>
 근데 위와 같은 분포에서 엔트로피를 계산하면 0이다 나온다.<br>
-$$ Entropy = -\sum_i P(i)logP(i) $$ 
 
-예를들어 진분포가 [1,0,0] 이라 가정하면, 즉 1번 클래스가 정답이라면
+엔트로피 식은 아래와 같은데,<br>
+$$ H(X) = -\sum_{i=1}^n P(x_i)logP(x_i) $$ 
 
+예를들어 진분포가 [1,0,0] 이라 가정하면, 즉 1번 클래스가 정답이라면,<br>
+P(X=2)와 P(X=3)은 0임으로, 아래와 같이 식이 정리된다.
 
-
-\begin{align} Entropy & = - \sum_{c=1}^C P(i=c)logP(i=c)\ & = - P(i=1)logP(i=1)\ & = - 1 * log1\ & = 0  \end{align}
+\begin{align} 
+H(X) & = - \sum_{c=1}^3 P(X=c)logP(X=c)
+\newline & = - P(X=1)logP(X=1)
+\newline & = - 1 * log1
+\newline & = 0 
+\end{align}
 
 
 이렇게 정답이 하나밖에 없는 분류 뮨제에서 엔트로피는 0이 되어버려서, <br>
@@ -86,20 +92,25 @@ $$ Entropy = -\sum_i P(i)logP(i) $$
 위 소제목 그대로, 크로스엔트로피는 분류 모델이 정답을 정확하게 맞출 확률의 하한을 결정한다는 것이다.<br>
 
 결론부터 말하면, 크로스 엔트로피로 아래와 같은 식을 만족시킬 수 있다.<br>
-$$ e^{-CE} <= P(Y = \hat{Y}) $$
+$$ e^{-CE(Y,\hat{Y})} <= P(Y = \hat{Y}) $$
 
-d여기서 $Y$ 는 진분포  $ \hat{Y} $는 모델이 예측한 분포이다.<br>
+여기서 $Y$ 는 진분포  $ \hat{Y} $는 모델이 예측한 분포이다.<br>
 위식에서 크로스 엔트로피가 0이 되면 두 본포가 같아질 확률이 1이 된다!
 
 어떻게 위와 같은 식이 증멸될까?<br>
 볼록함수의 젠슨 부등식을 활용하면 가능하다.
 
-$$ CE     = - \sum_{c=1}^C P(i=c)logQ(i=c) $$      <br>
-$$ \qquad = \sum_{c=1}^C p(c)(-logq(c)) $$     <br>
-$$ \quad  =  \sum_{c=1}^C p(c)f(q(c)) $$        <br>
-$$ \quad  =  E_{c \simeq p}[f(q(c))] $$
-$$ \quad \ge  f(E_{c \simeq p}[q(c)])   (Jensen) $$   <br>
-$$ \quad  =  f(\sum_{c=1}^C p(c)q(c))   $$      <br>
+학습시, 실제 라벨은 $Y$ 모델이 예측한 라벨은 $\hat{Y}$로 표현되곤 한다.<br>
+여기서도 위와같은 변수명을 그대로 사용하고 $Y$의 분포를 p, $\hat{Y}$의 분포를 q라 하면:<br> 
+
+\begin{align}
+CE(Y,\hat{Y}) & = - \sum_{c=1}^C P(Y=c)logQ(\hat{Y}=c)
+\newline & = \sum_{c=1}^C p(c)(-logq(c))
+\newline & =  \sum_{c=1}^C p(c)f(q(c))
+\newline & =  E_{c \sim p}[f(q(c))]
+\newline & \ge  f(E_{c \sim p}[q(c)])   (Jensen)
+\newline & =  f(\sum_{c=1}^C p(c)q(c))   
+\end{align}
 
 중간에 부등식으로 표현된 부분이 젠센부등식이다.<br>
 쉽게 말해 볼록함수에서는 항상 평균점의 함숫값보다 함숫값의 평균이 더 큰데. 그것을 부등식으로 표현한것이 젠센 부등식이다!
@@ -111,13 +122,15 @@ $$ \quad  =  f(\sum_{c=1}^C p(c)q(c))   $$      <br>
 $$ f(\sum_{c=1}^C p(c)q(c)) = f(P(Y = \hat{Y})) $$ 
 
 위식을 아래와 같이 정리하면! <br>
+\begin{align}
+\newline CE(Y,\hat{Y})& \ge f(P(Y = \hat{Y}))
+\newline CE(Y,\hat{Y}) & \ge -logP(Y = \hat{Y})
+\newline -CE(Y,\hat{Y}) &\ge logP(Y = \hat{Y})
+\newline  e^{-CE(Y,\hat{Y})} & \ge P(Y = \hat{Y}) 
+\end{align}
 
-$$ CE  \ge f(P(Y = \hat{Y})) $$     <br>
-$$ CE  \ge -logP(Y = \hat{Y}) $$    <br>
-$$ -CE \ge logP(Y = \hat{Y}) $$     <br>
-$$ e^{-CE} \ge P(Y = \hat{Y}) $$    <br>
-
-이렇게 엄청난 식이 나와버린다.<br>
+(제이미님의 글을 인용하였습니다.)
+위식의 마지막 라인을 보자! 정말 엄청난 식이 나와버린다.<br>
 크로스 엔트로피를 나춘다는것이 더이상 추상적인 손실 함수가 아님을 알 수 있다.<br>
-이제 신경망을 학습할때 손실함수가 1이 나온다면, 현재 정답률이 1/e 즉 36%라는 것을 추측할 수 도 있다.
+이제 신경망을 학습할때 손실함수가 1이 나온다면, 현재 정답률이 1/e 즉 36%라는 것을 추측할 수 도 있다. 
 
