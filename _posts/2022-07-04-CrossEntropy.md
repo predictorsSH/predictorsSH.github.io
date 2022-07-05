@@ -125,12 +125,17 @@ $$ f(\sum_{c=1}^C p(c)q(c)) = f(P(Y = \hat{Y})) $$
 \begin{align}
 \newline CE(Y,\hat{Y})& \ge f(P(Y = \hat{Y}))
 \newline CE(Y,\hat{Y}) & \ge -logP(Y = \hat{Y})
-\newline -CE(Y,\hat{Y}) &\ge logP(Y = \hat{Y})
-\newline  e^{-CE(Y,\hat{Y})} & \ge P(Y = \hat{Y}) 
+\newline -CE(Y,\hat{Y}) & \le logP(Y = \hat{Y})
+\newline  e^{-CE(Y,\hat{Y})} & \le P(Y = \hat{Y}) 
 \end{align}
 
 (제이미님의 글을 인용하였습니다.)
 위식의 마지막 라인을 보자! 정말 엄청난 식이 나와버린다.<br>
+e를 밑으로 하는 지수함수는 우상향 그래프이다. 따라서 크로스 엔트로피가 커질수록 좌변이 작아진다.<br>
+
+만약, 크로스 엔트로피가 작아져서 0이되면 좌변의 값은 1이된다.<br>
+즉. 크로스 엔트로피가 0이면, $Y$와 $\hat{Y}$의 분포가 같을 확률도 최소 1이 된다!
+
 크로스 엔트로피를 나춘다는것이 더이상 추상적인 손실 함수가 아님을 알 수 있다.<br>
 이제 신경망을 학습할때 손실함수가 1이 나온다면, 현재 정답률이 1/e 즉 36%라는 것을 추측할 수 도 있다. 
 
