@@ -1,0 +1,13 @@
+I"�<p>데브원영님의 카프카 강의를 듣고 정리 <br />
+강의는 인프런에서 무료로 제공하고 있고, 데브원영님의 유튜브 채널에서도 볼 수 있다!</p>
+
+<p>혼자 공부한 것을 기록 한 것이라, 잘못된 내용이 있을 수도 있음!</p>
+
+<h2 id="카프카란">카프카란?</h2>
+<p>“Apache Kafka is an open-source distributed event streaming platform used by thousands of companies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.</p>
+
+<h2 id="카프카-아키텍처">카프카 아키텍처</h2>
+
+<p><img src="/assets/images/contents/kafka/kafka_architecture.PNG" alt="kafka-architecture" /></p>
+
+:ET
