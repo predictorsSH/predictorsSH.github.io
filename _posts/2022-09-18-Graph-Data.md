@@ -59,6 +59,7 @@ $$ \beta_1 = {Cov(X,Y) \over \sigma(X)^2}  $$
 상관계수를 위와 비슷하게 나타내 보면,<br>
 
 $$ Coef(X,Y) = {Cov(X,Y) \over \sigma(X)\sigma(Y)} =  {Cov(X,Y) \over \sigma(X)^2} * {\sigma(X) \over \sigma(Y)}  $$
+
 $$ Coef(X,Y) =  \beta_1 * {\sigma(X) \over \sigma(Y)}  $$
 
 즉 상관계수는 회귀계수에, 두 변수의 표준편차의 비율을 곱한 것과 같으므로<br>
