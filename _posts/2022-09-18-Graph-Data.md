@@ -50,8 +50,10 @@ Linear regression과 Correlation의 차이는 무엇인가요? 라는 인터뷰 
 
 $$ \beta_1 = {\Sigma(x_i - \bar{x})(y_i - \bar{y}) \over \Sigma(x_i - \bar{x})^2}  $$
 
-다음과 같이 분자는 $X,Y$ 의 공분산 분모는 $X$의 분산이 된다.
+다음과 같이 분자는 $X,Y$ 의 공분산 분모는 $X$의 분산이 된다.<br>
+
 $$ \beta_1 = {\Sigma(x_i - \bar{x})(y_i - \bar{y})*{1 \over n} \over \Sigma(x_i - \bar{x})^2 *{1 \over n} }  $$
+
 $$ \beta_1 = {Cov(X,Y) \over \sigma(X)^2}  $$
 
 상관계수를 위와 비슷하게 나타내 보면,<br>
