@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Transformer 구현 코드로 이해하기 - Positional Encoding(작성중)
+title: Transformer 구현 코드로 이해하기 - Positional Encodig
 subtitle: Positional Encoding
 author: san9hyun
 categories: AI
