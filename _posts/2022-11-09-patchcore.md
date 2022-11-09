@@ -31,7 +31,7 @@ PatchCore는 image-level anomaly detection AUROC 점수를 99.6%까지 달성한
 최근에는, target distribution 대한 adaptation 없이(target에 대한 학습 없이?), ImageNet 분류모델로부터 common deep representations 활용하는 것이 제안된다.<br>
 <br>
 adaptation 생략하고도, 이러한 모델들은 결함의 localization 이상 탐지에 강한 성능을 보여준다.<br>
-이런 테크닉의 핵심은 deep feature representations의 multiscale nature를 이용하면서, 테스트 샘플과 정상 샘플간의 특징을 대조하는 것이다.
+이런 테크닉의 핵심은 deep feature representations의 multiscale nature를 이용하면서, 테스트 샘플과 정상 샘플간의 특징을 대조하는 것이다.<br>
 <br>
 그런데 미묘한 결함의 분할,추출(segmentation)은  높은 해상도(high resolution, 입력층에 가까움) feature로 커버가 되는 반면, 
 구조적 편차와 전체 이미지 수준의 Anomaly Detection은 더 높은 추상화 feature(입력층으로부터 멈)에 의해 커버 된다.<br>
@@ -45,8 +45,7 @@ adaptation 생략하고도, 이러한 모델들은 결함의 localization 이상
 3. retaining high inference speeds. 높은 추론 속도 유지
 
 PatchCore는 mid-level network feature를 사용하여, ImageNet classes에 대한 편향을 최소화 하면서도,
-이웃 지역에 대한 feature aggregation은 충분히 공간적 문맥 정보를 보장한다.<br>
-<br>
+이웃 지역에 대한 feature aggregation은 충분히 공간적 문맥 정보를 보장한다.
 결과적으로, PatcCore는 광범위한 메모리 뱅크를 통해 테스트시 사용 가능한 정상 정보를 최적으로 활용할수 있다.<br>
 <br>
 마지막으로, PatchCore는 추출된 패치 레벨 메모리 뱅크의 중복성을 줄이고, 스토리지 메모리와 추론 시간 단축을 위해 탐욕적 coreset 서브샘플링을 추가로 도입하였다.
