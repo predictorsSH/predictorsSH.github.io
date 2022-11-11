@@ -61,3 +61,7 @@ PatchCore또한 유사하게 memory-bank를 사용하지만, neighbourhoodaware 
 PatchCore의 image-level의 anomaly detection과 segmentation 두가지 모두에 대한 patch-level의 접근은 PaDiM과 연관이있다.<br>
 PaDiM은 patch-level의 anomalt detection을, 각 patch의 고유한 마할라노비스 거리를 측정하는 것으로 제한하는 반면에, PatchCore는 모든 패치들에 대해 동일하게 접근 가능한
 효율적인 patch-feature memory bank를 활용한다. (아직 무슨말인지 모르겠지만, 아래 Method를 보며 이해해보자!)
+
+## Method
+
+PatchCore는 3가지 단계로 구성된다.<br>
