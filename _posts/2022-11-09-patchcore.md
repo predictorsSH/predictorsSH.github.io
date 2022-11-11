@@ -64,4 +64,21 @@ PaDiM은 patch-level의 anomalt detection을, 각 patch의 고유한 마할라�
 
 ## Method
 
-PatchCore는 3가지 단계로 구성된다.<br>
+PatchCore는 아래 3가지 단계로 구성된다.<br>
+- Locally aware patch features
+- Coreset-reduced patch-feature memory bank
+- Anomaly Detection with PatchCore
+
+### Locally aware path features
+
+PatchCore는 사전학습 모델 $\phi$ 을 사용하는데, 특정 네트워크 층의 피처가 중요한 역할을 한다.<br>
+이미지 $x_i$에 대해, $\phi$의 j번째층 피처를 아래와 같이 나타낼 수 있다.<br>
+
+$$ \phi_{i,j} = \phi_j(x_i) $$
+<
+
+피처를 선택하는 한가지 방법으로, 마지막 층의 피처 표현을 사용할 수 있다.<br>
+그러나 두가지 문제가 발생한다. 첫째, 정상데이터의 지역적 정보를 잃는다<br>
+둘째,  ImageNet의 마지막 층 피처들은 이미지 분류 작업에 편향되어있으며, 이는 연구에서의 anomaly detection 작업과, 평가된 데이터 셋과 많은 차이가 있다.
+
+따라서 PatchCore는 midel-level 피처 표현을 사용한다.
