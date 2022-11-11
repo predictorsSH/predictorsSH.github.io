@@ -51,5 +51,13 @@ PatchCore는 mid-level network feature를 사용하여, ImageNet classes에 대�
 마지막으로, PatchCore는 추출된 패치 레벨 메모리 뱅크의 중복성을 줄이고, 스토리지 메모리와 추론 시간 단축을 위해 탐욕적 coreset 서브샘플링을 추가로 도입하였다.
 따라서 PatcCore는 매우 실용적이고, 산업에 활용하기 매력적이다.
 
+## Related Works
 
-
+PatchCore에서 사용한 특정 컴포넌트들은 SPADE와 PaDiM과 관련이 있다.<br>
+SPADE는 정상 피처의 memory-bank를 사용하며, 정상 피처는 사전 학습된 모델에서 추출 된다. 그리고 pixel-level과 image-level의 이상탐지에 대해 분리된 접근을 한다.<br>
+PatchCore또한 유사하게 memory-bank를 사용하지만, neighbourhoodaware patch-level features를 사용하는 차이가 있다.<br>
+그리고 memory-bank는 서브 샘플링된 coreset이다(정상 데이터를 전부 활용하지 않음). 이 방식은 더 높은 성능에 더 낮은 추론 비용을 보장한다.<br>
+<br>
+PatchCore의 image-level의 anomaly detection과 segmentation 두가지 모두에 대한 patch-level의 접근은 PaDiM과 연관이있다.<br>
+PaDiM은 patch-level의 anomalt detection을, 각 patch의 고유한 마할라노비스 거리를 측정하는 것으로 제한하는 반면에, PatchCore는 모든 패치들에 대해 동일하게 접근 가능한
+효율적인 patch-feature memory bank를 활용한다. (아직 무슨말인지 모르겠지만, 아래 Method를 보며 이해해보자!)
