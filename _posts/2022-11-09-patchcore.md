@@ -96,9 +96,11 @@ $$ \phi_{i,j}(h,w) = \phi_j(x_i,h,w) $$
 
 neighbourhood feature vectors를 아래와 같이 표현하고,
 
-$$ N_p^{(h,w)} = {(a,b)|a \in [h - [p/2], ...,h+[p/2]], b \in [w-[p/2], ..., w+[[/2]]]} $$ 
+$$ N_p^{(h,w)} = \\{(a,b)|a \in [h - [p/2], ...,h+[p/2]], b \in [w-[p/2], ..., w+[[p/2]]]\\} $$ 
 
 
 locally aware features 는 아래와 같이 표현할 수 있다.
 
-$$ \phi_{i,j}(N_p^{(h,w)}) = f_{agg}({\phi_{i,j}(a,b)|(a,b) \in N_p^{(h,w)}}) $$
+$$ \phi_{i,j}(N_p^{(h,w)}) = f_{agg}(\\{\phi_{i,j}(a,b)|(a,b) \in N_p^{(h,w)}\\}) $$
+
+$$ \\{test\\} $$
