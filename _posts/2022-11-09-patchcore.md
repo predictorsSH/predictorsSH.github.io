@@ -10,6 +10,8 @@ tags: DataScience paper patchcore
 
 ## Towards Total Recall in Industrial Anomaly Detection
 
+** 초안 작성 하며 공부중, 추후 가다듬을 예정
+
 ## [[paper]](https://arxiv.org/abs/2106.08265)
 
 
@@ -72,13 +74,31 @@ PatchCore는 아래 3가지 단계로 구성된다.<br>
 ### Locally aware path features
 
 PatchCore는 사전학습 모델 $\phi$ 을 사용하는데, 특정 네트워크 층의 피처가 중요한 역할을 한다.<br>
-이미지 $x_i$에 대해, $\phi$의 j번째층 피처를 아래와 같이 나타낼 수 있다.<br>
+이미지 $x_i$에 대해, $\phi$의 j번째층 피처를 아래와 같이 표현할 수 있다.<br>
 
 $$ \phi_{i,j} = \phi_j(x_i) $$
-<
 
 피처를 선택하는 한가지 방법으로, 마지막 층의 피처 표현을 사용할 수 있다.<br>
 그러나 두가지 문제가 발생한다. 첫째, 정상데이터의 지역적 정보를 잃는다<br>
-둘째,  ImageNet의 마지막 층 피처들은 이미지 분류 작업에 편향되어있으며, 이는 연구에서의 anomaly detection 작업과, 평가된 데이터 셋과 많은 차이가 있다.
+둘째,  ImageNet의 마지막 층 피처들은 이미지 분류 작업에 편향되어있으며, 이는 연구에서의 anomaly detection 작업과, 평가된 데이터 세트와는 많은 차이가 있다.<br>
+따라서 PatchCore는 midel-level 피처 표현을 사용한다.<br>
 
-따라서 PatchCore는 midel-level 피처 표현을 사용한다.
+patch 표현을 공식화 하기 위해서 이전에 소개한 표현법을 확장한다.<br>
+피처맵 $ \phi_{i,j} $ 이  depth $c^*$, heigjt $h^*$ 그리고 width $w^*$ 세가지 차원을 가진 텐서라고 가정하자<br>
+우리는, 특정 포지션(h,w)에서의 C차원 피처 slice를 아래와 같이 표현 할 수 있다.<br>
+
+$$ \phi_{i,j}(h,w) = \phi_j(x_i,h,w) $$
+
+이상적으로는, 각 patch-representation은 지역 공간 변화에 강한 의미가 이있는 anomalous context를 설명하기 위해 충분히 큰 receptive field size로 동작해야한다.<br>
+이는 신경망의 더 깊은 층으로 내려가면 가능하지만, 그렇게 되면 ImageNet에 더 고유해져서 당면한 이상탐지 작업과는 덜 관련이 있는 반면, 교육 비용이 증가하고, feature map 해상도는 떨어진다.<br>
+
+따라서, 공간 해상도를 잃지 않으면서, 작은 spatial deviations에 견고한 feature를 구성하기 위해 local neighbourhood aggregation 기법을 사용한다.<br>
+
+neighbourhood feature vectors를 아래와 같이 표현하고,
+
+$$ N_p^{(h,w)} = {(a,b)|a \in [h - [p/2], ...,h+[p/2]], b \in [w-[p/2], ..., w+[[/2]]]} $$ 
+
+
+locally aware features 는 아래와 같이 표현할 수 있다.<br>
+
+$$ \phi_{i,j}(N_p^{(h,2}) = f_agg({\phi_{i,j}(a,b)|(a,b) \in N_p^{(h,w}) $$
