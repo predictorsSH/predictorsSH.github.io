@@ -95,16 +95,38 @@ $$ h \in \{ 1,....h^* \} $$ and  $$ w \in \{ 1,....w^* \} $$
 
 
 
-이상적으로는, 각 patch-representation은 지역 공간 변화에 강한 의미가 이있는 anomalous context를 설명하기 위해 충분히 큰 receptive field size로 동작해야한다.<br>
-이는 신경망의 더 깊은 층으로 내려가면 가능하지만, 그렇게 되면 ImageNet에 더 고유해져서 당면한 이상탐지 작업과는 덜 관련이 있는 반면, 교육 비용이 증가하고, feature map 해상도는 떨어진다.<br>
+이상적으로는, 각 patch-representation은 지역 공간 변화에 강한 의미가 있는 anomalous context를 설명하기 위해 충분히 큰 receptive field size로 동작해야한다.<br>
+이는 신경망의 더 깊은 층으로 내려가면 가능하지만, 그렇게 되면 ImageNet에 편향되고, 당면한 이상탐지 작업과는 덜 관련이 있는 반면, 교육 비용이 증가하고, feature map 해상도는 떨어진다.<br>
 
 따라서, 공간 해상도를 잃지 않으면서, 작은 spatial deviations에 견고한 feature를 구성하기 위해 local neighbourhood aggregation 기법을 사용한다.<br>
 
-neighbourhood feature vectors를 아래와 같이 표현하고,
+먼저, neighbourhood feature vectors를 아래와 같이 정의하고,
 
 $$ N_p^{(h,w)} = \{(a,b)|a \in [h - [p/2], ...,h+[p/2]], b \in [w-[p/2], ..., w+[[p/2]]]\} $$ 
 
 
-locally aware features 는 아래와 같이 표현할 수 있다.
+neighbourhood aggregation 틍한  local neigh locally aware features 는 아래와 같이 표현할 수 있다.
 
 $$ \phi_{i,j}(N_p^{(h,w)}) = f_{agg}(\{\phi_{i,j}(a,b)|(a,b) \in N_p^{(h,w)}\}) $$
+
+$f_{agg}$는 aggregation function을 의미하며 PatchCore에서는 adaptive average pooling을 사용한다.<br>
+adaptive average pooling은 각각의 feature map에 대해 local smoothing을 해주는 것과 비슷하다.<br>
+aggregation을 하고나면, d차원의 single representation이 생성되며 이 representation은 모든 쌍의 (h,w)에 대해 수행되므로 feature map의 해상도를 유지한다.<br>
+
+하나의 feature map $ \phi_{i,j} $ 에 대한 locally aware patch-feature 집합은 <br>
+
+$$ P_{s,p}(\phi_{i,j}(N_p^{(h,w)})) | h,w mod s = 0, h<h^*, w<w^*, h, w \in \mathbb{N} $$
+
+이렇게 표현한다.<br>
+
+s는 strinding 파라미터로, 해당 연구에서는 1로 설정하였다.<br>
+
+경험적으로 여러층의 feature map을 사용하는 것이 benefit을 제공하는 것을 알아냈다.<br>
+그러나 feature의 generality와 공간 해상도를 유지하기 위해, PatchCore는 오직 두 intermediate feature를 사용한다.<br>
+
+j+1 번째 층에서 추출한 patch-features는 j층의 patch-features보다 size가 작기 때문에 bilinearly rescaling을하여 size를 맞춰준 후 합쳐준다.<br>
+
+결과적으로 모든 정상 샘플에 대한, PatchCore memory bank $M$ 은 간단하게 정의된다.<br>
+
+$$ M = 	\bigcup_{x_i \in x_n} P_{s,p}(\phi_j(x_i)). $$ 
+
