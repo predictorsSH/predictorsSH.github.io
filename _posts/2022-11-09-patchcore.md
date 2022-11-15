@@ -84,10 +84,7 @@ $$ \phi_{i,j} = \phi_j(x_i) $$
 따라서 PatchCore는 midel-level 피처 표현을 사용한다.<br>
 
 patch 표현을 공식화 하기 위해서 이전에 소개한 표현법을 확장한다.<br>
-피처맵 $ \phi_{i,j} $ 이  
-depth $ c^* $  heigjt
-$ h^* $ 그리고 width 
-$ w^* $ 세가지 차원을 가진 텐서라고 가정하자<br>
+피처맵 $\phi_{i,j}$이  depth$c$  heigjt$h$ 그리고 width$$ 세가지 차원을 가진 텐서라고 가정하자<br>
 우리는, 특정 포지션(h,w)에서의 C차원 피처 slice를 아래와 같이 표현 할 수 있다.<br>
 
 $$ \phi_{i,j}(h,w) = \phi_j(x_i,h,w) $$
