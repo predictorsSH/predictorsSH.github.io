@@ -86,7 +86,7 @@ $$ \phi_{i,j} = \phi_j(x_i) $$
 patch 표현을 공식화 하기 위해서 이전에 소개한 표현법을 확장한다.<br>
 피처맵 $\phi_{i,j}$이  depth $c^\*$  heigjt $h^\*$ 그리고 width $w^\*$ 세가지 차원을 가진 텐서라고 가정하자<br>
 우리는, 특정 포지션(h,w)에서의 C차원 피처 slice를 아래와 같이 표현 할 수 있다.<br>
-$ h \in \{1,....h^\*\} and w \in \{1,....w^\*\} $
+$ h \in \{ 1,....h^\* \} $ and  $ w \in \{ 1,....w^\* \} $
 
 $$ \phi_{i,j}(h,w) = \phi_j(x_i,h,w) $$
 
@@ -104,5 +104,3 @@ $$ N_p^{(h,w)} = \{(a,b)|a \in [h - [p/2], ...,h+[p/2]], b \in [w-[p/2], ..., w+
 locally aware features 는 아래와 같이 표현할 수 있다.
 
 $$ \phi_{i,j}(N_p^{(h,w)}) = f_{agg}(\{\phi_{i,j}(a,b)|(a,b) \in N_p^{(h,w)}\}) $$
-
-$$ \{test\} $$
