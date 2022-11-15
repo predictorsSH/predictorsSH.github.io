@@ -86,8 +86,10 @@ $$ \phi_{i,j} = \phi_j(x_i) $$
 patch 표현을 공식화 하기 위해서 이전에 소개한 표현법을 확장한다.<br>
 피처맵 $\phi_{i,j}$이  depth $c^\*$  heigjt $h^\*$ 그리고 width $w^\*$ 세가지 차원을 가진 텐서라고 가정하자<br>
 우리는, 특정 포지션(h,w)에서의 C차원 피처 slice를 아래와 같이 표현 할 수 있다.<br>
+$ h \in \{1,....h^\*\} and w \in \{1,....w^\*\} $
 
 $$ \phi_{i,j}(h,w) = \phi_j(x_i,h,w) $$
+
 
 이상적으로는, 각 patch-representation은 지역 공간 변화에 강한 의미가 이있는 anomalous context를 설명하기 위해 충분히 큰 receptive field size로 동작해야한다.<br>
 이는 신경망의 더 깊은 층으로 내려가면 가능하지만, 그렇게 되면 ImageNet에 더 고유해져서 당면한 이상탐지 작업과는 덜 관련이 있는 반면, 교육 비용이 증가하고, feature map 해상도는 떨어진다.<br>
