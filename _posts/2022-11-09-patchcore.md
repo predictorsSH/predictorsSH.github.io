@@ -14,7 +14,7 @@ tags: DataScience paper patchcore
 
 ## [[paper]](https://arxiv.org/abs/2106.08265)
 
-![PatchCore](/assets/images/contents/paper/patchcore/core_sampling_algorithms.PNG)
+![PatchCore](/assets/images/contents/paper/patchcore/patchcore.PNG)
 
 ## Abstract
 
