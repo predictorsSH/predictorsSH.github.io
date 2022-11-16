@@ -14,6 +14,7 @@ tags: DataScience paper patchcore
 
 ## [[paper]](https://arxiv.org/abs/2106.08265)
 
+![PatchCore](/assets/images/contents/paper/patchcore/core_sampling_algorithms.PNG)
 
 ## Abstract
 
@@ -73,6 +74,9 @@ PatchCore는 아래 3가지 단계로 구성된다.<br>
 
 ### Locally aware path features
 
+![local patch feature](/assets/images/contents/paper/patchcore/local_patch_feature.PNG)
+
+
 PatchCore는 사전학습 모델 $\phi$ 을 사용하는데, 특정 네트워크 층의 피처가 중요한 역할을 한다.<br>
 이미지 $x_i$에 대해, $\phi$의 j번째층 피처를 아래와 같이 표현할 수 있다.<br>
 
@@ -130,3 +134,14 @@ j+1 번째 층에서 추출한 patch-features는 j층의 patch-features보다 si
 
 $$ M = 	\bigcup_{x_i \in x_n} P_{s,p}(\phi_j(x_i)). $$ 
 
+### Coreset_reduced patch-feature memory bank
+
+![코어샘플링](/assets/images/contents/paper/patchcore/subsampling.PNG)
+
+데이터 수가 많아지면, memory bank는 매우 커지고 추론 속도와 요구되는 storage 또한 매우 커진다.<br>
+이 연구에서는, coreset subsampling 메커니즘을 사용하여 M의 크기를 줄여서, 성능을 유지하면서 추론 시간을 줄였다.
+
+개념적으로, corset selection의 목표는 A에 대한 과제를 더 빠르게 해결하기 위한 subset $S \subset A$를 찾는 것이다.
+본 연구에서는 반복적인 greedy approximation를 제안한다. 그리고 코어세트 선택시간을 더 줄이기 위해 존슨 린덴스트라우스 정리를 활용하여 M의 차원을 줄인다.<br>
+
+![코어샘플링](/assets/images/contents/paper/patchcore/core_sampling_algorithms.PNG)
