@@ -155,5 +155,5 @@ $$ M = 	\bigcup_{x_i \in x_n} P_{s,p}(\phi_j(x_i)). $$
 테스트 이미지 $x^{test}$ 에 대한 image-level의 score를 계산한다.<br>
 scores는 $P(x^{test} = P_{s,p}(\phi(x^{test})))$ 에 있는 test patch-features들과 메모리 뱅크에 있는 respective nearest neighbour $m^* in M$의 최대 거리이다.
 
-$$ m^{test},m^* = argMAX_{m^{test} /in p(x^{test})} $$
+![탐지](/assets/images/contents/paper/patchcore/score.PNG)
 
