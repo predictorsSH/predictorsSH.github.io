@@ -145,3 +145,15 @@ $$ M = 	\bigcup_{x_i \in x_n} P_{s,p}(\phi_j(x_i)). $$
 본 연구에서는 반복적인 greedy approximation를 제안한다. 그리고 코어세트 선택시간을 더 줄이기 위해 존슨 린덴스트라우스 정리를 활용하여 M의 차원을 줄인다.<br>
 
 ![코어샘플링](/assets/images/contents/paper/patchcore/core_sampling_algorithms.PNG)
+
+
+### Anomaly Detection with PatchCore
+
+![탐지](/assets/images/contents/paper/patchcore/detection.PNG)
+
+
+테스트 이미지 $x^{test}$ 에 대한 image-level의 score를 계산한다.<br>
+scores는 $P(x^{test} = P_{s,p}(\phi(x^{test})))$ 에 있는 test patch-features들과 메모리 뱅크에 있는 respective nearest neighbour $m^* in M$의 최대 거리이다.
+
+$$ m^{test},m^* = argMAX_{m^{test} /in p(x^{test})} $$
+
