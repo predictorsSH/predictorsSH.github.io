@@ -1,12 +1,14 @@
 ---
 layout: post
 title: image classification from scratch
-subtitle: keras example : Classification of images of dogs and cats
+subtitle: keras example - Classification of images of dogs and cats
 author: san9hyun
 categories: keras-example
 banner : /assets/images/banners/post-bg.jpeg
 tags: Xception ResidualNetwork
 ---
+
+[keras code example](https://keras.io/examples/vision/image_classification_from_scratch/) 을 따라 공부한 것 입니다.
 
 ## Description
 
@@ -140,7 +142,7 @@ for images, labels in train_ds.take(1):
 ```
 
 
-![png](image_classification_from_scratch_files/image_classification_from_scratch_17_0.png)
+![png](assets/images/contents/keras-examples/iamge_classification_from_scratch/image_classification_from_scratch_17_0.png)
 
 
 ## 데이터증강(Data Augmentation
@@ -167,7 +169,7 @@ for images, _ in train_ds.take(1):
 ```
 
 
-![png](image_classification_from_scratch_files/image_classification_from_scratch_20_0.png)
+![png](assets/images/contents/keras-examples/iamge_classification_from_scratch/image_classification_from_scratch_20_0.png)
 
 
 ### 데이터 표준화(Standardizing the data)
@@ -272,7 +274,7 @@ keras.utils.plot_model(model, show_shapes=True)
 
 
 
-![png](image_classification_from_scratch_files/image_classification_from_scratch_31_0.png)
+![png](assets/images/contents/keras-examples/iamge_classification_from_scratch/image_classification_from_scratch_31_0.png)
 
 
 
