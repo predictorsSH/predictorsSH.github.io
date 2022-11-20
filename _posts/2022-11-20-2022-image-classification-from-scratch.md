@@ -91,6 +91,7 @@ print("Delete %d images" % num_skipped)
 image_size = (180,180)
 batch_size = 128
 
+#학습 데이터
 train_ds= tf.keras.preprocessing.image_dataset_from_directory(
     "PetImages",
     validation_split=0.2,
@@ -100,7 +101,7 @@ train_ds= tf.keras.preprocessing.image_dataset_from_directory(
     batch_size = batch_size,
 )
 
-
+#검증데이터
 val_ds= tf.keras.preprocessing.image_dataset_from_directory(
     "PetImages",
     validation_split=0.2,
@@ -142,10 +143,10 @@ for images, labels in train_ds.take(1):
 ```
 
 
-![png](assets/images/contents/keras-examples/iamge_classification_from_scratch/image_classification_from_scratch_17_0.png)
+![png](/assets/images/contents/keras-examples/iamge_classification_from_scratch/image_classification_from_scratch_17_0.png)
 
 
-## 데이터증강(Data Augmentation
+## 데이터증강(Data Augmentation)
 
 
 ```python
@@ -169,7 +170,7 @@ for images, _ in train_ds.take(1):
 ```
 
 
-![png](assets/images/contents/keras-examples/iamge_classification_from_scratch/image_classification_from_scratch_20_0.png)
+![png](/assets/images/contents/keras-examples/iamge_classification_from_scratch/image_classification_from_scratch_20_0.png)
 
 
 ### 데이터 표준화(Standardizing the data)
@@ -274,7 +275,7 @@ keras.utils.plot_model(model, show_shapes=True)
 
 
 
-![png](assets/images/contents/keras-examples/iamge_classification_from_scratch/image_classification_from_scratch_31_0.png)
+![png](/assets/images/contents/keras-examples/iamge_classification_from_scratch/image_classification_from_scratch_31_0.png)
 
 
 
