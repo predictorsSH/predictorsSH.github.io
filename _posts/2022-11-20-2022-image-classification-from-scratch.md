@@ -7,7 +7,7 @@ categories: keras-example
 banner : /assets/images/banners/post-bg.jpeg
 tags: Xception ResidualNetwork
 ---
-**dark 모드로 보기**
+**dark 모드로 보기** <br>
 [keras code example](https://keras.io/examples/vision/image_classification_from_scratch/) 을 따라 공부한 것 입니다.
 
 ## Description
