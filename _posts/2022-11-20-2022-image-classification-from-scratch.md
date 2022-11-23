@@ -4,7 +4,7 @@ title: image classification from scratch
 subtitle: keras example - Classification of images of dogs and cats
 author: san9hyun
 categories: keras-example
-banner : /assets/images/banners/post-bg.jpeg
+banner : /assets/images/banners/solar-system.jpg
 tags: Xception ResidualNetwork
 ---
 **dark 모드로 보기** <br>
