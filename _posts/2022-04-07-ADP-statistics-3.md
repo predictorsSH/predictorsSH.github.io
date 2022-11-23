@@ -4,7 +4,7 @@ title: ADP-Statistics-가설검정
 subtitle: 평균에 대한 가설검정
 author: san9hyun
 categories: ADP
-banner : /assets/images/banners/hypothesis.jpg
+banner : /assets/images/banners/data.jpg
 tags: ADP statistics python
 ---
 

@@ -4,7 +4,7 @@ title: ADP-linear-regression
 subtitle: 선형회귀
 author: san9hyun
 categories: ADP
-banner : /assets/images/banners/machineLearning.jpg
+banner : /assets/images/banners/data.jpg
 tags: ADP statistics python
 ---
 
