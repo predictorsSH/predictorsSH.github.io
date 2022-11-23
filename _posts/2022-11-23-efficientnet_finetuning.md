@@ -100,41 +100,31 @@ NUM_CLASSES = ds_info.features["label"].num_classes
     Downloading and preparing dataset 778.12 MiB (download: 778.12 MiB, generated: Unknown size, total: 778.12 MiB) to ~/tensorflow_datasets/stanford_dogs/0.2.0...
 
 
-
     Dl Completed...: 0 url [00:00, ? url/s]
-
 
 
     Dl Size...: 0 MiB [00:00, ? MiB/s]
 
 
-
     Dl Completed...: 0 url [00:00, ? url/s]
 
 
-
     Dl Size...: 0 MiB [00:00, ? MiB/s]
-
 
 
     Extraction completed...: 0 file [00:00, ? file/s]
 
 
-
     Generating splits...:   0%|          | 0/2 [00:00<?, ? splits/s]
-
 
 
     Generating train examples...:   0%|          | 0/12000 [00:00<?, ? examples/s]
 
 
-
     Shuffling ~/tensorflow_datasets/stanford_dogs/0.2.0.incompleteG6P1KZ/stanford_dogs-train.tfrecord*...:   0%|  …
 
 
-
     Generating test examples...:   0%|          | 0/8580 [00:00<?, ? examples/s]
-
 
 
     Shuffling ~/tensorflow_datasets/stanford_dogs/0.2.0.incompleteG6P1KZ/stanford_dogs-test.tfrecord*...:   0%|   …
@@ -173,7 +163,7 @@ for i, (image,label) in enumerate(ds_train.take(9)):
 ```
 
 
-![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/EfficientNet_16_0.png)
+![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/Image classification via fine-tuning with EfficientNet_16_0.png)
 
 
 ## 데이터 증강
@@ -212,7 +202,7 @@ for image, label in ds_train.take(1):
 ```
 
 
-![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/EfficientNet_20_0.png)
+![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/Image classification via fine-tuning with EfficientNet_20_0.png)
 
 
 ## 입력 데이터 준비
@@ -397,7 +387,7 @@ plot_hist(hist)
 ```
 
 
-![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/EfficientNet_28_0.png)
+![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/Image classification via fine-tuning with EfficientNet_28_0.png)
 
 
 모델 검증 정확도가 상승하지 않음
@@ -496,7 +486,7 @@ plot_hist(hist)
 
 
 
-![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/EfficientNet_33_1.png)
+![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/Image classification via fine-tuning with EfficientNet_33_1.png)
 
 
 
@@ -548,7 +538,7 @@ plot_hist(hist)
 
 
 
-![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/EfficientNet_36_1.png)
+![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/Image classification via fine-tuning with EfficientNet_36_1.png)
 
 
 ## EfficientNet 미세조정을 위한 팁
