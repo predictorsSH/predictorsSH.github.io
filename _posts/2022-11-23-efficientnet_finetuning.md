@@ -567,4 +567,4 @@ plot_hist(hist)
 
 ## Include_top 옵션비교
 
-![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/include_top.png)
+![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/include_top.PNG)
