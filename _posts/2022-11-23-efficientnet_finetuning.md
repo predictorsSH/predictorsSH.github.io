@@ -390,11 +390,11 @@ plot_hist(hist)
 ![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/Image classification via fine-tuning with EfficientNet_28_0.png)
 
 
-모델 검증 정확도가 상승하지 않음
+모델 정확도가 매우 느리게 상승하는 것을 볼 수 있고, 검증 정확도는 해당 모델이 과대적합 되고 있음을 보여준다.
 
-## 사전학습 가중치를 활용한 전이학습
+### 사전학습 가중치를 활용한 전이학습
 
-최상위 레이어를 제외한 다른 모든 레이어를 동결하여(업데이트X) 전이학습 진행.<br>
+최상위 레이어를 제외한 다른 모든 레이어를 동결하여(업데이트X) 전이학습 진행한다.<br>
 이런 경우 상대적으로 큰 학습률(1e-2)을 사용할수 있다.<br>
 
 
@@ -493,10 +493,13 @@ plot_hist(hist)
 
 ![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/Image classification via fine-tuning with EfficientNet_33_1.png)
 
+사전 학습된 가중치를 사용하기 전보다 훨씬 높은 정확도에서 학습을 시작할 수 있다.<br>
 
 
 
-이번에는 레이어의 동결을 해제하고, 더 작은 학습률로 모델을 학습한다.<br>
+### 사전학습 가중치를 활용한 전이학습 - fine tuning
+
+fine tuning은 레이어의 동결을 해제하고, 더 작은 학습률로 모델을 학습한다.<br>
 이번 예제에서는 모든 레이어의 동결을 해제하지만, 데이터 세트에 따라 일부만 동결해제하는 것이 바람질할 수 있다.
 
 ImageNet과 다른 데이터 세트를 사용할때, feature extractor도 조정해야 하기 때문에, 이 미세조정 단계가 더욱 중요하다.
