@@ -67,13 +67,13 @@ model = EfficientNetB0(include_top=False, weights='imagenet')
 이 옵션은 마지막 Dense 레이어를 제외한다.<br>
 마지막 레이어를 사용자 정의 레이어로 대체하면, EfficientNet을 특징 추출기로 활용할 수 있게된다.
 
-drop_connetc_rate는 학습시 확률적으로 layer를 스킵하는 옵션이다.<br>
+drop_connect_rate는 학습시 확률적으로 layer를 스킵하는 옵션이다.<br>
 해당 옵션은 finetuning에서 정규화를 돕는다. 로드된 가중치에는 영향을 미치지 않는다.
 ```python
 model = EfficientNetB0(weights='imagenet', drop_connect_rate=0.4)
 ```
 
-## 예제 : Stangord Dog분류를 위한 EfficientNetB0
+## 예제 : Staford Dog분류를 위한 EfficientNetB0
 
 
 ```python
