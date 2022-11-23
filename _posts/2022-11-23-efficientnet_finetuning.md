@@ -421,6 +421,11 @@ def build_model(num_classes):
   return model
 ```
 
+이 모델에서 include_top=False 옵션을 사용했다.<br>
+위에서 해당 옵션이 마지막 Dense 레이어를 제거한다고 설명하였는데, EfficientNet뒤에 Dense레이어만 추가로 이어 붙이는 것이 아니라
+GlobalAveragePooling층을 생성하여 붙이는 것을 볼 수 있다.<br>
+이는  include_top 옵션이 사실 마지막 Dense레이어만 아니라, GAP레이어, Dropout레이어, Dense레이어 이 세가지 레이어를 제거하는 것임을 알 수 있다.<br>
+게시글 제일 아래 참고할 이미지가 있다.
 
 ```python
 with strategy.scope():
@@ -557,3 +562,6 @@ plot_hist(hist)
 - EfficinetNet의 큰 변형이 성능의 향상을 보장하지 않는다. 특히, 적은 데이터 또는 클래스를 가진 데이터 세트일수록 그렇다. EfficientNet이 크게 변형될 경우, 하이퍼파라미터 조정이 더욱 힘들어진다.
 
 
+## Include_top 옵션비교
+
+![png](/assets/images/contents/keras-examples/Image classification via fine-tuning with EfficientNet/include_top.png)
