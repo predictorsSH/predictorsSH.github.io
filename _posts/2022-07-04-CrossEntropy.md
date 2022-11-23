@@ -4,7 +4,7 @@ title: 비용함수로써 크로스엔트로피
 subtitle: cross entropy
 author: san9hyun
 categories: AI
-banner : /assets/images/banners/post-bg.jpeg
+banner : /assets/images/banners/sea-gec.jpg
 tags: DataScience AI loss function deeplearning classification
 ---
 

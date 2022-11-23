@@ -4,7 +4,7 @@ title: kafka 아키텍처 설명
 subtitle: Grad-CAM Paper
 author: san9hyun
 categories: kafka 
-banner : /assets/images/banners/book.jpg
+banner : /assets/images/banners/horses.jpg
 tags: kafka study
 ---
 

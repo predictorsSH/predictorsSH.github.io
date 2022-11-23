@@ -4,7 +4,7 @@ title: Recurrent neural network
 subtitle: rnn, lstm
 author: san9hyun
 categories: AI
-banner : /assets/images/banners/post-bg.jpeg
+banner : /assets/images/banners/sea-gec.jpg
 tags: DataScience AI rnn neuralnet 
 ---
 
