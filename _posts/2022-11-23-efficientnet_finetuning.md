@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Image classification via fine-tuning with EfficientNetv
+title: Image classification via fine-tuning with EfficientNet
 subtitle: keras example - EfficientNet Fine-tuning
 author: san9hyun
 categories: keras-example
