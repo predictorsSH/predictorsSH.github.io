@@ -117,7 +117,7 @@ display(Image(filename=input_img_paths[0]))
 ```
 
 
-![jpeg](assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_7_0.jpg)
+![jpeg](/assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_7_0.jpg)
 
 
 ```python
@@ -128,7 +128,7 @@ display(img)
 ```
 
 
-![png](assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_8_0.png)
+![png](/assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_8_0.png)
 
 
 ## 배치 데이터를 로드하고 벡터화하는 클래스 준비
@@ -248,7 +248,7 @@ keras.utils.plot_model(model, show_shapes=True)
 
 
 
-![png](assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_14_0.png)
+![png](/assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_14_0.png)
 
 
 
@@ -363,15 +363,15 @@ display_mask(i)
 
 
 
-![jpeg](assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_21_1.jpg)
+![jpeg](/assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_21_1.jpg)
 
 
 
-![png](assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_21_2.png)
+![png](/assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_21_2.png)
 
 
 
-![png](assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_21_3.png)
+![png](/assets/images/contents/keras-examples/Image segmentation with a U-Net-like architecture/Image segmentation with a U-Net-like architecture_21_3.png)
 
 
 
