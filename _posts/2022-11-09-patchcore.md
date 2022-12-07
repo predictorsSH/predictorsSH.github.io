@@ -156,7 +156,7 @@ scores는 $P(x^{test} = P_{s,p}(\phi(x^{test})))$ 에 있는 test patch-features
 ![탐지](/assets/images/contents/paper/patchcore/score.PNG)
 
 score를 얻기위해서 우리는 scaling $w$ 를 사용한다. <br>
-만약 memory bank features가 anomaly candidate $m^{test}$, $m^*$와 가깝다면, 그들은  neighbouring samples과는 멀고, 그렇기 때문에 이미 정상적이지 않은 존재다.<br>
+만약 memory bank features가 anomaly candidate $m^{test}$ 그리고 $m^*$와 가깝다면, 그들은  neighbouring samples과는 멀고, 그렇기 때문에 이미 정상적이지 않은 존재다.<br>
 그래서 우리는 test patch feature $m^*$에 대한 $M$ 안에서의 b nearest patch-feature $N_b(m^*)$ 와 함께 score를 증가시킨다.
 
 ![탐지](/assets/images/contents/paper/patchcore/final_score.PNG)
