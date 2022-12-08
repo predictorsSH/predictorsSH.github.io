@@ -94,7 +94,11 @@ patch 표현을 공식화 하기 위해서 이전에 소개한 표현법을 확�
 $$ \phi_{i,j}(h,w) = \phi_j(x_i,h,w) $$
 
 
-$$ h \in \{ 1,....h^* \} $$ and  $$ w \in \{ 1,....w^* \} $$
+$$ h \in \{ 1,....h^* \} $$ 
+
+and
+
+$$ w \in \{ 1,....w^* \} $$
 
 
 이상적으로는, 각 patch-representation은 지역 공간 변화에 강한 의미가 있는 anomalous context를 설명하기 위해 충분히 큰 receptive field size로 동작해야한다.<br>
@@ -117,7 +121,7 @@ adaptive average pooling은 각각의 feature map에 대해 local smoothing을 �
 aggregation을 하고나면, d차원의 single representation이 생성되며 이 representation은 모든 쌍의 (h,w)에 대해 수행되므로 feature map의 해상도를 유지한다.<br>
 하나의 feature map $ \phi_{i,j} $ 에 대한 locally aware patch-feature 집합은 <br>
 
-$$ P_{s,p}(\phi_{i,j}(N_p^{(h,w)})) | h,w  mod  s = 0, h<h^*, w<w^*, h, w \in \mathbb{N} $$
+$$ P_{s,p}(\phi_{i,j}(N_p^{(h,w)})) | h,w  {mod s} = 0, h<h^*, w<w^*, h, w \in \mathbb{N} $$
 
 이렇게 표현한다.<br>
 s는 strinding 파라미터로, 해당 연구에서는 1로 설정하였다.<br>
