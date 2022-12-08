@@ -10,8 +10,6 @@ tags: DataScience paper patchcore
 
 ## Towards Total Recall in Industrial Anomaly Detection
 
-** 초안 작성 하며 공부중, 추후 가다듬을 예정
-
 ## [[paper]](https://arxiv.org/abs/2106.08265)
 
 ![PatchCore](/assets/images/contents/paper/patchcore/patchcore.PNG)
