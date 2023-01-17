@@ -242,4 +242,4 @@ img = dataset[0]["pixel_values"]
 plt.imshow(img.permute(1, 2, 0))
 ```
 
-![png](/assets/images/contents/huggingface/sample_transformed.png)
+![png](/assets/images/contents/huggingface/sample_transformed.PNG)
