@@ -4,7 +4,7 @@ title: hugging face tutorials 3
 subtitle: Preprocess
 author: san9hyun
 categories: sundries
-banner : /assets/images/banners/Squirrel.jpg
+banner : /assets/images/banners/squirrel.jpg
 tags: huggingface tutorial 번역
 ---
 ## Preprocess
