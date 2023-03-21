@@ -11,15 +11,15 @@ tags: ADP statistics python
 ## 🚪 이전 게시글
 
 ADP 실기 시험 공부를 위해 연재하고 있으며,
-첫 포스팅은 [기초 통계량-1](https://predictorssh.github.io/adp/2022/03/11/ADP-statistics-0.html)이며,
-해당 포스팅에대한 사전 정보들이 있다. (데이터 셋 등에 관한)<br>
+첫 포스팅은 [기초 통계량-1](https://predictorssh.github.io/adp/2022/03/11/ADP-statistics-0.html)이다.
+
 
 이전 게시글 [상관분석](https://predictorssh.github.io/adp/2022/03/31/ADP-statistics-2.html)에 이어서 작성한 글이다.
 
 ## 🔑 가설검정이란
 
 네이버 지식백과에 따르면, (통계적)가설검정이란 확률적 표본 분포의 성질을 이용해서 가설이 참인지 거짓인지 가리는 것이다.<br>
-이때 가설은 모집단의 특성에 관한 진술인 것이다. <br>
+이때 가설은 모집단의 특성에 관한 진술이다. <br>
 
 네이버 국어사전은 (통계적)가설검정을, 모집단의 특성이 어떠할 것이라는 주장(가설)을, 표본의 정보를 이용하여 참인지 거짓인지 판정하는 것이라 한다.
 
