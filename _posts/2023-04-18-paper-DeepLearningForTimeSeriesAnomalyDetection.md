@@ -1,39 +1,23 @@
 ---
 layout: post
-title: 시계열 데이터 이상탐지를 위한 딥러닝 서베이 논문 (작성중)
-subtitle: Deep Learning for Time Series Anomaly Detection
+title: 시계열 데이터에서 Anomaly
+subtitle: -
 author: san9hyun
-categories: paper
-banner : /assets/images/banners/book.jpg
-tags: DataScience paper Anomaly DeepLearning
+categories: sundries
+banner : /assets/images/banners/squirrel.jpg
+tags: DataScience paper Anomaly 
 ---
 
-## Deep Learning for Time Series Anomaly Detection: A Survey
+## Time Series Anomaly
+
+아래 논문에서 시계열 Anomaly 종류에 대해서 설명하는 부분만 정리
 
 ### [Paper](https://arxiv.org/pdf/2211.05244.pdf)
 
-ZAHRA ZAMANZADEH DARBAN∗Monash University, Australia <br>
-GEOFFREY I. WEBB, Monash University, Australia <br>
-SHIRUI PAN, Griffith University, Australia <br>
-CHARU C. AGGARWAL, IBM T. J. Watson Research Center, USA <br>
-MAHSA SALEHI, Monash University, Australia <br>
-
-이 연구는 시계열 이상탐지을 위한 SOTA 딥러닝 모델의 개요를 제공한다. 
-그리고 이상탐지 전략과 딥러닝 모델에 기반한 분류 체계와 각 범주에서 기본적인 이상탐지 모델의 장단점도 설명한다.
-뿐만 아니라 최근 다양한 응용 분야에서 시계열 데이터의 딥러닝 기반 이상탐지 예제를 소개한다.
-마지막으로 시계열 이상탐지 모델이 직면한 과제를 짧게 다룬다.
-
-## Introduction
-최근 몇년간 딥러닝이 크게 발전해오면서, 복잡한 다차원 시계열 데이터의 표현을 학습할 수 있게 되었다.
-공간적, 시간적 특성이 포함된 시계열 데이터를 학습할 수 있다는 것이다. 
-deep anomaly detection 에서 뉴럴네트워크가 스코어 또는 특징 표현을 학습하여 이상을 탐지한다.
-다양한 실제 응용 분야에서 전통적인 시계열 이상탐지 보다 훨씬 높은 성능을 보이는 딥 이상탐지 모델이 많이 개발되었다.<br>
-
-## Background
+### Univariate Time Series(UTS)
 시계열(time series)은 순차적인 시간을 인덱스로 가지는 데이터의 집합이다.
 시계열은 단일 변수(univariate)와 다중 변수(multivariate)로 나누어진다.
 
-### Univariate Time Series(UTS)
 UTS는 시간에 따라 하나의 변수가 변하는 시리즈 데이터이다. 
 t 시간동안의 데이터 X는 다음과 같이 표현된다.<br>
 $$ X = (𝑥_1, 𝑥_2, . . . , 𝑥_𝑡) $$ 
@@ -68,3 +52,9 @@ UTS와 MTS 이상치는 시간적(temporal), intermetirc(번역 모르겠음) �
 단일 시계열에서 시간적 이상치는 local과 global 이상치로 구분된다. 시간적 이상치는 다변량 시계열에도 역시 나타 날 수 있다.
 
 ![anomaly_type](/assets/images/contents/anomaly survey/anomaly_types_univariate.PNG)
+
+- Global : 다른 값들에 비해 극단적인 값을 가지는 시리즈 관측값들, 예를 들어 급격하게 감소 또는 증가하는 지점
+- Contextual : 인점한 주변 데이터들과 편차가 큰 경우
+- Seasonal : 계절성에서 벗어나는 경우. 
+- Trend : 해당 데이터의 평균을 영구적으로 이동시키는 경우, 주기와 계절성은 유지하면서도 추세의 기울기(변화)가 급격하게 변하는 경우
+- Shapelet: 전체 시퀀스와 다른 형태 또는 주기를 가지는 서브 시계열 
