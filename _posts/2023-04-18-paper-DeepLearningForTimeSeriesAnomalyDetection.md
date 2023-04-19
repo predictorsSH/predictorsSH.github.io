@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 시계열 데이터에서 Anomaly
-subtitle: -
+title: 시계열 데이터에서의 Aomaly 란
+subtitle: Time Series Anomaly
 author: san9hyun
 categories: sundries
 banner : /assets/images/banners/squirrel.jpg
