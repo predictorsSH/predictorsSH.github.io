@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Anomaly Detection in Time-Series Data (작성중)
+title: Anomaly Detection in Time-Series Data 
 subtitle: 시계열 이상탐지 자료 조사
 author: san9hyun
 categories: paper
