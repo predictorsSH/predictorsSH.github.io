@@ -66,11 +66,17 @@ tags: DataScience gradient optimizer
 ### Momentum
 
 SGD는 샘플데이터 하나에 대해서 목적함수의 기울기를 계산하고 파라미터를 업데이트 하기 때문에, 최적해로 빠르게 수렴하지 않는다.<br>
-그리고 local minima에 빠질 우려가 있다.
+그리고 local minima에 빠질 우려가 있다. (기울기가 0에 가까운 평탄한 지역에서 느리게 벗어남)
+
+위 그림에서 우리는 수직축으로는 더 작은 학습율을 원하고, 수평 축에 대해서는 더 빠르게 학습하길 원한다.<br>
 
 momentum은 최적해의 방향으로 SGD를 가속시켜준다.
 
 ![momentum](/assets/images/contents/paper/gradient descent optimizer/momentum.PNG)
 
-- $ v_t = \gamma v_{t−1}$ + η∇_{θ}J(θ)
+- $ v_t = \gamma v_{t−1}$ + $η∇_{θ}$J(θ)
 - $ θ = θ − v_{t} $
+
+momentum의 식을 보면, 기존 경사하강법 보다 $ \gamma v_{t−1}$ 만큼 추가적으로 더 이동 하는 것을 알 수 있다.<br>
+$ \gamma v_{t−1} $ 는 이전 step 에서의 기울기이므로 이전에 이동하던 방향으로 조금 더 이동 하는 것이라 볼 수 있다.  
+여기서 $ \gamma $는 1이하의 값을 가진다.(논문에서는 0.9)
