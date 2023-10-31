@@ -72,5 +72,5 @@ momentum은 최적해의 방향으로 SGD를 가속시켜준다.
 
 ![momentum](/assets/images/contents/paper/gradient descent optimizer/momentum.PNG)
 
-- $ v_t = \gammav_{t−1}$ + η∇_{θ}J(θ)
+- $ v_t = \gamma v_{t−1}$ + η∇_{θ}J(θ)
 - $ θ = θ − v_{t} $
