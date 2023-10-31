@@ -23,7 +23,7 @@ tags: DataScience gradient optimizer
 ### Batch gradient descent 
 모든 데이터를 사용해 비용함수에 대한 파라미터의 기울기를 계산한다.<br>
 
-- θ = θ − η · ∇θJ(θ)
+- θ = θ − η · $∇_{θ}$J(θ)
 
 #### 문제점
 
