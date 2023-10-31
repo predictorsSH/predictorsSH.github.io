@@ -8,45 +8,69 @@ banner : /assets/images/banners/book.jpg
 tags: DataScience gradient optimizer 
 ---
 
-# Introduction
+## 1.Introduction
 
-## 논문의 목적
+### 논문의 목적
 - 다양한 경사하강법 최적화 알고리즘들을 직관적으로 이해
 
-## 논문 내용
+### 논문 내용
 - 경사하강법 최적화를 다루는 다양한 알고리즘 소개
 - 각 알고리즘별 문제점/다른 알고리즘 등장 배경 소개
 
-# Gradient descent variants
+## 2.Gradient descent variants
+목적함수의 경사(기울기)를 계산하기 위해 사용하는 데이터의 양에 따라 3가지 종류의 경사하강법이 있음
 
-## Batch gradient descent 
+### Batch gradient descent 
 모든 데이터를 사용해 비용함수에 대한 파라미터의 기울기를 계산한다.<br>
 
 - θ = θ − η · ∇θJ(θ)
 
-### 문제점/한계
+#### 문제점
 
 - 메모리에 모든 데이터를 올려야함. 
 - 새로운 데이터를 실시간으로 학습하는 것이 불가능.(온라인 학습 불가능)
 - 한번의 업데이트가 매우 느리다.
-- 데이터셋에 유사한 데이터가 있을경우 중복 계산 수행. (별로 문제처럼 안보임) 
+- 데이터셋에 유사한 데이터가 있을경우 중복 계산 수행.(크리티컬한 문제로 보이지 않는다) 
 
-## Stochastic gradient descent
+### Stochastic gradient descent
 
 각 샘플 $ x^{(i)} $, $ y^{(i)} $ 을 사용해 파라미터 업데이트 수행. <br>
 매 에포크마다 훈련 데이터를 섞음. 
 
-- θ = θ − η · ∇θJ(θ; $ x^{(i)} $ ; $ y^{(i)}$ }
+- θ = θ − η · $∇_{θ}$J(θ; $ x^{(i)} $ ; $ y^{(i)}$)
 
-### 장점
+#### 장점
 
 - Batch gradient descent의 중복 계산 문제 해결)
 - 일반적으로 Batch gradient보다 빠름
 - 온라인 학습 가능
 
-### 문제점/한계
+#### 문제점/한계
 
 - 목적함수 수렴이 오래 걸릴 수 있음(목적 함수의 변동이 심함, 아래 그림 참고)
 - 벡터 연산의 장점을 활용 못함
 
 ![SGD fluctuation](/assets/images/contents/paper/gradient descent optimizer/SGD.PNG)
+
+## 3.Challenges
+
+위 경사하강법에서 해결되어야할 몇 가지 도전과제가 있다. 
+
+- 적절한 학습률 선택이 어렵다.
+  - learning rate schedule는 사전에 정의된 알고리즘으로, dataset 특성에 스스로 적응하는 알고리즘이 아니다.
+  - learning rate schedule은 모든 파라미터에 같은 학습률을 적용 시킨다.
+- local minima와  saddle point에 빠질 위험이 있다.
+
+## 4.Gradient descent optimization algorithms
+
+### Momentum
+
+SGD는 샘플데이터 하나에 대해서 목적함수의 기울기를 계산하고 파라미터를 업데이트 하기 때문에, 최적해로 빠르게 수렴하지 않는다.<br>
+그리고 local minima에 빠질 우려가 있다.
+
+momentum은 최적해의 방향으로 SGD를 가속시켜준다.
+
+![momentum](/assets/images/contents/paper/gradient descent optimizer/momentum.PNG)
+
+$ v_t = \gammav_{t−1}$ + η∇_{θ}J(θ)
+$ θ = θ − v_{t} $
