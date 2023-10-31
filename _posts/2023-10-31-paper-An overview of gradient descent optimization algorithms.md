@@ -34,4 +34,4 @@ tags: DataScience gradient optimizer
 
 각 샘플 $ x^{(i)} $, $ y^{(i)} $ 을 사용해 파라미터 업데이트 수행
 
-θ = θ − η · ∇θJ(θ; $ x^{(i) $ ; $ y^{(i)}$ }
+θ = θ − η · ∇θJ(θ; $ x^{(i)} $ ; $ y^{(i)}$ }
