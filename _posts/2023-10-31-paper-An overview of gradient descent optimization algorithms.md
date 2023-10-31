@@ -31,4 +31,7 @@ tags: DataScience gradient optimizer
 - 한번의 업데이트가 매우 느리다.
 
 ## Stochastic gradient descent
-$ x^{(i)} y^{(i)} $  
+
+각 샘플 $ x^{(i)} $, $ y^{(i)} $ 을 사용해 파라미터 업데이트 수행
+
+θ = θ − η · ∇θJ(θ; $ x^{(i) $ ; $ y^{(i)}$ }
