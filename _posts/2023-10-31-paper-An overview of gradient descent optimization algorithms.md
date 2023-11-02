@@ -39,24 +39,25 @@ Batch gradient descent는 모든 학습 데이터를 사용해 비용함수의 �
 
 - θ = θ − η · $∇_{θ}$J(θ; $ x^{(i)} $ ; $ y^{(i)}$)
 
+#### 특징
+
+- 목적함수 수렴이 오래 걸릴 수 있음(목적 함수의 변동이 심함, 아래 그림 참고)
+- 벡터 연산의 장점을 활용 못함(각 샘플 데이터를 순회하면서 gradient를 계산해야함)
+
+![SGD fluctuation](/assets/images/contents/paper/gradient descent optimizer/SGD.PNG)
+
 ### 2.3 Mini-batch gradient descent
 
 미니배치 경사하강법은 n개 학습 데이터를 가진 미니배치에 대해서 gradient를 계산하고 업데이틀 수행한다.
 
 - θ = θ − η · $∇_{θ}$J(θ; $ x^{(i:i+n)} $ ; $ y^{(i:i+n)}$)
 
-#### 장점
+#### 특징
 
 - 업데이트의 분산을 줄여서 더 안정적인 수렴을 도와즘.
 - 적절한 batch 크기 적용시 속도가 가장 빠름.(행렬 연산 사용해서 여러 샘플에 대해 한번에 계산)
 - 미니배치를 사용할때도 SGD 라는 용어가 일반적으로 사용됨
 
-#### 문제점/한계
-
-- 목적함수 수렴이 오래 걸릴 수 있음(목적 함수의 변동이 심함, 아래 그림 참고)
-- 벡터 연산의 장점을 활용 못함(각 샘플 데이터를 순회하면서 gradient를 계산해야함)
-
-![SGD fluctuation](/assets/images/contents/paper/gradient descent optimizer/SGD.PNG)
 
 ## 3. Challenges
 
