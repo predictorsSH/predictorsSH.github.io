@@ -41,7 +41,9 @@ Batch gradient descent는 모든 학습 데이터를 사용해 비용함수의 �
 
 #### 특징
 
-- 목적함수 수렴이 오래 걸릴 수 있음(목적 함수의 변동이 심함, 아래 그림 참고)
+- 목적함수의 변동이 큼
+- 변동이 커서 local minimum에서 빠져나올 수 있음(장점)
+- 변동이 커서 목적함수 수렴이 오래 걸릴 수 있음(단점, 아래 그림 참고)
 - 벡터 연산의 장점을 활용 못함(각 샘플 데이터를 순회하면서 gradient를 계산해야함)
 
 ![SGD fluctuation](/assets/images/contents/paper/gradient descent optimizer/SGD.PNG)
