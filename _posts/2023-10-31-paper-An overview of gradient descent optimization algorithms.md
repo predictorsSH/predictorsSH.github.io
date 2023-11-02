@@ -8,7 +8,7 @@ banner : /assets/images/banners/book.jpg
 tags: DataScience gradient optimizer 
 ---
 
-## 1.Introduction
+## 1. Introduction
 
 #### 논문의 목적
 - 다양한 경사하강법 최적화 알고리즘들을 **직관적**으로 이해
@@ -17,10 +17,10 @@ tags: DataScience gradient optimizer
 - 경사하강법 최적화를 다루는 다양한 알고리즘 소개
 - 각 알고리즘별 특징 설명
 
-## 2.Gradient descent variants
+## 2. Gradient descent variants
 목적함수의 경사도를 계산할 때 사용하는 데이터의 양에 따라 3가지 종류의 경사하강법이 있다.
 
-### Batch gradient descent 
+### 2.1 Batch gradient descent 
 Batch gradient descent는 모든 학습 데이터를 사용해 비용함수의 경사를 계산한다.
 
 - θ = θ − η · $∇_{θ}$J(θ)
@@ -32,18 +32,24 @@ Batch gradient descent는 모든 학습 데이터를 사용해 비용함수의 �
 - 한번의 업데이트가 매우 느림
 - 데이터셋에 유사한 데이터가 있을경우 중복 계산 수행(크리티컬한 문제로 보이지 않는다) 
 
-### Stochastic gradient descent
+### 2.2 Stochastic gradient descent
 
 각 샘플 $ x^{(i)} $, $ y^{(i)} $ 을 사용해 파라미터 업데이트 수행한다. 
 실제 구현 시 매 에포크마다 훈련 데이터를 섞는다.
 
 - θ = θ − η · $∇_{θ}$J(θ; $ x^{(i)} $ ; $ y^{(i)}$)
 
+### 2.3 Mini-batch gradient descent
+
+미니배치 경사하강법은 n개 학습 데이터를 가진 미니배치에 대해서 gradient를 계산하고 업데이틀 수행한다.
+
+- θ = θ − η · $∇_{θ}$J(θ; $ x^{(i:i+n)} $ ; $ y^{(i:i+n)}$)
+
 #### 장점
 
-- Batch gradient descent의 중복 계산 문제 해결
-- 일반적으로 Batch gradient보다 빠름
-- 온라인 학습 가능
+- 업데이트의 분산을 줄여서 더 안정적인 수렴을 도와즘.
+- 적절한 batch 크기 적용시 속도가 가장 빠름.(행렬 연산 사용해서 여러 샘플에 대해 한번에 계산)
+- 미니배치를 사용할때도 SGD 라는 용어가 일반적으로 사용됨
 
 #### 문제점/한계
 
@@ -52,7 +58,7 @@ Batch gradient descent는 모든 학습 데이터를 사용해 비용함수의 �
 
 ![SGD fluctuation](/assets/images/contents/paper/gradient descent optimizer/SGD.PNG)
 
-## 3.Challenges
+## 3. Challenges
 
 위 경사 하강법에서 해결이 필요한 몇가지 도전과제가 있다.
 
@@ -72,9 +78,9 @@ saddle point(안정점은) 도함수가 0이지만 극값을 가지지 않는 �
 ![saddlepoint](/assets/images/contents/paper/gradient descent optimizer/saddlepoint.PNG)
 
 
-## 4.Gradient descent optimization algorithms
+## 4. Gradient descent optimization algorithms
 
-### Momentum
+### 4.1 Momentum
 
 SGD는 샘플데이터 하나에 대해서 목적함수의 기울기를 계산하고 파라미터를 업데이트 하기 때문에, 최적해로 빠르게 수렴하지 못한다.
 그리고 local minima에 빠질 우려가 있다. (기울기가 0에 가까운 평탄한 지역에서 느리게 벗어남)
@@ -104,7 +110,7 @@ $ \gamma v_{t−1} $ 는 이전 step 에서의 기울기 누적이므로 이전�
 
 ##### 그림의 수식은 의미만 알 수 있게 간단하게 작성하였습니다.
 
-### Nesterov accelerated gradient
+### 4.2 Nesterov accelerated gradient
 
 NAG는 gradient 계산 순서를 바꿔서 Momentum의 문제를 해결하려고했다.
 
@@ -117,7 +123,7 @@ Gradient를 구할 때 momentum term 크기 만큼 먼저 이동한 후 구하�
 
 ![momentum_NAG](/assets/images/contents/paper/gradient descent optimizer/Momentum_NAG.PNG)
 
-### Adagrad
+### 4.3 Adagrad
 
 이전에는 모든 파라미터에 대해 동일한 학습률을 사용해 학습했다.
 그런데 어떤 파라미터는 최적값에 거의 도달했고, 다른 값은 최적해로부터 멀리 떨어져있을 수 있다.
@@ -161,7 +167,7 @@ $ G_{t} $는 대각행렬로, 각 대각(i,i)원소에 $ θ_{i} $의 gradient �
 다시 말해, Momentum은 방향 정보까지 누적하고 Adagrad는 변화량만 누적하여 다음 스텝에 활용한다." 
 ```
 
-### RMSprop/Adadelta
+### 4.4 RMSprop/Adadelta
 
 Adagrad는 학습 할수록 학습률이 작아지는 현상이 발생한다. <br>
 
@@ -192,7 +198,7 @@ Adagrad는 학습 할수록 학습률이 작아지는 현상이 발생한다. <b
 
 - $θ_{t+1} = θ_{t} - { η \over \sqrt{E\[g^2]\_{t} + \epsilon} } · g_{t} $
 
-### Adadelta
+### 4.5 Adadelta
 
 Adadelta는 RMSprop와 같이 지수가중평균을 사용해 gradient를 누적한다.<br>
 RMSprop와의 차이점은 **가중치 업데이터 단위를 맞추는 작업이 더해진다는 것이다.**
@@ -205,7 +211,7 @@ RMSprop와의 차이점은 **가중치 업데이터 단위를 맞추는 작업�
 다음에 다시 읽어보겠습니다 ㅎ..
 ```
 
-### Adam
+### 4.6 Adam
 
 Adam은 이전에 보았던 좋은 알고리즘 momentum과 adaptive 모두 사용하는 옵티마이저이다.
 
@@ -229,7 +235,7 @@ $ v_{t} $ 로 예를 들면, $ v_{0} $ 은 0으로 초기화 되고, $ v_{1} $ �
 이렇게 되면 $ v_{t} $ 의 초기 값들이 매우 작아지게 되는데 이를 보정하기 위해 $ v\_{t} $ 를 $ 1-β\_{2}^t  $ 로 나눠준다.
 t가 커질수록 $ 1-β\_{2}^t $ 값은 1에 가까워지기 때문에 t가 충분히 커지면 편향 보정의 효과는 거의 사라진다.
 
-### AdamX
+### 4.7 AdamX
 
 Adam 에서 $ v_{t} $ 를 계산할때 아래 식 처럼 gradient의 L2 norm을 이용한다.<br>
 
@@ -253,7 +259,7 @@ L_∞ norm은 벡터 성문들의 절대값 중에서 가장 큰 값으로 계�
 
 - $θ_{t+1} = θ_{t} - { η \over u_{t} } · \hat{m}_{t} $
 
-### Nadam
+### 4.8 Nadam
 
 momentum 대신 NAG와 adaptive를 결합하면 성능이 더 좋지 않을까?
 
@@ -286,7 +292,7 @@ Adam에 Nesterov momentum을 적용시키기 위해, 이전 momentum vector를 �
 - $ θ_{t+1} =  θ_{t} - {η \over { \sqrt{\hat{v}\_{t} } +\epsilon }} (β_{1} \hat{m}_{t} +  { (1- β\_{1})g\_{t} \over (1-β^t\_{1})})   $
   
 
-### Visualization of algorithms
+### 4.9 Visualization of algorithms
 
 아래 그림에서 gradient 최적화 알고리즘의 동작을 직관적으로 볼 수 있다.
 
@@ -303,23 +309,23 @@ Adam에 Nesterov momentum을 적용시키기 위해, 이전 momentum vector를 �
 - Adagrad, RMSprop, Adadelta는 빠르게 최적해로 향한다.
 
 
-### Which optimizer to use?
+### 4.10 Which optimizer to use?
 
 - 입력데이터가 희소하면 Adaptive 알고리즘을 사용해라. 학습률을 조절할 필요가 없음
 - Adam, RMSprop, Adadleta는 유사하지만 알고리즘이지만 전반적으로 Adam이 최선의 선택
 - SGD는 minimum을 찾지만 최적화하는데 매우 오래 걸리고 learning rate schedule에 크게 의존적
 
-## 5.Parallelizing and distributing SGD 
+## 5. Parallelizing and distributing SGD 
 
 SGD를 더 빠르게 수행하기 위해서 병렬화,분산이 필요하다.
 
 (생략) 
 
-## 6.Additional strategies for optimizing SGD
+## 6. Additional strategies for optimizing SGD
 
 SGD 성능을 개선하기 위한 추가적인 전략들을 소개한다.
 
-### Shuffling and Curriculum Learning
+### 6.1 Shuffling and Curriculum Learning
 학습 시 데이터를 특정 순서대로 투입하면, 편향을 일으킬 수 있다. 
 따라서 매 에포크 이후 훈련 데이터를 섞는것이 좋다.
 
@@ -330,7 +336,7 @@ Zaremba와 Sutskever는 LSTM을 사용하여 간단한 프로그램을 평가하
 난이도가 증가하는 순서대로 예제를 정렬하는 단순한 방법보다 결합된 또는 혼합된 전략이 더 좋다는 것을 보여 
 주었다.
 
-### Batch normalization
+### 6.2 Batch normalization
 
 일반적으로 학습 전 파라미터의 초기값을 평균이 0이고 분산이 1인 값으로 정규화하는데 학습이 진행되면서 
 파라미터를 서로 다른 정도로 업데이트 하면서 이 정규화를 잃게 된다. 
@@ -344,17 +350,17 @@ Zaremba와 Sutskever는 LSTM을 사용하여 간단한 프로그램을 평가하
 - 학습 속도 빠르게 함 (상대적으로 큰 학습률 사용 가능해짐)
 - 배치 정규화가 왜 학습에 도움되는지는 의견이 좀 갈리지만/ 학습에 도움이 되는건 명백하다고 함
 ```
-### Early Stopping
+### 6.3 Early Stopping
 
 validation 성능이 나아지지 않으면 학습 중지 
 
-### Gradient noise
+### 6.4 Gradient noise
 
 각 기울기 업데이트에 가우시안 분포를 따르는 노이즈 추가
 - 깊고 복잡한 네트워크 훈련에 도움이 됨
 - 새로운 지역 최소값 탐색 가능성이 높아짐(더 좋은 최솟값을 찾을 수 있게 도와줌)
 
-## 7.Conclusion
+## 7. Conclusion
 
 Adam을 쓰자! (내 결론)
 
