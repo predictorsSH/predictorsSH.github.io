@@ -7,7 +7,7 @@ categories: paper
 banner : /assets/images/banners/book.jpg
 tags: DataScience ROC AUC
 ---
-# An introduction to ROC analysis
+## An introduction to ROC analysis
 
 ```text
 💡 ROC analysis 논문 리뷰
@@ -188,6 +188,105 @@ $$
 
 ```
 
+아래는 맨 휘트니 U 검정(윌콕슨 검정과 같음)과 AUC 스코어의 관계를 정리한 자료이다. <br>
+이 자료를 참고하여 맨 휘트니 검정과 AUC 스코어를 비교하는 코드를 작성했다.<br>
+
+참고 자료 https://johaupt.github.io/blog/Area_under_ROC_curve.html
+
+
+```python
+from scipy.stats import wilcoxon
+from scipy.stats import mannwhitneyu
+
+import numpy as np
+```
+
+#### 데이터 생성
+
+```python
+
+X = np.random.uniform(-1,1, size=[10000,2])
+y = np.random.binomial(n=1, p=1/(1+ np.exp(-(1+np.dot(X,[3,-1])+0.3*np.dot(X**2, [3,-1])))))
+```
+
+```python
+# X shape 확인
+X.shape
+```
+
+    (10000, 2)
+
+```python
+# y shape 확인
+y.shape
+```
+
+    (10000,)
+
+#### 로지스틱회귀 모델 생성
+
+```python
+from sklearn.linear_model import LogisticRegression
+```
+
+
+```python
+logit = LogisticRegression()
+logit.fit(X,y)
+
+# True coef : [3, -1]
+print(logit.coef_)
+```
+
+    [[ 2.76188455 -0.95043761]]
+
+```python
+# score 저장
+logit_score = logit.predict_proba(X)[:,1]
+logit_score[:10]
+```
+
+    array([0.23671783, 0.44941468, 0.91848767, 0.47544825, 0.93973081,
+           0.48526089, 0.88016776, 0.32474005, 0.83718784, 0.14155767])
+
+#### AUC 계산
+
+```python
+from sklearn.metrics import roc_auc_score
+```
+
+
+```python
+roc_auc_score(y, logit_score)
+```
+    0.8489586969860821
+
+#### 맨 휘트니 검정
+
+```python
+# socre를 A(class=1)와 B(class=0) 그룹을 구분 
+A = [logit_score[i] for i in range(len(y)) if y[i] == 1]
+B = [logit_score[i] for i in range(len(y)) if y[i] == 0]
+```
+
+```python
+# 맨휘트니 검정결과, p-value 0.0 으로 귀무가설 기각 A와 B는 서로 다른 분포
+statistic, p_value = mannwhitneyu(A, B)
+print(statistic)
+print(p_value)
+```
+
+    18822158.0
+    0.0
+#### statistic 값과 AUC 관계
+
+```python
+# Formula for the relation between AUC and the U statistic
+score = statistic/(len(A)*len(B))
+# 값이 AUC와 일치함
+score 
+```
+    0.8489586969860821
 
 ## 8. Averaging ROC curves
 
