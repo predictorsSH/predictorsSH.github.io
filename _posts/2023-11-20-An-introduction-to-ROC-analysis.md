@@ -90,9 +90,10 @@ ROC 곡선은 클래스 분포 변화에 영향을 받지 않는다. 양상 음�
 
 클래스 분포 변화에 영향을 받지 않는 이유는, TP Rate 계산 할때는 Positive Class만 사용하고, FP Rate 계산 할떄는 Negative Class만 사용하기 때문이다.
 
-$$
-tp\\_rate = {TP \over P}, fp\\_rate = {FP \over N}
-$$
+$$ tp\\_rate = {TP \over P}$$
+
+$$fp\\_rate = {FP \over N}$$
+
 
 두 클래스를 혼합해서 사용하는 정확도, 정밀도, f-score는 분포 변화에 민감해진다. 위 그림에서 precision-recall 그래프(오른쪽 그림)는 데이터 분포가 달라지면 그 모양이 많이 변한다. 반면 ROC 그래프는 변화가 없다.
 
