@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Image segmentation with a U-Net-like architecture
+title: (keras) Image segmentation with a U-Net-like architecture
 subtitle: keras example - Segmentation 
 author: san9hyun
-categories: keras-example
+categories: code-example
 banner : /assets/images/banners/solar-system.jpg
 tags: U-Net Segmentation 
 ---

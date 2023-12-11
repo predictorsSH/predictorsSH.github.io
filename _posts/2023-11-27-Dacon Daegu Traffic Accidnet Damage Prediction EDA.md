@@ -3,7 +3,7 @@ layout: post
 title: 대구 교통사고 피해예측 EDA 코드 
 subtitle: EDA
 author: san9hyun
-categories: sundries
+categories: EDA
 banner : /assets/images/banners/Squirrel.jpg
 tags: EDA tutorial 
 ---

@@ -3,7 +3,7 @@ layout: post
 title: 수많은 데이터에 대한 경사 하강을 어떻게 빠르게 할수 있을까?
 subtitle: 로지스틱 회귀 계산의 벡터화 
 author: san9hyun
-categories: AI
+categories: AI-Theory
 banner : /assets/images/banners/sea-gec.jpg
 tags: DataScience neuralnet
 ---

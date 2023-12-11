@@ -3,8 +3,8 @@ layout: post
 title: MNIST데이터셋 Grad-CAM 적용
 subtitle: Grad-CAM 실습
 author: san9hyun
-categories: paper
-banner : /assets/images/banners/book.jpg
+categories: Practice
+banner : /assets/images/banners/sea-gec.jpg
 tags: DataScience XAI Grad-CAM 
 ---
 

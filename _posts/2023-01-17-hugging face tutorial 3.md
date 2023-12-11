@@ -3,7 +3,7 @@ layout: post
 title: hugging face tutorials 3
 subtitle: Preprocess
 author: san9hyun
-categories: sundries
+categories: code-example
 banner : /assets/images/banners/squirrel.jpg
 tags: huggingface tutorial 번역
 ---

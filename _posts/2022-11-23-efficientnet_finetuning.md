@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Image classification via fine-tuning with EfficientNet
+title: (keras) Image classification via fine-tuning with EfficientNet
 subtitle: keras example - EfficientNet Fine-tuning
 author: san9hyun
-categories: keras-example
+categories: code-example
 banner : /assets/images/banners/solar-system.jpg
 tags: EfficientNet Fine-tuning transfer-learning
 ---

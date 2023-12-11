@@ -3,7 +3,7 @@ layout: post
 title: Transformer 구현 코드로 이해하기 - Positional Encodig
 subtitle: Positional Encoding
 author: san9hyun
-categories: AI
+categories: Practice
 banner : /assets/images/banners/sea-gec.jpg
 tags: DataScience transformer paper NLP
 ---

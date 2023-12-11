@@ -1,9 +1,9 @@
 ---
 layout: post
-title: image classification from scratch
+title: (keras) image classification from scratch
 subtitle: keras example - Classification of images of dogs and cats
 author: san9hyun
-categories: keras-example
+categories: code-example
 banner : /assets/images/banners/solar-system.jpg
 tags: Xception ResidualNetwork
 ---

@@ -3,7 +3,7 @@ layout: post
 title: 가중치 초기화를 상수로 하면 안되는 이유
 subtitle: 가중치 초기화 상수
 author: san9hyun
-categories: AI
+categories: AI-Theory
 banner : /assets/images/banners/sea-gec.jpg
 tags: DataScience neuralnet initialize 
 ---

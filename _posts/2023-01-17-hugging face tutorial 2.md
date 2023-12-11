@@ -3,7 +3,7 @@ layout: post
 title: hugging face tutorials 2
 subtitle: Load pretrained instances with an AutoClass
 author: san9hyun
-categories: sundries
+categories: code-example
 banner : /assets/images/banners/Squirrel.jpg
 tags: huggingface tutorial 번역
 ---
