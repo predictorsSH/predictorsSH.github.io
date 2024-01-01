@@ -18,8 +18,7 @@ banner : /assets/images/banners/elephant.jpg
 
 ## certificate
 
-- 진행중 : 정보처리기사 실기
-- 진행중 : ADP 실기
+- 2023 : 정보처리기사 실기
 - 2021.12 : 빅데이터분석기사
 - 2020.08 : OPIc IM2
 - 2020.07 : adsp  
