@@ -4,7 +4,7 @@ title: hugging face tutorials 1
 subtitle: pipelines for inference
 author: san9hyun
 categories: code-example
-banner : /assets/images/banners/Squirrel.jpg
+banner : /assets/images/banners/squirrel.jpg
 tags: huggingface tutorial 번역
 ---
 
