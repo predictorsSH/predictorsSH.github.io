@@ -1,11 +1,12 @@
 ---
 layout: post
 title: About 
-subtitle: about who I am
+subtitle: 자기소개
 banner : /assets/images/banners/elephant.jpg
 ---
 
-
+### 데이터 사이언티스트 **김상현**입니다.
+의사결정을 돕기 위해 **데이터를 분석**하고, 문제 해결을 위한 **인공지능**을 연구합니다.
 
 ## History
 
