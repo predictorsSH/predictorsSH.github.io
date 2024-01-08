@@ -4,7 +4,8 @@ title: Goodbye 2023, Welcome 2024
 subtitle: 2023년 회고
 author: san9hyun
 categories:  daily
-banner : /assets/images/banners/sea-gec.jpg
+banner: /assets/images/banners/sea-gec.jpg
+excerpt_image: /assets/images/contents/daily/2023/happy.png
 tags: daily
 ---
 
