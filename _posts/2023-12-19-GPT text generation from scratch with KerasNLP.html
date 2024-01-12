@@ -14590,10 +14590,44 @@ all of MD as it is not optimized for dense, information rich UIs.
     </div>
     <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
     </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-      <p style="color: white;">우측 상단에 Light 모드를 선택해주세요.</p>
-      <h1>GPT text generation from scratch with KerasNLP</h1>
-      <p><a href="https://keras.io/examples/generative/text_generation_gpt/">keras 공식 문서 code example을 공부한 것입니다.</a></p>
-      <p>code example 목표</p>
+      <p>❗ 우측 상단 light mode를 이용해 주세요.</p>
+
+    </div>
+    </div>
+  </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+  <div class="jp-Cell-inputWrapper">
+    <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+    </div>
+    <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+    </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+      <h1 id="GPT-text-generation-from-scratch-with-KerasNLP">GPT text generation from scratch with KerasNLP<a class="anchor-link" href="#GPT-text-generation-from-scratch-with-KerasNLP">&#182;</a></h1>
+    </div>
+    </div>
+  </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+  <div class="jp-Cell-inputWrapper">
+    <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+    </div>
+    <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+    </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+      <blockquote><p>☝ <a href="https://keras.io/examples/generative/text_generation_gpt/">keras API docs code example을 공부한 내용입니다.</a></p>
+      </blockquote>
+
+    </div>
+    </div>
+  </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+  <div class="jp-Cell-inputWrapper">
+    <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+    </div>
+    <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+    </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+      <blockquote><p>⚡ code example 목표</p>
+      </blockquote>
       <ul>
         <li>scaled down GPT 모델 생성</li>
         <li>simplebooks-92 코퍼스(소설) 훈련</li>
@@ -14619,7 +14653,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
@@ -14641,7 +14675,7 @@ all of MD as it is not optimized for dense, information rich UIs.
       <div class="jp-OutputArea-child">
 
 
-        <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+        <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
 
 
 
@@ -14661,7 +14695,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">q</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">keras</span><span class="o">-</span><span class="n">nlp</span>
@@ -14703,7 +14737,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -14757,7 +14791,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="c1"># Data</span>
@@ -14800,7 +14834,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="c1"># SimpleBooks dataset</span>
@@ -14847,7 +14881,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="c1"># TextLineDataset : 텍스트 파일에서 한줄씩 데이터를 읽어드림</span>
@@ -14879,8 +14913,11 @@ all of MD as it is not optimized for dense, information rich UIs.
     </div>
     <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
     </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-      <p>! TextLineDataset</p>
-      <p>대용량 텍스트 파일을 전부 메모리에 올리지 않고, 한 줄씩 읽어와서 처리 할 수 있다.</p>
+      <blockquote><p>✅ TextLineDataset <br></p>
+      </blockquote>
+      <ul>
+        <li>대용량 텍스트 파일을 전부 메모리에 올리지 않고, 한 줄씩 읽어와서 처리 할 수 있다.</li>
+      </ul>
 
     </div>
     </div>
@@ -14901,7 +14938,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="c1"># [PAD] : 패딩 토큰</span>
@@ -14929,7 +14966,8 @@ all of MD as it is not optimized for dense, information rich UIs.
     </div>
     <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
     </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-      <p>! keras_nlp.tokenizer.compute_word_piece_vocabulary</p>
+      <blockquote><p>✅ keras_nlp.tokenizer.compute_word_piece_vocabulary</p>
+      </blockquote>
       <ul>
         <li>word piece 훈련을 쉽게 할 수 있다.</li>
         <li>pretokenize를 위해 입력은 tf.data.Dataset 또는 파일 이름 리스트여야 한다.</li>
@@ -14973,7 +15011,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="c1"># 토크나이저 객체 생성</span>
@@ -15006,7 +15044,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="c1"># 시퀀스 시작에 "[BOS]" 토큰 추가</span>
@@ -15054,9 +15092,10 @@ all of MD as it is not optimized for dense, information rich UIs.
     </div>
     <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
     </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-      <p>! keras_nlp.layers.StartEndPacker</p>
-      <p>시퀀스에 시작과 끝 토큰을 추가하고, 고정된 길이로 패딩하는 레이어</p>
+      <blockquote><p>✅ keras_nlp.layers.StartEndPacker</p>
+      </blockquote>
       <ul>
+        <li>시퀀스에 시작과 끝 토큰을 추가하고, 고정된 길이로 패딩하는 레이어</li>
         <li>토큰화 이후 호출됨</li>
         <li>입력 길이를 맞추고 시작과 끝 토큰 추가</li>
       </ul>
@@ -15069,7 +15108,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
@@ -15092,7 +15131,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="c1"># 데이터셋 전처리</span>
@@ -15127,7 +15166,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[37]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="n">inputs</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">SEQ_LEN</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"int32"</span><span class="p">)</span>
@@ -15170,11 +15209,26 @@ all of MD as it is not optimized for dense, information rich UIs.
     </div>
     <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
     </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-      <p>! keras_nlp.layers.TokenAndPositionEmbeddin</p>
-      <p>토크나이징 + 포지셔닝 임베딩 레이어</p>
-      <p>! keras_nlp.layers.TransformerDecoder</p>
-      <p>트랜스포머 디코더</p>
+      <blockquote><p>✅ keras_nlp.layers.TokenAndPositionEmbedding<br></p>
+      </blockquote>
       <ul>
+        <li>토크나이징 + 포지셔닝 임베딩 레이어</li>
+      </ul>
+
+    </div>
+    </div>
+  </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+  <div class="jp-Cell-inputWrapper">
+    <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+    </div>
+    <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+    </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+      <blockquote><p>✅ keras_nlp.layers.TransformerDecoder<br></p>
+      </blockquote>
+      <ul>
+        <li>트랜스포머 디코더</li>
         <li>casual masking (현재 위치 이후 토큰 마스킹)이 기본적으로 적용 됨</li>
         <li>cross-attention 은 기본적으로 사용한함 (optional)</li>
       </ul>
@@ -15187,7 +15241,7 @@ all of MD as it is not optimized for dense, information rich UIs.
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[38]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
@@ -15259,7 +15313,7 @@ _________________________________________________________________
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[39]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_ds</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="n">val_ds</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">EPOCHS</span><span class="p">)</span>
@@ -15301,7 +15355,7 @@ Epoch 5/5
       <div class="jp-OutputArea-child">
 
 
-        <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[39]:</div>
+        <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
 
 
 
@@ -15332,7 +15386,7 @@ Epoch 5/5
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[64]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="c1"># 모델 입력과 동일한 형태의 프롬프트 생성</span>
@@ -15360,7 +15414,7 @@ Epoch 5/5
       <div class="jp-OutputArea-child">
 
 
-        <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[64]:</div>
+        <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
 
 
 
@@ -15391,7 +15445,7 @@ array([[  2,  97, 250, 124, 556,   0,   0,   0,   0,   0,   0,   0,   0,
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[65]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
@@ -15425,7 +15479,7 @@ array([[  2,  97, 250, 124, 556,   0,   0,   0,   0,   0,   0,   0,   0,
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[66]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">keras_nlp</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">GreedySampler</span><span class="p">()</span>
@@ -15489,7 +15543,7 @@ array([[  2,  97, 250, 124, 556,   0,   0,   0,   0,   0,   0,   0,   0,
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[67]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">keras_nlp</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">RandomSampler</span><span class="p">()</span>
@@ -15551,7 +15605,7 @@ array([[  2,  97, 250, 124, 556,   0,   0,   0,   0,   0,   0,   0,   0,
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[68]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">keras_nlp</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">TopKSampler</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -15616,7 +15670,7 @@ array([[  2,  97, 250, 124, 556,   0,   0,   0,   0,   0,   0,   0,   0,
     <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
     </div>
     <div class="jp-InputArea jp-Cell-inputArea">
-      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[69]:</div>
+      <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
       <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         <div class="CodeMirror cm-s-jupyter">
           <div class=" highlight hl-python"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">keras_nlp</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">TopPSampler</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
