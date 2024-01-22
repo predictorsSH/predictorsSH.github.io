@@ -13,9 +13,13 @@ tags: keras time-series
 > 🧑: [Keras code example](https://keras.io/examples/timeseries/timeseries_anomaly_detection/)을 따라 공부한 것입니다. <br>
 > - This Script is written following a Keras code example
 
-> 🎯 code example goals <br>
+> 🎯 code example goals 
 - 시계열 데이터에서 이상 감지를 어떻게 하는지 알아보기 위해
 - To understand how to perform anomaly detection on time series data
+
+> 🧑: 데이터를 어떻게 모델에 입력하고, 모델의 출력 결과를 어떻게 해석해서 anomaly point를 찾아내는지를 중심으로 살펴보았습니다.
+> -  I have explored how to input time series data into a model, and how to interpret the model's output to detect anomaly points.
+> - This code example has been very helpful with that
 
 ### Setup
 
