@@ -1,0 +1,1 @@
+Sitemap: https://predictorssh.github.io//jekyll-theme-yat/sitemap.xml

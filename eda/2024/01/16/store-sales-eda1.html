@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>시계열 데이터 시각화 with seaborn | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="시계열 데이터 시각화 with seaborn">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="캐글 Store Sales 대회 데이터를 분석하였습니다. 해당 대회는 대규모 식료품 소매업체인 Corporación Favorita의 매장 매출을 예측하는 것을 목표로 합니다. 학습 데이터로 각 일자별 제품에대한 판매량을 제공합니다. 그리고 각 판매 매장에 대한 정보, 기름가격 변동 데이터, 휴일 이벤트 데이터도 별도로 제공됩니다.">
+<meta property="og:description" content="캐글 Store Sales 대회 데이터를 분석하였습니다. 해당 대회는 대규모 식료품 소매업체인 Corporación Favorita의 매장 매출을 예측하는 것을 목표로 합니다. 학습 데이터로 각 일자별 제품에대한 판매량을 제공합니다. 그리고 각 판매 매장에 대한 정보, 기름가격 변동 데이터, 휴일 이벤트 데이터도 별도로 제공됩니다.">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/eda/2024/01/16/store-sales-eda1.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/eda/2024/01/16/store-sales-eda1.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-01-16T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="시계열 데이터 시각화 with seaborn">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2024-01-16T00:00:00+00:00","datePublished":"2024-01-16T00:00:00+00:00","description":"캐글 Store Sales 대회 데이터를 분석하였습니다. 해당 대회는 대규모 식료품 소매업체인 Corporación Favorita의 매장 매출을 예측하는 것을 목표로 합니다. 학습 데이터로 각 일자별 제품에대한 판매량을 제공합니다. 그리고 각 판매 매장에 대한 정보, 기름가격 변동 데이터, 휴일 이벤트 데이터도 별도로 제공됩니다.","headline":"시계열 데이터 시각화 with seaborn","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/eda/2024/01/16/store-sales-eda1.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/eda/2024/01/16/store-sales-eda1.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/banners/squirrel.jpg)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/banners/squirrel.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">시계열 데이터 시각화 with seaborn</h1>
+  <h2 class="post-subtitle">Store Sales EDA 1</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2024-01-16T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Jan 16, 2024
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 25 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#EDA">#EDA</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#tutorial">#tutorial</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%EC%8B%9C%EA%B3%84%EC%97%B4">#시계열</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#seaborn">#seaborn</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%EC%8B%9C%EA%B0%81%ED%99%94">#시각화</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p>캐글 <a href="https://www.kaggle.com/competitions/store-sales-time-series-forecasting">Store Sales</a> 대회 데이터를 분석하였습니다. 
+해당 대회는 대규모 식료품 소매업체인 Corporación Favorita의 매장 매출을 예측하는 것을 목표로 합니다.
+학습 데이터로 각 일자별 제품에대한 판매량을 제공합니다. 그리고 각 판매 매장에 대한 정보, 기름가격 변동 데이터, 휴일 이벤트 데이터도 별도로 제공됩니다.</p>
+
+<p>분석할 거리가 많습니다!
+다양한 시각화 기법을 활용해서, 해당 데이터를 분석해보겠습니다!</p>
+
+<h2 id="데이터-로드--필요한-라이브러리-임포트">데이터 로드 / 필요한 라이브러리 임포트</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 압축해제
+</span><span class="err">!</span><span class="n">unzip</span> <span class="o">-</span><span class="n">qq</span> <span class="s">"/content/drive/MyDrive/Colab Notebooks/project/competition/캐글-Store Sales/store-sales-time-series-forecasting.zip"</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 필요한 라이브러리
+</span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="n">mpl</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"train.csv"</span><span class="p">)</span>
+<span class="n">test_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"test.csv"</span><span class="p">)</span>
+
+<span class="n">train_df</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 3000888 entries, 0 to 3000887
+Data columns (total 6 columns):
+ #   Column       Dtype  
+---  ------       -----  
+ 0   id           int64  
+ 1   date         object 
+ 2   store_nbr    int64  
+ 3   family       object 
+ 4   sales        float64
+ 5   onpromotion  int64  
+dtypes: float64(1), int64(3), object(2)
+memory usage: 137.4+ MB
+</code></pre></div></div>
+
+<blockquote>
+  <p>⛳ 컬럼 정보</p>
+  <ul>
+    <li>date: 날짜</li>
+    <li>store_nbr: 상점</li>
+    <li>family: 제품군</li>
+    <li>sales: 판매량</li>
+    <li>onpromotion: 특정 날짜에 홍보중인 제품군 품목 수</li>
+  </ul>
+</blockquote>
+
+<h2 id="eda-traincsv">EDA (train.csv)</h2>
+
+<h3 id="기초-통계량-평균-표준편차-사분위수-최빈값-등">기초 통계량 (평균, 표준편차, 사분위수, 최빈값 등)</h3>
+
+<blockquote>
+  <p>🧑 : 먼저 데이터의 기초 통계량을 확인하자.</p>
+  <ul>
+    <li>categorical 변수는 unique(카테고리 개수), 최빈값, 최빈값의 빈도를 확인할 수 있다.</li>
+    <li>numerical 변수는 평균, 사분위수, 최대값, 최소값, 표준편차를 확인 할 수 있다.</li>
+  </ul>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># store_nbr은 categorical 변수로, 데이터 타입을 object로 변경
+</span><span class="n">train_df</span><span class="p">[</span><span class="s">'store_nbr'</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="s">'store_nbr'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'object'</span><span class="p">)</span>
+
+<span class="n">train_df</span><span class="p">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s">'all'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div id="df-f1bc1433-4e43-4887-b1be-8b21a4b3ec17" class="colab-df-container">
+    <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>
+</th>
+      <th>id</th>
+      <th>date</th>
+      <th>store_nbr</th>
+      <th>family</th>
+      <th>sales</th>
+      <th>onpromotion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>3.000888e+06</td>
+      <td>3000888</td>
+      <td>3000888.0</td>
+      <td>3000888</td>
+      <td>3.000888e+06</td>
+      <td>3.000888e+06</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>NaN</td>
+      <td>1684</td>
+      <td>54.0</td>
+      <td>33</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>NaN</td>
+      <td>2013-01-01</td>
+      <td>1.0</td>
+      <td>AUTOMOTIVE</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>NaN</td>
+      <td>1782</td>
+      <td>55572.0</td>
+      <td>90936</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1.500444e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3.577757e+02</td>
+      <td>2.602770e+00</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>8.662819e+05</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.101998e+03</td>
+      <td>1.221888e+01</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000e+00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>7.502218e+05</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.500444e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.100000e+01</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>2.250665e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.958473e+02</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>3.000887e+06</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.247170e+05</td>
+      <td>7.410000e+02</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-f1bc1433-4e43-4887-b1be-8b21a4b3ec17')" title="Convert this dataframe to an interactive table." style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-f1bc1433-4e43-4887-b1be-8b21a4b3ec17 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-f1bc1433-4e43-4887-b1be-8b21a4b3ec17');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-495eeebf-5169-486b-ba3f-3479f5832f02">
+  <button class="colab-df-quickchart" onclick="quickchart('df-495eeebf-5169-486b-ba3f-3479f5832f02')" title="Suggest charts" style="display:none;">
+
+&lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+width="24px"&gt;
+<g>
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
+</g>
+&lt;/svg&gt;
+</button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-495eeebf-5169-486b-ba3f-3479f5832f02 button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+
+    </div>
+  </div>
+
+<h3 id="학습-데이터-수집-기간--판매량-line-plot">학습 데이터 수집 기간 / 판매량 (Line Plot)</h3>
+
+<blockquote>
+  <p>🧑 : 학습 데이터 수집 기간 동안 판매량이 어떻게 변화하는지 살펴보자.</p>
+</blockquote>
+
+<blockquote>
+  <p>⚡ 참고할 시각화 규칙</p>
+  <ol>
+    <li>
+<strong>테두리를 없애자!</strong><br>
+불필요한 테두리는 우리의 시각을 분산시킬 수 있다고 한다. <br>
+필요한 정보에 집중할 수 있도록 테두리를 지우자.<br>
+</li>
+    <li>
+<strong>색은 필요할때만 쓰자!</strong><br>
+색은 강조하고 싶은 정보가 있을때만 사용하자!
+3.그래프와 제목 사이에 적절한 간격을 두자!</li>
+  </ol>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 데이트 컬럼 타입 변경
+</span><span class="n">train_df</span><span class="p">[</span><span class="s">'date'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">train_df</span><span class="p">[</span><span class="s">'date'</span><span class="p">],</span><span class="nb">format</span> <span class="o">=</span> <span class="s">"%Y-%m-%d"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 주별로 데이터 집계. 데이터 개수가 너무 많기 때문에, 주, 월 년도 별로 미리 그룹화 하는 것이 좋음.
+</span><span class="n">weekly_group_df</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">pd</span><span class="p">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s">'date'</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">'W'</span><span class="p">)]).</span><span class="n">agg</span><span class="p">(</span><span class="n">sales</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sales'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">)).</span><span class="n">reset_index</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 시각화
+</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="c1"># line plot
+</span><span class="n">sns</span><span class="p">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'date'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">weekly_group_df</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">'Sales Over Time'</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="sa">f</span><span class="s">"Start Date:</span><span class="si">{</span><span class="n">train_df</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="nb">min</span><span class="p">().</span><span class="n">strftime</span><span class="p">(</span><span class="s">'%Y-%m-%d'</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">,</span>
+         <span class="n">x</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span> <span class="mf">0.85</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s">'center'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="sa">f</span><span class="s">" End Date:</span><span class="si">{</span><span class="n">train_df</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="nb">max</span><span class="p">().</span><span class="n">strftime</span><span class="p">(</span><span class="s">'%Y-%m-%d'</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">,</span>
+         <span class="n">x</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span> <span class="mf">0.80</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s">'center'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_14_0.png" alt="png"></p>
+
+<blockquote>
+  <p>☝ 해석</p>
+  <ul>
+    <li>2013년부터 2017년 8월 15일까지의 데이터이다.</li>
+    <li>전체 sales가 조금씩 상승하는 경향이 있다. 데이터가 비정상적(Nonstational)이다. <br>
+</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>❎ 문제점 <br></p>
+  <ul>
+    <li>불필요한 색 <br>
+라인이 파란색이다. 그런데 위 그래프에서 색은 어떤 추가 정보도 가져다주지 못하므로 불필요하다.</li>
+    <li>불필요한 테두리<br>
+우측과 상단의 테두리는 우리의 시각이 그래프의 라인에 집중하는 것을 방해한다.<br>
+</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>🧑: 위 그래프를 아래와 같이 다시 그려보자</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="c1"># line plot
+</span><span class="n">sns</span><span class="p">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'date'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">weekly_group_df</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'#808080'</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">'Sales Over Time'</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">despine</span><span class="p">(</span><span class="n">right</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="sa">f</span><span class="s">"Start Date:</span><span class="si">{</span><span class="n">train_df</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="nb">min</span><span class="p">().</span><span class="n">strftime</span><span class="p">(</span><span class="s">'%Y-%m-%d'</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">,</span>
+         <span class="n">x</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span> <span class="mf">0.85</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s">'center'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'#333333'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="sa">f</span><span class="s">" End Date:</span><span class="si">{</span><span class="n">train_df</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="nb">max</span><span class="p">().</span><span class="n">strftime</span><span class="p">(</span><span class="s">'%Y-%m-%d'</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">,</span>
+         <span class="n">x</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span> <span class="mf">0.80</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s">'center'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'#333333'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_16_0.png" alt="png"></p>
+
+<blockquote>
+  <p>✅ 개선 <br></p>
+  <ul>
+    <li>작은 차이지만,
+그래프의 라인과 좌측 상단의 데이터 수집기간 정보가 더 눈에 들어온다.<br>
+</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>🧑: 앞으로는 모든 그래프에서 상단, 우측 테두리를 제거하겠다.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># top, right 축 제거
+</span><span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'axes.spines.top'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'axes.spines.right'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+</code></pre></div></div>
+
+<h3 id="판매량-경향-box-plot">판매량 경향 (Box Plot)</h3>
+
+<blockquote>
+  <p>🧑: 연도별 Box Plot을 활용해서 데이터 분포의 변화를 확인할 수 도 있다.</p>
+  <ul>
+    <li>line plot은 시간에 따른 추이를 시각화 할때 효과적이다.</li>
+    <li>box plot은 데이터의 분포가 시간에 따라 어떻게 변화하는지 확인할 수 있다.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>⚡ 참고할 시각화 규칙</p>
+  <ol>
+    <li>
+<strong>이상치가 있을떄 시각화</strong><br>
+이상치의 영향을 제거하고 시각화하자.</li>
+    <li>
+<strong>색은 적게 사용하자</strong><br>
+눈에 띄는 다양한 색상이 있으면 사용자가 데이터에서 의미를 추출하는 것이 더 어려워질 수 있다.</li>
+  </ol>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_df</span><span class="p">[</span><span class="s">'year'</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">year</span>
+
+<span class="n">sns</span><span class="p">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'year'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">train_df</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">'Sales Over Time'</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_21_0.png" alt="png"></p>
+
+<blockquote>
+  <p>❎ 문제점 <br></p>
+  <ul>
+    <li>많은 이상치가 Sales의 평균값을 훨씬 웃돌기 때문에 Box Plot의 중요한 정보들이 보이지 않음</li>
+  </ul>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 이상치를 제거하기 위해 주별로 평균 내준 데이터를 사용
+</span><span class="n">weekly_group_df</span><span class="p">[</span><span class="s">'year'</span><span class="p">]</span> <span class="o">=</span> <span class="n">weekly_group_df</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">year</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">sns</span><span class="p">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'year'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">weekly_group_df</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'year'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">weekly_group_df</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'#B0E0E6'</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">'Year-wise Plot'</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="s">"different colors"</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="s">"same color"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_23_0.png" alt="png"></p>
+
+<blockquote>
+  <p>✅개선<br></p>
+  <ul>
+    <li>주별 평균 데이터를 사용해서, 이상치를 제거하는 효과를 줌</li>
+    <li>동일한 색상을 사용하면 사용자는 색상에 주의를 기울이지 않고 데이터 패턴에 주의를 기울일 수 있음</li>
+  </ul>
+</blockquote>
+
+<h3 id="월별-판매량-violin-plot">월별 판매량 (Violin Plot)</h3>
+
+<blockquote>
+  <p>🧑 : 바이올린 그래프는 박스플롯과 비슷하게 데이터의 분포를 보여준다.
+바이올린 플롯과 박스 플롯의 차이점이자, 바이올린 플롯의 장점을 장점은 중심선을 따라 대칭인 KDE 플롯이 있다는 것이다.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">weekly_group_df</span><span class="p">[</span><span class="s">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">weekly_group_df</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">month</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">avg</span> <span class="o">=</span> <span class="n">weekly_group_df</span><span class="p">[</span><span class="s">'sales'</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'month'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">weekly_group_df</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'#B0E0E6'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">avg</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'r'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s">'Sales Mean Line (</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">avg</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s">)'</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">'Month-wise Plot'</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">),</span><span class="n">loc</span><span class="o">=</span><span class="s">'upper right'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_26_0.png" alt="png"></p>
+
+<h3 id="요일별-판매량-bar-plot">요일별 판매량 (Bar Plot)</h3>
+
+<blockquote>
+  <p>🧑 : 주말에 판매량이 많지 않을까?
+앞선 시각화 규칙들을 유의하면서 심플하면서 강력한 시각화를 해보자!</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">daily_group_df</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">pd</span><span class="p">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s">'date'</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">'d'</span><span class="p">)]).</span><span class="n">agg</span><span class="p">(</span><span class="n">sales</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sales'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">)).</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="n">order</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Monday'</span><span class="p">,</span><span class="s">'Tuesday'</span><span class="p">,</span><span class="s">'Wednesday'</span><span class="p">,</span><span class="s">'Thursday'</span><span class="p">,</span><span class="s">'Friday'</span><span class="p">,</span><span class="s">'Saturday'</span><span class="p">,</span><span class="s">'Sunday'</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s">'#dddddd'</span><span class="p">]</span> <span class="o">*</span> <span class="mi">7</span>
+<span class="n">palette</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'#00A000'</span><span class="p">,</span><span class="s">'#00A000'</span><span class="p">]</span>
+
+<span class="n">daily_group_df</span><span class="p">[</span><span class="s">'day_of_week'</span><span class="p">]</span> <span class="o">=</span> <span class="n">daily_group_df</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">day_name</span><span class="p">()</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'day_of_week'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">daily_group_df</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
+            <span class="n">errorbar</span><span class="o">=</span><span class="p">(</span><span class="s">'ci'</span><span class="p">,</span> <span class="bp">False</span><span class="p">),</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">bar_label</span><span class="p">(</span><span class="n">ax</span><span class="p">.</span><span class="n">containers</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">fmt</span><span class="o">=</span><span class="s">'%.0f'</span><span class="p">)</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">despine</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">''</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">''</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">'Day of Week Sales Plot'</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_28_0.png" alt="png"></p>
+
+<h3 id="제품군-종류-bar-plot">제품군 종류 (Bar Plot)</h3>
+
+<blockquote>
+  <p>🧑: 어떤 제품군들이 판매되고 있는지도 알아보자</p>
+</blockquote>
+
+<blockquote>
+  <p>⚡ 참고할 시각화 규칙</p>
+  <ol>
+    <li><strong>그래프 배치 순서에 의미를 두자!</strong></li>
+    <li><strong>색은 강조하고 싶은 부분에만! 최대한 적은 개수를 사용하자!</strong></li>
+  </ol>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">num_unique_family</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_df</span><span class="p">[</span><span class="s">'family'</span><span class="p">].</span><span class="n">unique</span><span class="p">())</span>
+<span class="c1"># 데이터를 미리 그룹화 해주었습니다. 미리 그룹화 하지 않으면 bar 그래프를 그리는데 오래 걸립니다.
+</span><span class="n">family_group</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'family'</span><span class="p">).</span><span class="n">agg</span><span class="p">(</span><span class="n">sales</span><span class="o">=</span><span class="p">(</span><span class="s">'sales'</span><span class="p">,</span><span class="s">'mean'</span><span class="p">)).</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">sorted_family_group</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'family'</span><span class="p">).</span><span class="n">agg</span><span class="p">(</span><span class="n">sales</span><span class="o">=</span><span class="p">(</span><span class="s">'sales'</span><span class="p">,</span><span class="s">'mean'</span><span class="p">)).</span><span class="n">reset_index</span><span class="p">().</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="n">family_group</span><span class="p">,</span> <span class="n">sorted_family_group</span><span class="p">],[</span><span class="s">'Unsorted'</span><span class="p">,</span><span class="s">'Sorted'</span><span class="p">]):</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s">'y'</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s">'family'</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">"Product Category(family)"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.41</span><span class="p">,</span><span class="n">y</span><span class="o">=</span> <span class="mf">1.045</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span> <span class="sa">f</span><span class="s">"sell </span><span class="si">{</span><span class="n">num_unique_family</span><span class="si">}</span><span class="s"> product categories"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_31_0.png" alt="png"></p>
+
+<blockquote>
+  <p>:☝ 해석</p>
+  <ul>
+    <li>총 33개의 제품이 판매되고 있다.</li>
+    <li>GROCERY1 제품이 가장 많이 판매되는 것도 확인할 수 있다.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>❎ 문제점(첫번째 그림)<br>
+그런데 그래프에 문제가 있다. 정렬이 되어있지 않아 데이터가 눈에 잘 들어오지 않는다.<br></p>
+  <ul>
+    <li>배치가 올바르지 않으면 그래프를 읽기 힘들다.</li>
+    <li>불필요하게 너무 많은 색을 사용하였다.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>✅개선(두번째 그림)</p>
+  <ul>
+    <li>그래프 배치에 신경을 쓰니, 어떤 제품들 순서로 많이 판매되는지를 알 수 있습니다. <br>
+</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>🧑: 이것만으로도 충분할수 있지만, 색이 불필요하게 많이 사용되었다.<br>
+들어오는 정보가 많으면, 인간의 뇌는 정작 필요한 정보는 쉽게 놓친다고 한다.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">num_unique_family</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_df</span><span class="p">[</span><span class="s">'family'</span><span class="p">].</span><span class="n">unique</span><span class="p">())</span>
+<span class="c1"># 데이터를 미리 그룹화 해주었습니다. 미리 그룹화 하지 않으면 bar 그래프를 그리는데 오래 걸립니다.
+</span><span class="n">family_group</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'family'</span><span class="p">).</span><span class="n">agg</span><span class="p">(</span><span class="n">sales</span><span class="o">=</span><span class="p">(</span><span class="s">'sales'</span><span class="p">,</span><span class="s">'mean'</span><span class="p">)).</span><span class="n">reset_index</span><span class="p">().</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1">#color map
+</span><span class="n">color_map</span> <span class="o">=</span> <span class="p">[</span><span class="s">'#d4dddd'</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_unique_family</span><span class="p">)]</span>
+<span class="n">color_map</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'#87CEEB'</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span>
+<span class="n">color_map</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'#4682B4'</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s">'y'</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s">'family'</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">family_group</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">color_map</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">"Product Category(family)"</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.3</span> <span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span> <span class="mf">0.90</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span> <span class="sa">f</span><span class="s">"sell </span><span class="si">{</span><span class="n">num_unique_family</span><span class="si">}</span><span class="s"> product categories"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_34_0.png" alt="png"></p>
+
+<blockquote>
+  <p>✅개선</p>
+  <ul>
+    <li>많이 판매되는 5개 제품군을 강조할 수 있다.</li>
+  </ul>
+</blockquote>
+
+<h3 id="주요-제품군들의-판매량">주요 제품군들의 판매량</h3>
+
+<blockquote>
+  <p>🧑: 주요 제품군별로 판매량 추세를 살펴보자</p>
+</blockquote>
+
+<blockquote>
+  <p>⚡ 참고할 시각화 규칙</p>
+  <ol>
+    <li>강조하고 싶은 데이터에만 색을 쓰자</li>
+  </ol>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 주요 판매 제품군
+</span><span class="n">top_products</span> <span class="o">=</span> <span class="n">family_group</span><span class="p">[:</span><span class="mi">5</span><span class="p">][</span><span class="s">'family'</span><span class="p">]</span>
+
+<span class="n">weekly_family_group_df</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">pd</span><span class="p">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s">'date'</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">'W'</span><span class="p">),</span> <span class="s">'family'</span><span class="p">]).</span><span class="n">agg</span><span class="p">(</span><span class="n">sales</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sales'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">),</span> <span class="n">onpromotions</span><span class="o">=</span><span class="p">(</span><span class="s">'onpromotion'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">)).</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">weekly_family_group_df</span><span class="o">=</span><span class="n">weekly_family_group_df</span><span class="p">[</span><span class="n">weekly_family_group_df</span><span class="p">[</span><span class="s">'family'</span><span class="p">].</span><span class="n">isin</span><span class="p">(</span><span class="n">top_products</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="c1"># line plot
+</span><span class="n">sns</span><span class="p">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'date'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s">'family'</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">weekly_family_group_df</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">'Top 5 Family Sales Over Time'</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_40_0.png" alt="png"></p>
+
+<blockquote>
+  <p>☝ 해석</p>
+  <ul>
+    <li>PRODUCE, BEVERAGES가 상당히 유사한 판매 패턴을 보인다.</li>
+    <li>GROCERY 1도 판매량의 변화 패턴이 PRODUCE, BEVERAGES와 약간 유사해 보인다.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>❎문제점<br></p>
+  <ul>
+    <li>너무 많은 색이 있어 패턴이 비슷한 데이터가 눈에 들어오지 않는다.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>🧑: 패턴이 유사한 데이터를 강조 해보자.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">color_map</span> <span class="o">=</span> <span class="p">[</span><span class="s">'#d4dddd'</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="n">color_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s">'#3498db'</span>
+<span class="n">color_map</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="s">'#5d9cec'</span>
+<span class="n">color_map</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="s">'#4b77be'</span>
+
+
+<span class="n">weekly_family_group_df</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">pd</span><span class="p">.</span><span class="n">Grouper</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s">'date'</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">'W'</span><span class="p">),</span> <span class="s">'family'</span><span class="p">]).</span><span class="n">agg</span><span class="p">(</span><span class="n">sales</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sales'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">),</span> <span class="n">onpromotions</span><span class="o">=</span><span class="p">(</span><span class="s">'onpromotion'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">)).</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">weekly_family_group_df</span><span class="o">=</span><span class="n">weekly_family_group_df</span><span class="p">[</span><span class="n">weekly_family_group_df</span><span class="p">[</span><span class="s">'family'</span><span class="p">].</span><span class="n">isin</span><span class="p">(</span><span class="n">top_products</span><span class="p">)]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="c1"># line plot
+</span><span class="n">sns</span><span class="p">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'date'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s">'family'</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">weekly_family_group_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">color_map</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">'GROCERY I,BEVERAGES,PRODUCE'</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_43_0.png" alt="png"></p>
+
+<blockquote>
+  <p>✅개선<br></p>
+  <ul>
+    <li>유사한 패턴을 서로 유사한 계열의 색으로 표현하여, 유사성이 더 눈에 띈다.</li>
+  </ul>
+</blockquote>
+
+<h3 id="promotions">Promotions</h3>
+
+<blockquote>
+  <p>🧑: 프로모션 트렌드를 살펴보자.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="c1"># line plot
+</span><span class="n">sns</span><span class="p">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'date'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'onpromotions'</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">weekly_family_group_df</span><span class="p">,</span>  <span class="n">color</span><span class="o">=</span><span class="s">'#808080'</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">'Promotions Over Time'</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s">'bold'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_47_0.png" alt="png"></p>
+
+<blockquote>
+  <p>☝ 해석</p>
+  <ul>
+    <li>promotion이 점점 증가하는 경향이 보인다.</li>
+  </ul>
+</blockquote>
+
+<h3 id="프로모션과-판매량-상관관계">프로모션과 판매량 상관관계</h3>
+
+<blockquote>
+  <p>🧑: 프로모션이 많으면, 제품 판매량이 증가할까?</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 데이터가 정상성을 띄는 2016년 이후만 활용
+</span><span class="n">promotion_df</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="n">train_df</span><span class="p">[</span><span class="s">'date'</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="s">'2016-01-01'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># family = promotion_df.family.unique()
+</span><span class="n">promotional_products</span> <span class="o">=</span> <span class="p">[</span><span class="s">'PLAYERS AND ELECTRONICS'</span><span class="p">,</span> <span class="s">'PRODUCE'</span><span class="p">,</span>
+                        <span class="s">'SCHOOL AND OFFICE SUPPLIES'</span><span class="p">,</span> <span class="s">'DELI'</span><span class="p">,</span>
+                        <span class="s">'BEAUTY'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scatter_kws</span> <span class="o">=</span> <span class="p">{</span><span class="s">'color'</span><span class="p">:</span> <span class="s">'blue'</span><span class="p">,</span> <span class="s">'alpha'</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span> <span class="s">'s'</span><span class="p">:</span> <span class="mi">15</span><span class="p">}</span>
+<span class="n">line_kws</span> <span class="o">=</span> <span class="p">{</span><span class="s">'color'</span><span class="p">:</span> <span class="s">'red'</span><span class="p">}</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">promotional_products</span><span class="p">):</span>
+    <span class="n">sns</span><span class="p">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">promotion_df</span><span class="p">[</span><span class="n">promotion_df</span><span class="p">[</span><span class="s">'family'</span><span class="p">]</span><span class="o">==</span><span class="n">p</span><span class="p">],</span>
+               <span class="n">x</span><span class="o">=</span><span class="s">'onpromotion'</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s">'sales'</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">scatter_kws</span><span class="o">=</span><span class="n">scatter_kws</span><span class="p">,</span> <span class="n">line_kws</span><span class="o">=</span><span class="n">line_kws</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">"linear relationship with sales"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_52_0.png" alt="png"></p>
+
+<blockquote>
+  <p>🧑: 몇몇 제품군은 Promotion과 Sales에 양의 선형상관관계가 있어 보인다.</p>
+</blockquote>
+
+<h3 id="acfpacf-상관도표correlogram">ACF/PACF 상관도표(Correlogram)</h3>
+
+<blockquote>
+  <p>🧑: ACF/PACF를 사용해 데이터의 정상성을 평가하자(이미 판매량이 점점 증가하는 추세가 있음을 확인했지만). <br></p>
+  <ul>
+    <li>ACF(자기상관함수)는 현재값과 특정 시점 이전(lag)의 값의 상관관계를 보여준다. <br>
+</li>
+    <li>PACF는 다른 시차의 영향을 제외하고, 현재값과 특정시점 이전의 값의 상관관계를 보여준다. <br>
+</li>
+    <li>상관도표를 통해 한눈에 시계열 데이터의 정상성을 판단할 수 있다. <br>
+</li>
+    <li>또한 ARIMA 모형의 차수를 결정하는데 도움이 된다.</li>
+  </ul>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_acf</span><span class="p">,</span> <span class="n">plot_pacf</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">top_products</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="n">train_df</span><span class="p">[</span><span class="s">'family'</span><span class="p">]</span><span class="o">==</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'date'</span><span class="p">)[</span><span class="s">'sales'</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">plot_acf</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">lags</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">plot_pacf</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">lags</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s"> Autocorrelation"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s"> ParticialAutocorrelation"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/EDA/EDA-1_files/EDA-1_56_0.png" alt="png"></p>
+
+<blockquote>
+  <p>🧑 :</p>
+  <ul>
+    <li>ACF, PACF가 특정한 패턴이 없고 랜덤하면, 데이터가 Stationary(정상성)을 가진다고 할 수 있음</li>
+    <li>ACF, PACF가 LAG 1, LAG 2 이후 확 떨어지면 데이터가 Stationary(정상성)을 가진다고 할 수 있음</li>
+    <li>ACF, PACF가 천천히 감소하는 형태면 전형적으로 Nonstational한 데이터임</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>☝ 해석</p>
+  <ul>
+    <li>ACF, PACF가 천천히 감소하는 형태로, 데이터가 비정상적임</li>
+    <li>Lag 7을 주기로 강한 상관관계가 나타남</li>
+  </ul>
+</blockquote>
+
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/daily/2023/12/31/2023-Retrospective.html" title="Goodbye 2023, Welcome 2024">Goodbye 2023, Welcome 2024</a><a class="next" href="/jekyll-theme-yat/code-example/2024/01/22/time-series-anomaly-detection-ae.html" title="(keras) Timeseries anomaly detection using an Autoencoder">(keras) Timeseries anomaly detection using an...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/daily/2023/12/31/2023-Retrospective.html" title="Goodbye 2023, Welcome 2024">
+            Goodbye 2023, Welcome 2024<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/10/23/vetorization.html" title="수많은 데이터에 대한 경사 하강을 어떻게 빠르게 할수 있을까?">
+            수많은 데이터에 대한 경사 하강을 어떻게 빠르게 할수 있을까?<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/practice/2022/03/27/MNIST-Grad-CAM.html" title="MNIST데이터셋 Grad-CAM 적용">
+            MNIST데이터셋 Grad-CAM 적용<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/paper/2023/11/20/An-introduction-to-ROC-analysis.html" title="An introduction to ROC analysis">
+            An introduction to ROC analysis<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2024 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

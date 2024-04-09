@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>ADP-Statistics-상관분석 | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="ADP-Statistics-상관분석">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="🚪 이전 게시글">
+<meta property="og:description" content="🚪 이전 게시글">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/adp/2022/03/31/ADP-statistics-2.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/adp/2022/03/31/ADP-statistics-2.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-03-31T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="ADP-Statistics-상관분석">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2022-03-31T00:00:00+00:00","datePublished":"2022-03-31T00:00:00+00:00","description":"🚪 이전 게시글","headline":"ADP-Statistics-상관분석","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/adp/2022/03/31/ADP-statistics-2.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/adp/2022/03/31/ADP-statistics-2.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/banners/data.jpg)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/banners/data.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">ADP-Statistics-상관분석</h1>
+  <h2 class="post-subtitle">실전 상관분석</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2022-03-31T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Mar 31, 2022
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 5 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#ADP">#ADP</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#statistics">#statistics</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%EC%83%81%EA%B4%80%EB%B6%84%EC%84%9D">#상관분석</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%EC%83%81%EA%B4%80%EA%B3%84%EC%88%98">#상관계수</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#python">#python</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="-이전-게시글">🚪 이전 게시글</h2>
+
+<p>ADP 실기 시험 공부를 위해 연재하고 있으며,
+첫 포스팅은 <a href="https://predictorssh.github.io/adp/2022/03/11/ADP-statistics-0.html">기초 통계량-1</a>이다.</p>
+
+<p>이전 게시글 <a href="https://predictorssh.github.io/adp/2022/03/13/ADP-statistics-1.html">기초 통계량-2</a>에 이어서 작성한 글이다.</p>
+
+<h2 id="-상관분석">🔑 상관분석</h2>
+
+<p>상관분석은 두 변수 사이에 어떠한 관계가 있는지 분석하는 것이다.<br>
+특히, 상관계수를 이용하여 두 변수사이의 선형관계 정도를 측정한다.<br>
+또 산점도를 그려 관계를 시각화 할 수 도 있다.<br></p>
+
+<p>상관분석, 상관계수의 종류는 여러가지가 있다.</p>
+
+<ul>
+  <li>피어슨 상관계수</li>
+  <li>스피어만 순위 상관계수</li>
+  <li>Kendall Tau</li>
+  <li>점 양분 상관계수</li>
+  <li>파이 계수</li>
+</ul>
+
+<p>가 있는데, 가장 많이 사용되는 피어슨 상관계수와 스피어먼 순위 상관계수에 대해서 알아보자</p>
+
+<h2 id="피어슨-상관계수">피어슨 상관계수</h2>
+<p>두 변수 X 와 Y 간의 선형 상관 관계를 계량화한 수치다. <br>
+피어슨 상관 계수는 +1과 -1 사이의 값을 가지며, +1은 완벽한 양의 선형 상관 관계, 0은 선형 상관 관계 없음, -1은 완벽한 음의 선형 상관 관계를 의미한다.<br>
+일반적으로 상관계수는 피어슨 상관계수를 말한다.<br></p>
+
+<h2 id="temp와-atemp-피어슨-상관계수-분석">temp와 atemp 피어슨 상관계수 분석</h2>
+<p>temp(기온)와 atemp(체감 기온)는 선형 상관관계가 매우 강할 것으로 추측된다.<br>
+둘 사이의 피어슨 상관계수를 확인해보자.<br>
+pandas.Dataframe.corr을 활용하여 변수들 사이의 피어슨 상관계수를 확인 할 수 있다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">[[</span><span class="s">'temp'</span><span class="p">,</span><span class="s">'atemp'</span><span class="p">]].</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">'pearson'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>index</th>
+      <th>temp</th>
+      <th>atemp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>temp</td>
+      <td>1.0</td>
+      <td>0.9849481104817075</td>
+    </tr>
+    <tr>
+      <td>atemp</td>
+      <td>0.9849481104817075</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>거의 1에 가까운 상관계수가 나온 것을 확인할 수 있다.<br>
+그런데 상관계수만 확인해서는 상관 분석을 했다고 말하기 힘들다. <br>
+구해진 상관계수가 유의한지 검정해야한다.<br></p>
+
+<p>scipy라이브러리를 활용하면, 상관계수뿐 아니라 p-value또한 구해준다.<br>
+일반적으로 p-value가 0.05 보다 작으면 상관계수가 유의하다고 판단할 수 있다.<br>
+p-value가 0.05 보다 크면 구해진 상관계수는 별 의미없는 숫자가 된다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">stats</span><span class="p">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s">'temp'</span><span class="p">],</span> <span class="n">train</span><span class="p">[</span><span class="s">'atemp'</span><span class="p">])</span>
+<span class="c1">#(상관계수, p-value)
+</span></code></pre></div></div>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(0.9849481104817074, 0.0)
+</code></pre></div></div>
+
+<p>예상했던 대로 temp와 atemp는 강한 양의 선형상관관계가 있고, p-value가 0.0으로 유의하다.</p>
+
+<h2 id="p_value-와-가설검정">p_value 와 가설검정</h2>
+
+<p>여기서, p-value가 정확하게 무엇을 의미하는지 집고 넘어가야 할 것 같다.<br>
+p-value는 통계적 가설검정에서 매우 중요한 개념이기 때문이다.<br></p>
+
+<p>상관분석은 가설검정이다.<br>
+귀무가설 : 두 변수사이에 선형 상관관계가 없다.(상관계수가 0이다.) <br>
+대립가설 : 두 변수 사이에 선형 상관관계가 있다.(상관계수가 0이 아니다.) <br>
+를 검정하는 것이다.<br></p>
+
+<p>가설검정과 p-value에 대해서 필자가 학부시절에 공부했던 내용을 기억해 조금 정리 해보겠다.<br>
+가설검정이란 내가 주장하는 가설(대립가설)이 통계적으로 맞는지 틀렸는지를 확인하는 것이다.<br>
+위에서 필자는 temp와 atemp가 선형관계가 있다고 가정하였고, 그것을 확인하는 것이 상관분석이라는 것이다.<br>
+<br>
+가설을 검정하기 위해서 검정 통계량을 사용한다. 검정 통계량은 귀무가설이 참이라는 가정하에, 표본을 추출해서 구하게 된다.<br>
+Z-test에서는 Z-통계량, T-test에서는 t-통계량을 사용한다. 
+<br>
+p-value는, 검정에 사용된 통계량의 값이 그정도로 나올 확률이다. 예를 들어 T-test를 하는데 t-통계량의 값이 x가 나왔다고 하자.<br> 
+이때 p-value는 t-통계량의 값이 x정도로(엄밀히 말하면 x 또는 x보다 더 극단적인 값이 나올)확률이다. <br>
+그러니까 p-value가 너무 낮으면, 실험자는 이런 생각을 할 수 있다. <br>
+‘귀무가설이 참이라는 가정하에 검정 통계량이 x가 나왔는데, x가 나올 확률이 이렇게 낮아? 그럼 귀무가설을 의심해야하는거 아니야?’</p>
+
+<p>여기서, 실험자는 유의수준을 정한다.<br>
+유의수준은 귀무가설에 대한 의심을 넘어서, 귀무가설을 기각하게 되는 p-value 수준이다. 보통 유의수준을 0.05로 정한다.<br></p>
+
+<p>쉽게 말해서, p-value가 0.05 보다 낮으면 “귀무가설이 참이라면, 통계량의 값이 그렇게  나올리가 없어! 그러니까 귀무가설은 기각이야”라고 말하면서 기각 시킬 수 있다.<br></p>
+
+<p>위에서 필자는 p-value가 낮게 나와서 귀무가설을 기각하고, 대립가설(temp와 atemp 사이에 선형상관관계가 있다.)를 채택했다.</p>
+
+<h2 id="스피어만-상관계수">스피어만 상관계수</h2>
+
+<p>스피어먼 상관계수은 이산형, 순서형 데이터의 상관관계를 분석할때 적합한 평가 척도이다.<br>
+피어슨 상관계수와 마찬가지로 -1에서 1사이의 값을 가지며, 값에 떄른 해석도 비슷하게 할 수 있다.</p>
+
+<p><a href="https://hyen4110.tistory.com/38">해당 블로그 포스터</a>를 보면, 피어슨과 스피어먼의 차이점에 대해서 더 자세히 알아볼 수 있다.</p>
+
+<p>습도와 target 변수 사이의 상관관계를 spearman 계수로 확인해보자</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># train[['humidity','count']].corr(method='spearman') 
+</span><span class="n">stats</span><span class="p">.</span><span class="n">spearmanr</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s">'humidity'</span><span class="p">],</span> <span class="n">train</span><span class="p">[</span><span class="s">'count'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>pearson과 마찬가지로 pd.Dataframe.corr() 에서 method만 변경해서 구할 수도 있지만,<br>
+stats 라이브러리를 활용해서 구할 수도 있다.</p>
+
+<h2 id="시각화히트맵-산점도">시각화(히트맵, 산점도)</h2>
+
+<p>데이터의 모든 필드들에 대해서 상관계수를 보고싶다면,<br>
+아래와 같이 코드를 입력하면 된다. 주의할점은 변수의 타입과 상관없이, 모든 변수사이의 상관계수가 나온다.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">'pearson'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>변수가 너무 많으면 시각화가 필요하다.<br>
+아래와 같이 seaborn(sns), matplotlib(plt) 라이브러리를 활용해서 시각화 할 수 있다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">'pearson'</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> 
+<span class="n">fmt</span> <span class="o">=</span> <span class="s">'.2f'</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">'Blues'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/ADP_statistics/corr_heatmap.PNG" alt="corr_heatmap"></p>
+
+<p>어떤 변수끼리 pearson 상관계수 값이 높은지 한눈에 알 수 있다.<br>
+sns.heatmap에서 annot은 각 그리드에 상관계수를 표현할지 유무를 결정하는 옵션이고<br>
+fmt는 소숫점 자릿수를 지정해준다.</p>
+
+<p>위 그림에서 registered와 count 사이의 선형상관관계가 매우 높음을 알 수 있는데,<br>
+두 변수로 산점도를 그려보자.</p>
+
+<p>matplotplib의 scatter는 두 변수 사이의 산점도를 그려준다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s">'registered'</span><span class="p">],</span><span class="n">train</span><span class="p">[</span><span class="s">'count'</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'r'</span><span class="p">)</span>
+</code></pre></div></div>
+<p><img src="/assets/images/contents/ADP_statistics/corr_scatter.PNG" alt="corr_scatter"></p>
+
+<p>두변수 사이의 상관계수가 높을수록, 위 그림처럼 그래프가 직선에 가깝게 그려질것이다.</p>
+
+<h2 id="-정리">📌 정리</h2>
+
+<p>상관분석을 진행해보았다.<br>
+가장 많이 활용되는 피어슨과 스피어만 상관계수에 대해서만 우선 알아보았다.<br>
+상관분석은 데이터를 파악하는데 중요하다.<br>
+특히, target변수와 다른 변수들 사이의 상관분석을 통해, 어떤 변수가 target 변수 예측 또는 분류에 도움이 될 수 있을지 확인할 수 있다.<br>
+그러나 독립 변수들 사이에 상관관계가 높으면, target 변수의 예측이나 분류에 부정적인 영향을 미칠 수도 있다.<br>
+독립 변수들 사이의 상관관계가 높은 것을, 다중공선성이라고 한다.<br>
+다중 공선성을 해결하기 위해서 feature selection , pca(차원 축소), 변수 제거 등의 작업을 하기도 한다.<br></p>
+
+<h2 id="-다음-이야기">🎬 다음 이야기</h2>
+
+<p>다음 게시글부터는 가설검정에 대해서 공부해 보겠습니다!</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/practice/2022/03/27/MNIST-Grad-CAM.html" title="MNIST데이터셋 Grad-CAM 적용">MNIST데이터셋 Grad-CAM 적용</a><a class="next" href="/jekyll-theme-yat/adp/2022/04/07/ADP-statistics-3.html" title="ADP-Statistics-가설검정">ADP-Statistics-가설검정</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/paper/2023/04/19/paper-DeepLearningForAnomalyDetectioninTimeSeriesData.html" title="Anomaly Detection in Time-Series Data">
+            Anomaly Detection in Time-Series Data<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/practice/2022/06/23/transformer_code.html" title="Transformer 구현 코드로 이해하기 - Positional Encodig">
+            Transformer 구현 코드로 이해하기 - Positional Encodig<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/10/23/vetorization.html" title="수많은 데이터에 대한 경사 하강을 어떻게 빠르게 할수 있을까?">
+            수많은 데이터에 대한 경사 하강을 어떻게 빠르게 할수 있을까?<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/adp/2022/04/07/ADP-statistics-3.html" title="ADP-Statistics-가설검정">
+            ADP-Statistics-가설검정<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2024 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

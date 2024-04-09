@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>ADP-Statistics-기초통계량-1 | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="ADP-Statistics-기초통계량-1">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="🔑 기초 통계량">
+<meta property="og:description" content="🔑 기초 통계량">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-03-11T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="ADP-Statistics-기초통계량-1">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2022-03-11T00:00:00+00:00","datePublished":"2022-03-11T00:00:00+00:00","description":"🔑 기초 통계량","headline":"ADP-Statistics-기초통계량-1","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/banners/data.jpg)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/banners/data.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">ADP-Statistics-기초통계량-1</h1>
+  <h2 class="post-subtitle">실전 기초통계량</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2022-03-11T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Mar 11, 2022
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 12 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#ADP">#ADP</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#statistics">#statistics</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%EA%B8%B0%EC%B4%88%ED%86%B5%EA%B3%84%EB%9F%89">#기초통계량</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%ED%8F%89%EA%B7%A0">#평균</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%EC%A4%91%EC%95%99">#중앙</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%EC%99%9C%EB%8F%84">#왜도</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%EC%B2%A8%EB%8F%84">#첨도</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#EDA">#EDA</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="-기초-통계량">🔑 기초 통계량</h2>
+
+<p>데이터 분석의 첫번째 단계는 기초통계량을 살펴보는 것이다.
+먼저 어떤 통계량들이 있는지 확인하고, 실제 데이터에서 기초 통계량을 도출하고 시각화 해보자.</p>
+
+<h3 id="기초통계량">기초통계량</h3>
+<p>기초통계량이란 데이터의 가장 기본적인 통계적 특징을 알려주는 값들이다.</p>
+
+<ul>
+  <li>데이터 개수(표본 개수)</li>
+  <li>평균(표본 평균)</li>
+  <li>분산</li>
+  <li>표준편차</li>
+  <li>최솟값, 최대값</li>
+  <li>중간값</li>
+  <li>분위수</li>
+  <li>최빈값</li>
+</ul>
+
+<p>등이 기초통계량이라 할 수 있다.<br>
+각 기초통계량에 대한 설명은 생략하고, 실제 데이터셋으로 기초통계량의 값을 구해보자!</p>
+
+<h2 id="-준비물데이터세트-colab">🔧 준비물(데이터세트, colab)</h2>
+<p>먼저 데이터세트를 준비한다.<br>
+나는 kaggel <a href="https://www.kaggle.com/c/bike-sharing-demand/overview">Bike Sharing Demand</a> 대회에서 제공하는 데이터세트를 활용할 것이다.<br></p>
+
+<p>해당 대회에 대해서 간단하게 설명하자면 시간, 날씨, 기온 등의 정보를 가지고 자전거 대여 건수를 예측하는 대회이다.</p>
+
+<p>이 데이터세트를 준비한 이유는,<br></p>
+<ol>
+  <li>시계열 데이터이다. 시계열 데이터를 다루는 문제가 ADP에 자주 출제 되기 때문에 연습해 둘 필요가 있다고 생각했다.</li>
+  <li>해당 데이터를 분석한 자료가 많다. 많은 정보가 캐글에 공유되어있다.</li>
+  <li>데이터가 비교적 쉽고 간단하다. 데이터가 복잡하고 어려우면 데이터를 파악하는데 많은 시간이 든다.</li>
+</ol>
+
+<p>당분간은 이 데이터를 가지고 놀면서 ADP를 준비할 것이다.
+그리고 분석 도구로는 python(colab)을 활용할 것이다.</p>
+
+<p>colab에서 작성한 코드를 포스트할때는, 코드블럭 ‘python’ 으로 작성하였다.
+<br>
+그리고 그 코드의 output은 코드블럭 ‘text’로 작성하였다.</p>
+
+<h2 id="-데이터-분석">🐌 데이터 분석</h2>
+
+<p>본격적으로 데이터 분석을 해보자!<br>
+먼저, kaggle에서 받은 데이터세트를 구글드라이브 data 폴더에 저장하고 <br>
+colab에서 그 데이터를 불러온다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#드라이브 연동
+</span><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+<span class="n">drive</span><span class="p">.</span><span class="n">mount</span><span class="p">(</span><span class="s">'/content/drive/'</span><span class="p">)</span>
+
+<span class="c1">#작업폴더로 이동
+</span><span class="n">cd</span> <span class="s">"/content/drive/My Drive/Colab Notebooks/ADP/"</span>
+
+<span class="c1">#필요라이브러리 임포트
+</span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+
+<span class="c1">#데이터 load
+</span><span class="n">train</span><span class="o">=</span><span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"data/train.csv"</span><span class="p">)</span>
+<span class="n">test</span><span class="o">=</span><span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"data/train.csv"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="필드-설명">필드 설명</h3>
+
+<p>먼저, 데이터의 필드(속성)을 간단하게 소개하면 다음과 같다.</p>
+
+<p>datetime</p>
+<ul>
+  <li>hourly date + timestamp</li>
+</ul>
+
+<p>season</p>
+<ul>
+  <li>1 = spring,</li>
+  <li>2 = summer,</li>
+  <li>3 = fall,</li>
+  <li>4 = winter</li>
+</ul>
+
+<p>holiday</p>
+<ul>
+  <li>whether the day is considered a holiday</li>
+</ul>
+
+<p>workingday</p>
+<ul>
+  <li>whether the day is neither a weekend nor holiday</li>
+</ul>
+
+<p>weather</p>
+<ul>
+  <li>1: Clear, Few clouds, Partly cloudy, Partly cloudy</li>
+  <li>2: Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist</li>
+  <li>3: Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain +    Scattered clouds</li>
+  <li>4: Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog</li>
+</ul>
+
+<p>temp</p>
+<ul>
+  <li>temperature in Celsius</li>
+</ul>
+
+<p>atemp</p>
+<ul>
+  <li>“feels like” temperature in Celsius</li>
+</ul>
+
+<p>humidity</p>
+<ul>
+  <li>relative humidity</li>
+</ul>
+
+<p>windspeed</p>
+<ul>
+  <li>wind speed</li>
+</ul>
+
+<p>casual</p>
+<ul>
+  <li>number of non-registered user rentals initiated</li>
+</ul>
+
+<p>registered</p>
+<ul>
+  <li>number of registered user rentals initiated</li>
+</ul>
+
+<p>count</p>
+<ul>
+  <li>number of total rentals, target 변수</li>
+</ul>
+
+<h3 id="기초통계량-살펴보기">기초통계량 살펴보기</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+<p>dataframe 형태로 데이터를 불러온 뒤, 대부분 가장 먼저 입력하는 명령어는 dataframe.info()일 것이다.<br>
+아래와 같이 컬럼명, 데이터 개수, 결측치, 데이터 타입, 메모리 사용 등에 대한 간단한 정보를 얻을 수 있다.</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 10886 entries, 0 to 10885
+Data columns (total 12 columns):
+ #   Column      Non-Null Count  Dtype  
+---  ------      --------------  -----  
+ 0   datetime    10886 non-null  object 
+ 1   season      10886 non-null  int64  
+ 2   holiday     10886 non-null  int64  
+ 3   workingday  10886 non-null  int64  
+ 4   weather     10886 non-null  int64  
+ 5   temp        10886 non-null  float64
+ 6   atemp       10886 non-null  float64
+ 7   humidity    10886 non-null  int64  
+ 8   windspeed   10886 non-null  float64
+ 9   casual      10886 non-null  int64  
+ 10  registered  10886 non-null  int64  
+ 11  count       10886 non-null  int64  
+dtypes: float64(3), int64(8), object(1)
+memory usage: 1020.7+ KB
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>pandas의 dataframe에서 가장 손쉽게 기초 통계량을 확인하는 방법은, <br> dataframe.describe() 함수를 사용하는 것이다.
+아래 표와 같은 형태로, 각 컬럼별 mean,std, 분위수 등 기초통계량을 얻을 수 있다. <br>
+다만, numeric 데이터 타입만 기초통계량을 확인 할 수 있다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>index</th>
+      <th>season</th>
+      <th>holiday</th>
+      <th>workingday</th>
+      <th>weather</th>
+      <th>temp</th>
+      <th>atemp</th>
+      <th>humidity</th>
+      <th>windspeed</th>
+      <th>casual</th>
+      <th>registered</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>count</td>
+      <td>10886.0</td>
+      <td>10886.0</td>
+      <td>10886.0</td>
+      <td>10886.0</td>
+      <td>10886.0</td>
+      <td>10886.0</td>
+      <td>10886.0</td>
+      <td>10886.0</td>
+      <td>10886.0</td>
+      <td>10886.0</td>
+      <td>10886.0</td>
+    </tr>
+    <tr>
+      <td>mean</td>
+      <td>2.5066139996325556</td>
+      <td>0.02856880396839978</td>
+      <td>0.6808745177291935</td>
+      <td>1.418427337865148</td>
+      <td>20.230859819952173</td>
+      <td>23.65508405291192</td>
+      <td>61.88645967297446</td>
+      <td>12.799395406945093</td>
+      <td>36.02195480433584</td>
+      <td>155.5521771082124</td>
+      <td>191.57413191254824</td>
+    </tr>
+    <tr>
+      <td>std</td>
+      <td>1.1161743093442644</td>
+      <td>0.16659885062471985</td>
+      <td>0.4661591687997421</td>
+      <td>0.6338385858190921</td>
+      <td>7.791589843987506</td>
+      <td>8.474600626484888</td>
+      <td>19.245033277394786</td>
+      <td>8.16453732683849</td>
+      <td>49.9604765726498</td>
+      <td>151.0390330819246</td>
+      <td>181.14445383028496</td>
+    </tr>
+    <tr>
+      <td>min</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.82</td>
+      <td>0.76</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <td>25%</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>13.94</td>
+      <td>16.665</td>
+      <td>47.0</td>
+      <td>7.0015</td>
+      <td>4.0</td>
+      <td>36.0</td>
+      <td>42.0</td>
+    </tr>
+    <tr>
+      <td>50%</td>
+      <td>3.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>20.5</td>
+      <td>24.24</td>
+      <td>62.0</td>
+      <td>12.998</td>
+      <td>17.0</td>
+      <td>118.0</td>
+      <td>145.0</td>
+    </tr>
+    <tr>
+      <td>75%</td>
+      <td>4.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>26.24</td>
+      <td>31.06</td>
+      <td>77.0</td>
+      <td>16.9979</td>
+      <td>49.0</td>
+      <td>222.0</td>
+      <td>284.0</td>
+    </tr>
+    <tr>
+      <td>max</td>
+      <td>4.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>41.0</td>
+      <td>45.455</td>
+      <td>100.0</td>
+      <td>56.9969</td>
+      <td>367.0</td>
+      <td>886.0</td>
+      <td>977.0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>해당 데이터의 경우 기초 통계량을 확인해서는 큰 정보를 얻지 못한다.<br>
+위에서 필자가 얻은 정보는 casual, registered, count의 경우 중앙값과 평균값 차이가 크다는 것이다. <br> 
+중앙값과 평균값 차이가 크다는 말은 데이터의 분포가 고르지 않다는 뜻이다.<br></p>
+
+<p>데이터 분석을 위해 더 확인해봐야 할 것은 서로 다른 필드들의 관계이다.<br>
+특히 종속변수와 독립변수의 관계를 파악하는 것이 중요하다.<br></p>
+
+<h3 id="연도별로-target-변수의-평균-중앙값-최대값-최소값-표준편차-등-기초-통계량-알아보기">연도별로 target 변수의 평균, 중앙값, 최대값, 최소값, 표준편차 등 기초 통계량 알아보기</h3>
+<p>특정 년, 월 별로 count 값의 평균을 알아보고자 한다. <br>
+먼저 데이터를 년, 월로 구분하고 그룹화 해야한다.
+object type의 ‘datetime’필드를 datetime type으로 변경하고, 년, 월, 일, 시간을 분리해 필드로 만들자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 데이터 타입 변경
+</span><span class="n">train</span><span class="p">[</span><span class="s">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s">'datetime'</span><span class="p">])</span>
+
+<span class="c1"># 년도, 월, 일, 시간으로 필드 분리
+</span><span class="n">train</span><span class="p">[</span><span class="s">'year'</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s">'datetime'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">year</span>
+<span class="n">train</span><span class="p">[</span><span class="s">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s">'datetime'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">month</span>
+<span class="n">train</span><span class="p">[</span><span class="s">'day'</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s">'datetime'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">month</span>
+<span class="n">train</span><span class="p">[</span><span class="s">'hour'</span><span class="p">]</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s">'datetime'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">hour</span>
+</code></pre></div></div>
+
+<p>년, 월, 일, 시간 컬럼을 생성했다.
+이제 년도별, 월별 count의 평균이 어떻게 다른지 확인해보자</p>
+
+<p>dataframe[‘col’].unique() 로 특정 컬럼에 어떤 값들이 있는지 확인한 후,
+조건절로 인덱싱하여 평균을 구할 수도 있다. 그러나 더 간단한 방법은 groupby를 활용하는 것이다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'년도:'</span><span class="p">,</span> <span class="n">train</span><span class="p">[</span><span class="s">'year'</span><span class="p">].</span><span class="n">unique</span><span class="p">())</span> <span class="c1"># 2011, 2012
+</span><span class="k">print</span><span class="p">(</span><span class="s">'2011년:'</span><span class="p">,</span> <span class="n">train</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s">'year'</span><span class="p">]</span><span class="o">==</span><span class="mi">2011</span><span class="p">][</span><span class="s">'count'</span><span class="p">].</span><span class="n">mean</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'2012년:'</span><span class="p">,</span> <span class="n">train</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s">'year'</span><span class="p">]</span><span class="o">==</span><span class="mi">2012</span><span class="p">][</span><span class="s">'count'</span><span class="p">].</span><span class="n">mean</span><span class="p">())</span>
+</code></pre></div></div>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>년도: [2011 2012]
+2011년: 144.223349317595
+2012년: 238.56094436310394
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#groupby를 활용
+</span><span class="n">train</span><span class="p">[[</span><span class="s">'year'</span><span class="p">,</span><span class="s">'count'</span><span class="p">]].</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'year'</span><span class="p">).</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>year</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2011</td>
+      <td>144.223349317595</td>
+    </tr>
+    <tr>
+      <td>2012</td>
+      <td>238.56094436310394</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>2011년도와, 2012년도의 평균값 차이가 매우 큰 것을 알 수 있다.
+하지만 평균값만을 가지고 2011년보다 2012년에 자전거 대여가 더 많았다고 판단할 수 없다.
+이상치가 평균 통계량을 왜곡할 수 있기 때문이다.<br>
+이상치가 존재하지는 않는지 확인 하거나 중앙값을 확인해 봐야한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">[[</span><span class="s">'year'</span><span class="p">,</span><span class="s">'count'</span><span class="p">]].</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'year'</span><span class="p">).</span><span class="n">median</span><span class="p">()</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>year</th>
+      <th>count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2011</td>
+      <td>111.0</td>
+    </tr>
+    <tr>
+      <td>2012</td>
+      <td>199.0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>중앙값의 차이도 매우 큰것을 알 수 있다.<br>
+이는 2011년도와 2012년도의 count 평균값 차이가 이상치때문이 아니라는 주장에 힘을 실어준다.</p>
+
+<p>조금 더 데이터를 살펴보기 위해,
+2011년도와 2012년도의 데이터 개수, count 최대값,count 최소값, count 표준편차등을 확인해보자</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'    &lt;counts&gt;'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">train</span><span class="p">[[</span><span class="s">'year'</span><span class="p">,</span><span class="s">'count'</span><span class="p">]].</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'year'</span><span class="p">).</span><span class="n">count</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'    &lt;max&gt;'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">train</span><span class="p">[[</span><span class="s">'year'</span><span class="p">,</span><span class="s">'count'</span><span class="p">]].</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'year'</span><span class="p">).</span><span class="nb">max</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'    &lt;min&gt;'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">train</span><span class="p">[[</span><span class="s">'year'</span><span class="p">,</span><span class="s">'count'</span><span class="p">]].</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'year'</span><span class="p">).</span><span class="nb">min</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'    &lt;std&gt;'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">train</span><span class="p">[[</span><span class="s">'year'</span><span class="p">,</span><span class="s">'count'</span><span class="p">]].</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'year'</span><span class="p">).</span><span class="n">std</span><span class="p">())</span>
+</code></pre></div></div>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;mean&gt;
+        casual  registered       count
+year                                  
+2011  28.73792  115.485430  144.223349
+2012  43.25000  195.310944  238.560944
+    &lt;median&gt;
+      casual  registered  count
+year                           
+2011    13.0        91.0  111.0
+2012    20.0       161.0  199.0
+    &lt;max&gt;
+      casual  registered  count
+year                           
+2011     272         567    638
+2012     367         886    977
+    &lt;min&gt;
+      casual  registered  count
+year                           
+2011       0           0      1
+2012       0           1      1
+    &lt;std&gt;
+         casual  registered       count
+year                                   
+2011  39.554419  108.847868  133.312123
+2012  57.584101  174.709050  208.114003
+</code></pre></div></div>
+<p>위 기초통계량들을 확인해보면 casual, registerd 중 registerd의 증가폭이 더 커보인다.<br>
+2012년도에 자전거 렌탈 서비스가 더 알려지면서, 가입한 사람이 증가하였다고 생각해볼 수 있다.</p>
+
+<h3 id="월-별로-target변수-기초통계량-알아보기시각화">월 별로 target변수 기초통계량 알아보기/시각화</h3>
+
+<p>year는 2개의 유니크한 값을 가지는 반면에, month는 12개의 유니크한 값을 가지기 때문에,<br>
+위에서 처럼 표로 결과를 확인하면 결과를 한눈에 파악하기 힘들다.<br>
+많은 양의 데이터를 한눈에 파악하려면 시각화를 잘 해야 한다.</p>
+
+<p>먼저, 평균값에 대해서 시각화를 해보자</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#월별 count 평균이 저장되어 있는 새로운 데이터 프레임 정의
+</span><span class="n">month_mean</span><span class="o">=</span><span class="n">train</span><span class="p">[[</span><span class="s">'month'</span><span class="p">,</span><span class="s">'count'</span><span class="p">]].</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'month'</span><span class="p">).</span><span class="n">mean</span><span class="p">(</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">month_mean</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'bar'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'month_mean'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/ADP_statistics/month_mean.PNG" alt="month_mean"></p>
+
+<p>위 막대그래프를 보면 6,7,8,9,10월에 바이크 렌탈 서비스를 이용한 고객이 많아 보인다.
+그럼 여기서 궁금한것이 하나 생긴다. 2011, 2012년도에 상관없이 위와 같은 모양의 그래프가 그려질까?</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#11년도, 12년도 따로 데이터프레임 생성
+</span><span class="n">month_mean_11</span><span class="o">=</span><span class="n">train</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s">'year'</span><span class="p">]</span><span class="o">==</span><span class="mi">2011</span><span class="p">][[</span><span class="s">'month'</span><span class="p">,</span><span class="s">'count'</span><span class="p">]].</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'month'</span><span class="p">).</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">month_mean_12</span><span class="o">=</span><span class="n">train</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s">'year'</span><span class="p">]</span><span class="o">==</span><span class="mi">2012</span><span class="p">][[</span><span class="s">'month'</span><span class="p">,</span><span class="s">'count'</span><span class="p">]].</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'month'</span><span class="p">).</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">month_mean_11</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'bar'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'month_mean_11'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/ADP_statistics/month_mean11.PNG" alt="month_mean"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">month_mean_12</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'bar'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'month_mean_12'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/ADP_statistics/month_mean12.PNG" alt="month_mean"></p>
+
+<p>그래프의 차이가 있지만, 6월 7월, 8월, 9월이 다른 달보다 count가 높은 경향이 있다!
+그렇다면 월별 날씨의 영향으로 count의 차이가 나는 것은 아닐까?라고 추측해볼 수 있다.<br></p>
+
+<h3 id="target변수-왜도-첨도-구하기">target변수 왜도 첨도 구하기</h3>
+
+<p>target변수의 기초통계량에서, mean과 median이 크게 차이가 났었다.
+target 변수의 분포를 확인해보기 위해 히스토그램을 그려보고 왜도와 첨도를 구해보자!</p>
+
+<p>왜도(Skewness) : 분포의 비대칭도를 나타내는 통계량이다. 정규분포, T분포와 같이 대칭인 분포의 경우 왜도가 0이다. <br></p>
+
+<ul>
+  <li>왼쪽으로 치우침(오른쪽 꼬리가 김) : 왜도 &gt; 0</li>
+  <li>오른쪽으로 치우침(왼쪽 꼬리가 김) : 왜도 &lt; 0</li>
+</ul>
+
+<p><img src="/assets/images/contents/ADP_statistics/skewness_0.PNG" alt="skewness" title="출처:https://dining-developer.tistory.com/17(skewness)"></p>
+
+<p>첨도(Kurtosis) : 첨도는 분포의 꼬리부분의 길이와 중앙부분의 뾰족함에 대한 정보를 제공하는 통계량이다.</p>
+
+<ul>
+  <li>정규분포 : 첨도 0(Pearson 첨도 = 3)</li>
+  <li>위로 뾰족함 : 첨도 &gt; 0</li>
+  <li>아래로 뾰족함 : 첨도 &lt; 0</li>
+</ul>
+
+<p><img src="/assets/images/contents/ADP_statistics/kutosis_0.PNG" alt="kutosis" title="출처:https://dining-developer.tistory.com/17(skewness)"></p>
+
+<p>왜도 첨도의 자세한 설명은 <a href="https://dining-developer.tistory.com/17">이 블로그</a>를 참고하자!</p>
+
+<p>pandas로 왜도와 첨도를 구하는 방법은 간단하다.<br>
+dataframe[‘col’].skew() dataframe[‘col’].kurt()를 각각 입력하면 된다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#왜도 구하기, 첨도 구하기
+</span><span class="k">print</span><span class="p">(</span><span class="s">'왜도:'</span><span class="p">,</span><span class="n">train</span><span class="p">[</span><span class="s">'count'</span><span class="p">].</span><span class="n">skew</span><span class="p">())</span> 
+<span class="k">print</span><span class="p">(</span><span class="s">'첨도:'</span><span class="p">,</span><span class="n">train</span><span class="p">[</span><span class="s">'count'</span><span class="p">].</span><span class="n">kurt</span><span class="p">())</span>
+</code></pre></div></div>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>왜도: 1.2420662117180776
+첨도: 1.3000929518398334
+</code></pre></div></div>
+<p>왜도와 첨도가 모두 1보다 큰 것을 알 수있다.<br>
+아마 분포그래프를 그리면 오른쪽 꼬리가 길고 중앙이 뾰족한 그래프가 그려질것이다.<br>
+seaborn library를 활용해 그래프를 그려보자!<br>
+seaborn의 distplot() 은 히스토그램을 그려준다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">displot</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s">'count'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/ADP_statistics/skewness.PNG" alt="skewness"></p>
+
+<p>그래프가 정규성을 보이지 않는다. 이러한 경우 학습하기전에 데이터를 정규화 해야한다.
+Skewed 되어있는 데이터를 그대로 학습시키면 꼬리 부분의 데이터가 상대적으로 학습되기 힘들기 때문이다.</p>
+
+<h2 id="-다음-이야기">🎬 다음 이야기</h2>
+<p>다음 포스트에서는, 다른 필드들을 활용해서 또 다른 기초통계량에 대해서 살펴볼 것이다.</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/book/2022/03/06/pale-blue-dot.html" title="창백한 푸른점-칼세이건">창백한 푸른점-칼세이건</a><a class="next" href="/jekyll-theme-yat/adp/2022/03/13/ADP-statistics-1.html" title="ADP-Statistics-기초통계량-2">ADP-Statistics-기초통계량-2</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/adp/2022/06/09/ADP-LinearRegressors.html" title="ADP-linear-regression">
+            ADP-linear-regression<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/06/ADP-start.html" title="ADP Study List">
+            ADP Study List<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/13/ADP-statistics-1.html" title="ADP-Statistics-기초통계량-2">
+            ADP-Statistics-기초통계량-2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/bigquery/2024/02/05/BigQuery-2.html" title="BigQuery 쿼리 필수 요소">
+            BigQuery 쿼리 필수 요소<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2024 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

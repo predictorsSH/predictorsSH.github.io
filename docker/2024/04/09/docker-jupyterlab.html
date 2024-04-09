@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>주피터랩 컨테이너화 기본 | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="주피터랩 컨테이너화 기본">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="🧑 도커 공식문서 1과 2를 공부하며 정리한 글입니다.">
+<meta property="og:description" content="🧑 도커 공식문서 1과 2를 공부하며 정리한 글입니다.">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/docker/2024/04/09/docker-jupyterlab.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/docker/2024/04/09/docker-jupyterlab.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-04-09T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="주피터랩 컨테이너화 기본">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2024-04-09T00:00:00+00:00","datePublished":"2024-04-09T00:00:00+00:00","description":"🧑 도커 공식문서 1과 2를 공부하며 정리한 글입니다.","headline":"주피터랩 컨테이너화 기본","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/docker/2024/04/09/docker-jupyterlab.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/docker/2024/04/09/docker-jupyterlab.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/contents/docker/jupyterlab/docker_jupyterlab.png)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/contents/docker/jupyterlab/docker_jupyterlab.png">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">주피터랩 컨테이너화 기본</h1>
+  <h2 class="post-subtitle">도커 활용 사례 가이드 - 주피터랩</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2024-04-09T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Apr 09, 2024
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 5 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#Docker">#Docker</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#JupyterLab">#JupyterLab</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <blockquote>
+  <p>🧑 도커 공식문서 <a href="https://docs.docker.com/guides/use-case/jupyter/">1</a>과 <a href="https://www.docker.com/blog/supercharging-ai-ml-development-with-jupyterlab-and-docker/?_gl=1*git58m*_ga*OTgyNzIxMzY1LjE3MTIxNDgyNDY.*_ga_XJWPQMJYHQ*MTcxMjY1MjAxMC41LjEuMTcxMjY1MjUwOS41MC4wLjA">2</a>를 공부하며 정리한 글입니다.</p>
+</blockquote>
+
+<p><br></p>
+<blockquote>
+  <p>Docker와 JupyterLab은 데이터 과학 작업을 더 편리하고 생산적으로 
+수행할 수 있도록 도와주는 강력한 툴이다. 특히 두가지를 동시에 사용하면 <strong>재현 가능한</strong> 데이터 과학 
+환경을 만들고 실행할 수 있다.</p>
+</blockquote>
+
+<h2 id="jupyterlab을-컨테이너화하는-이유">JupyterLab을 컨테이너화하는 이유</h2>
+
+<ul>
+  <li>컨테이너화는 서로 다른 배포에서도 JupyterLab 환경의 일관성을 유지하도록 보장한다.</li>
+  <li>컨테이너로 패키징된 JupyterLab은 운영체제에 관계 없이 notebook 환경을 다른 사람에게 쉽게 공유할 수 있다. 
+수동으로 종속성을 설치하고 환경을 구성할 필요가 없어 재현 가능한 연구 또는 작업을 공유하기가 더욱 쉬워진다.</li>
+  <li>JupyterLab 환경을 필요에 맞게 확장할 수 있다. 동시에, 여러 사용자가 JupyterLab을 사용하거나, 대규모 데이터를 처리할 때
+여러 JupyerLab 인스턴스를 실행하는 컨테이너를 쉽게 생성하고, 워크로드를 분산시킬 수 있다. 컨테이너 오케스트레이션 플랫폼을 활용하여 
+효율적으로 리소스를 관리할 수 있다.</li>
+</ul>
+
+<h2 id="jupyterlab-컨테이너-실행하기">JupyterLab 컨테이너 실행하기</h2>
+
+<p><a href="https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#selecting-an-image">JupyterLab 이미지 참고자료</a>
+<br></p>
+<blockquote>
+  <p>docker hub에는 base-notebook, scipy-notebook, tensorflow-notebook, pytorch-notebook
+등 다양한 형태의 JupyerLab 이미지가 있다. 
+포스팅에서는 base-notebook을 사용한다. base-notebook은 최소한의 기능을 가지고 있는 이미지라고 생각하면 된다.<br></p>
+</blockquote>
+
+<pre><code class="language-commandline">docker run -it --rm -p 10000:8888 -v /Users/sanghyun/my-jupyter-data:/home/jovyan/work jupyter/base-notebook
+</code></pre>
+<ul>
+  <li>–rm:  컨테이너가 종료될 때 자동으로 삭제</li>
+  <li>-it: 컨테이너를 실핼할 때 터미널 상에서 사용자와 상호작용할 수 있도록 설정</li>
+  <li>-p: 호스트와 컨테이너 포트 매핑 설정</li>
+  <li>-v: 호스트와 Docker 컨테이너 사이의 볼륨 마운트를 설정하는 데 사용, 컨테이너 내부와 데이터 공유, 컨테이너 삭제해도 공유된 데이터는 로컬에 저장.</li>
+</ul>
+
+<blockquote>
+  <p>위 명령을 실행하면 jupyter/base-notebook 이미지를 활용해서(없으면 다운로드)컨테이너를 실행할 수 있다. 
+이때, -v 옵션을 사용해 로컬의 특정 경로와 컨테이너 내부 특정 경로를 연결해 파일을 공유할 수 있도록 설정하는 것이 중요하다.
+컨테이너가 삭제되면 컨테이너 내에서 생성된 파일과 데이터가 함께 삭제된다. 그래서 컨테이너 내에서 작업한 데이터를 보존하려면 -v 옵션을 사용해 호스트와
+컨테이너간 볼륨을 마운트해야한다.<br></p>
+</blockquote>
+
+<blockquote>
+  <p>실행 후 아래와 같은 출력을 볼 수 있다.</p>
+</blockquote>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://127.0.0.1:8888/lab?token=a3e3e1a4c1bc9841fb10aead56ec7419e5dec7b38f0fe7fc
+</code></pre></div></div>
+<blockquote>
+  <p>브라우저 주소에 출력된 URL(호스트 포트인 10000으로 변경)과 토큰을 입력하면 아래와 같이 실행된 JupyterLab을 확인 할 수 있다.</p>
+</blockquote>
+
+<p><img src="/assets/images/contents/docker/jupyterlab/run.png" alt="run"></p>
+
+<h2 id="종속성-설치하기">종속성 설치하기</h2>
+
+<blockquote>
+  <p>JupyerLab에서 ipynb 파일을 열어 다음과 같은 코드를 실행시켜보자.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+
+<span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">load_iris</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">scatter</span> <span class="o">=</span> <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">iris</span><span class="p">.</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">iris</span><span class="p">.</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">iris</span><span class="p">.</span><span class="n">target</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="n">iris</span><span class="p">.</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ylabel</span><span class="o">=</span><span class="n">iris</span><span class="p">.</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span>
+   <span class="n">scatter</span><span class="p">.</span><span class="n">legend_elements</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">iris</span><span class="p">.</span><span class="n">target_names</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s">"lower right"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">"Classes"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+<blockquote>
+  <p>base-notebook 이미지에는 모듈이 없기 때문에 오류가 발생한다.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">matplotlib</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>matplotlib과 sklearn을 설치해주고 다시 코드를 실행시키면, 성공적으로 데이터를 그려내는것을 확인할 수 있다.</p>
+</blockquote>
+
+<p><img src="/assets/images/contents/docker/jupyterlab/matplotlib2.png" alt="matplotlib"></p>
+
+<h2 id="종속성을-이미지화하기-build">종속성을 이미지화하기 (build)</h2>
+
+<blockquote>
+  <p>컨테이너를 삭제하고 컨테이너를 다시 실행시키면 종속성 설치를 다시 해야 한다. 이를 피하기 위해 종속성을 Docker 이미지에 포함시킬 수 있다.
+대부분 파이썬 패키지 관리를 위해 requirements.txt 또는 poetry를 많이 사용한다. 이번에는 requirements.txt를 사용하자.
+주피터 notebook에 아래 커맨드를 입력하면, 현재 프로젝트에서 사용중인 패키지를 requirements 포맷으로 출력한다.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="nb">list</span> <span class="o">--</span><span class="nb">format</span><span class="o">=</span><span class="n">freeze</span> <span class="o">&gt;</span> <span class="n">requirements</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>컨테이너를 실행할때 -v 옵션으로 볼륨 설정한 경로로 가서 requirements.txt 파일을 확인하자.</p>
+</blockquote>
+
+<p><img src="/assets/images/contents/docker/jupyterlab/require.png" alt="require"></p>
+
+<blockquote>
+  <p>나중에 설치한 scikit-learn도 잘 들어가있는 것을 확인할 수 있다.</p>
+</blockquote>
+
+<h3 id="dockerfile-작성">Dockerfile 작성</h3>
+
+<blockquote>
+  <p>이제 이미지 빌드에 필요한 도커 파일을 아래와 같이 작성하자.</p>
+</blockquote>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FROM jupyter/base-notebook
+COPY requirements /home/jovyan/work
+RUN python -m pip install --no-cache -r work/requirements
+</code></pre></div></div>
+<blockquote>
+  <p>base-notebook 이미지를 기반으로 새로운 이미지를 생성할 수 있는 도커파일이다.
+RUN 명령어를 통해 컨테이너 실행시 requirements.txt에 포함된 패키지를 자동으로 설치한다.</p>
+</blockquote>
+
+<h3 id="이미지-빌드">이미지 빌드</h3>
+
+<blockquote>
+  <p>이제 위에서 작성한 Dockerfile을 활용해 이미지를 생성하자.
+아래 명령어를 입력하면, myjupyer라는 이름의 새로운 이미지가 생성된다.</p>
+</blockquote>
+
+<pre><code class="language-commandline">docker image build -t myjupyter
+</code></pre>
+
+<blockquote>
+  <p>아래 명령어로 이미지 리스트를 확인할 수 있다.</p>
+</blockquote>
+
+<pre><code class="language-commandline">docker images
+</code></pre>
+
+<blockquote>
+  <p>이제 생성한 이미지를 사용해 컨테이너를 실행하고</p>
+</blockquote>
+
+<pre><code class="language-commandline">docker run -it --rm -p 10000:8888 -v /Users/sanghyun/my-jupyter-data:/home/jovyan/work myjupyter
+</code></pre>
+
+<blockquote>
+  <p>아래 코드를 다시 실행시켜보자.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+
+<span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">load_iris</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">scatter</span> <span class="o">=</span> <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">iris</span><span class="p">.</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">iris</span><span class="p">.</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">iris</span><span class="p">.</span><span class="n">target</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="nb">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="n">iris</span><span class="p">.</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ylabel</span><span class="o">=</span><span class="n">iris</span><span class="p">.</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span>
+   <span class="n">scatter</span><span class="p">.</span><span class="n">legend_elements</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">iris</span><span class="p">.</span><span class="n">target_names</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s">"lower right"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">"Classes"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>패키지 설치 없이 잘 동작하는 것을 알 수 있다.</p>
+</blockquote>
+
+<p><img src="/assets/images/contents/docker/jupyterlab/run2.png" alt="run"></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/bigquery/2024/02/05/BigQuery-2.html" title="BigQuery 쿼리 필수 요소">BigQuery 쿼리 필수 요소</a><span></span>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/adp/2022/06/09/ADP-LinearRegressors.html" title="ADP-linear-regression">
+            ADP-linear-regression<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/paper/2023/10/31/paper-An-overview-of-gradient-descent-optimization-algorithms.html" title="An overview of gradient descent optimization algorithms">
+            An overview of gradient descent optimization algorithms<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/ai-theory/2023/12/04/VAE.html" title="생성형 AI, VAE의 Loss Function">
+            생성형 AI, VAE의 Loss Function<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-2.html" title="hugging face tutorials 2">
+            hugging face tutorials 2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2024 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
