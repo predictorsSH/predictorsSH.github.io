@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>hugging face tutorials 1 | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="hugging face tutorials 1">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="1.들어가기 전에 hugging face는 사전학습 모델들과, 토크나이저들을 쉽게 불러와서 사용할 수 있다. 실제로 roberta 모델을 문서 분류 태스크에 사용해봤었는데 그 기능은 정말 강력했다…. 코드 몇줄이면 여러가지 task에 대해 추론까지 할 수 있다..">
+<meta property="og:description" content="1.들어가기 전에 hugging face는 사전학습 모델들과, 토크나이저들을 쉽게 불러와서 사용할 수 있다. 실제로 roberta 모델을 문서 분류 태스크에 사용해봤었는데 그 기능은 정말 강력했다…. 코드 몇줄이면 여러가지 task에 대해 추론까지 할 수 있다..">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/code-example/2023/01/13/hugging-face-tutorials.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/code-example/2023/01/13/hugging-face-tutorials.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-01-13T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="hugging face tutorials 1">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2023-01-13T00:00:00+00:00","datePublished":"2023-01-13T00:00:00+00:00","description":"1.들어가기 전에 hugging face는 사전학습 모델들과, 토크나이저들을 쉽게 불러와서 사용할 수 있다. 실제로 roberta 모델을 문서 분류 태스크에 사용해봤었는데 그 기능은 정말 강력했다…. 코드 몇줄이면 여러가지 task에 대해 추론까지 할 수 있다..","headline":"hugging face tutorials 1","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/code-example/2023/01/13/hugging-face-tutorials.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/code-example/2023/01/13/hugging-face-tutorials.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/banners/squirrel.jpg)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/banners/squirrel.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">hugging face tutorials 1</h1>
+  <h2 class="post-subtitle">pipelines for inference</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2023-01-13T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Jan 13, 2023
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 7 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#huggingface">#huggingface</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#tutorial">#tutorial</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%EB%B2%88%EC%97%AD">#번역</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="1들어가기-전에">1.들어가기 전에</h2>
+<p>hugging face는 사전학습 모델들과, 토크나이저들을 쉽게 불러와서 사용할 수 있다.<br>
+실제로 roberta 모델을 문서 분류 태스크에 사용해봤었는데 그 기능은 정말 강력했다….<br>
+코드 몇줄이면 여러가지 task에 대해 추론까지 할 수 있다..</p>
+
+<p>hugging face를 더 잘, 제대로 사용하기 위해서 시간 날때 Docs를 꼼곰하게 읽어보려고한다.<br></p>
+
+<h2 id="2추론을-위한-파이프라인">2.추론을 위한 파이프라인</h2>
+
+<p>pipeline().을 사용하면 모든 언어, 비전, 음성 그리고 다중모드 작업에서 <a href="https://huggingface.co/models">transformer의 모델들을</a> 간단하게 사용할 수 있다.
+특정 양식에 대한 경험이 없고, 모델의 코드에 익숙하지 않아도 쉽게 추론에 사용할 수 있다.<br>
+이 튜토리얼에서는  다음을 알려준다.</p>
+
+<ul>
+  <li>추론을 위한 pipeline 사용</li>
+  <li>특정 토크나이저 또는 모델 사용</li>
+  <li>오디오 비전 및 다중 모드 작업에 파이프라인 사용</li>
+</ul>
+
+<h2 id="2-1파이프라인-사용">2-1파이프라인 사용</h2>
+
+<p>각 태스크에는 연결된 pipeline()이 있지만, 모든 태스크별 파이프라인을 포함하는 pipeline 추상화를 사용하는 것이 더 간단하다.
+그 pipline().은 태스트 추론을 위한 기본모델과 전처리 클래스를 자동으로 로드한다.<br></p>
+
+<p>pipline().을 생성하고 추론 작업을 지정한다.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipeline</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="s">"text-generation"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>입력 텍스트를 pipline().에 전달한다.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">generator</span><span class="p">(</span><span class="s">"Three Rings for the Elven-kings under the sky, Seven for the Dwarf-lords in their halls of stone"</span><span class="p">)</span>
+<span class="p">[{</span><span class="s">'generated_text'</span><span class="p">:</span> <span class="s">'Three Rings for the Elven-kings under the sky, Seven for the Dwarf-lords in their halls of stone, Seven for the Iron-priests at the door to the east, and thirteen for the Lord Kings at the end of the mountain'</span><span class="p">}]</span>
+</code></pre></div></div>
+<p>만약 입력 텍스트가 둘 이상이라면, list 형식으로 전달한다.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">generator</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s">"Three Rings for the Elven-kings under the sky, Seven for the Dwarf-lords in their halls of stone"</span><span class="p">,</span>
+        <span class="s">"Nine for Mortal Men, doomed to die, One for the Dark Lord on his dark throne"</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">)</span> 
+</code></pre></div></div>
+<p>매개변수 또한 존재하는데, 예를들어 둘 이상의 출력을 생성하려면, 아래와 같이 num_return_sequences 매개변수로 설정할 수 있다.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">generator</span><span class="p">(</span>
+    <span class="s">"Three Rings for the Elven-kings under the sky, Seven for the Dwarf-lords in their halls of stone"</span><span class="p">,</span>
+    <span class="n">num_return_sequences</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>  
+</code></pre></div></div>
+<h2 id="2-2모델-토크나이저-선택">2-2모델, 토크나이저 선택</h2>
+
+<p>pipeline().은 허브의 모든 모델(트랜스포머 제공 모델)들을 받을 수 있다. 적절한 모델을 선택하면 해당하는 AutoModelFor와 AutoTokenizer 클래스를 로드한다.
+예를 들어, causal language 모델링 태스크를 위해 AutoModelForCasualLM 클래스를 로드한다.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModelForCausalLM</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"distilgpt2"</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"distilgpt2"</span><span class="p">)</span>
+</code></pre></div></div>
+<p>태스크를 위한 pipline().을 생성하고, 로드했던 모델과 토크나이저를 지정한다.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">pipleine</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="s">"text-generation"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">)</span>
+</code></pre></div></div>
+<p>입력 텍스트를 pipline().에 전달하여 텍스트를 생성한다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">generator</span><span class="p">(</span>
+    <span class="s">"Three Rings for the Elven-kings under the sky, Seven for the Dwarf-lords in their halls of stone"</span>
+<span class="p">)</span>  
+<span class="p">[{</span><span class="s">'generated_text'</span><span class="p">:</span> <span class="s">'Three Rings for the Elven-kings under the sky, Seven for the Dwarf-lords in their halls of stone, Seven for the Dragon-lords (for them to rule in a world ruled by their rulers, and all who live within the realm'</span><span class="p">}]</span>
+</code></pre></div></div>
+<h2 id="2-3오디오-파이프라인">2-3오디오 파이프라인</h2>
+<p>pipline().은 오디오 분류와 자동 음성 인식과 같은 오디오 태스크도 지원한다.</p>
+
+<p>예를들어, 이 오디오 클립애 대해 감정분류를 해보자.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="n">torch</span><span class="p">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s">"hf-internal-testing/librispeech_asr_demo"</span><span class="p">,</span> <span class="s">"clean"</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s">"validation"</span><span class="p">)</span>
+<span class="n">audio_file</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">"audio"</span><span class="p">][</span><span class="s">"path"</span><span class="p">]</span>
+</code></pre></div></div>
+<p>audio classification 모델을 허브에서 찾아 pipeline().에 지정해준다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">audio_classifier</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span>
+    <span class="n">task</span><span class="o">=</span><span class="s">"audio-classification"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s">"ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+<p>오디오 파일을 pipeline()에 전달해준다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">preds</span> <span class="o">=</span> <span class="n">audio_classifier</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="p">[{</span><span class="s">"score"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">pred</span><span class="p">[</span><span class="s">"score"</span><span class="p">],</span> <span class="mi">4</span><span class="p">),</span> <span class="s">"label"</span><span class="p">:</span> <span class="n">pred</span><span class="p">[</span><span class="s">"label"</span><span class="p">]}</span> <span class="k">for</span> <span class="n">pred</span> <span class="ow">in</span> <span class="n">preds</span><span class="p">]</span>
+<span class="n">preds</span>
+<span class="p">[{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.1315</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'calm'</span><span class="p">},</span> <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.1307</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'neutral'</span><span class="p">},</span> <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.1274</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'sad'</span><span class="p">},</span> <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.1261</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'fearful'</span><span class="p">},</span> <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.1242</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'happy'</span><span class="p">}]</span>
+</code></pre></div></div>
+<h2 id="2-4비전-파이프라인">2-4비전 파이프라인</h2>
+<p>비전 태스크에도 동일하게 pipline()응 사용한다.<br>
+태스크를 지정하고 이미지를 분류기에 전달한다.이미지는 링크 또는 로컬 경로 일 수도 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vision_classifier</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="s">"image-classification"</span><span class="p">)</span>
+
+<span class="n">preds</span> <span class="o">=</span> <span class="n">vision_classifier</span><span class="p">(</span>
+  <span class="n">images</span><span class="o">=</span><span class="s">"https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/pipeline-cat-chonk.jpeg"</span>
+<span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="p">[{</span><span class="s">"score"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">pred</span><span class="p">[</span><span class="s">"score"</span><span class="p">],</span> <span class="mi">4</span><span class="p">),</span> <span class="s">"label"</span><span class="p">:</span> <span class="n">pred</span><span class="p">[</span><span class="s">"label"</span><span class="p">]}</span> <span class="k">for</span> <span class="n">pred</span> <span class="ow">in</span> <span class="n">preds</span><span class="p">]</span>
+<span class="n">preds</span>
+<span class="p">[{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.4335</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'lynx, catamount'</span><span class="p">},</span> <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.0348</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'cougar, puma, catamount, mountain lion, painter, panther, Felis concolor'</span><span class="p">},</span> <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.0324</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'snow leopard, ounce, Panthera uncia'</span><span class="p">},</span> <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.0239</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'Egyptian cat'</span><span class="p">},</span> <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.0229</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'tiger cat'</span><span class="p">}]</span>
+</code></pre></div></div>
+<p>위 코드를 보면, pipline에 model을 설정해주지 않았다.<br>
+model을 설정하지 않으면, 디폴트로 특정 모델을 사용하게 되는데, 이러한 방법(model 설정 x)은 추천하지 않는다고 한다.<br>
+실제 위 코드를 실행시키면 아래와 같은 경고를 받게 된다.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>No model was supplied, defaulted to google/vit-base-patch16-224 and revision 5dca96d (https://huggingface.co/google/vit-base-patch16-224).
+Using a pipeline without specifying a model name and revision in production is not recommended.
+</code></pre></div></div>
+
+<h2 id="2-5다중-모드-파이프-라인">2-5다중 모드 파이프 라인</h2>
+<p>pipeline().은 둘 이상의 양식을 지원한다. 예를 들어, 시각적 질의 응답 태스크는 텍스트와 이미지를 결합한다.<br></p>
+
+<p>예를 들어보자,</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">image</span> <span class="o">=</span> <span class="s">"https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/pipeline-cat-chonk.jpeg"</span>
+<span class="n">question</span> <span class="o">=</span> <span class="s">"Where is the cat?"</span>
+</code></pre></div></div>
+<p>vqa 파이프라인을 만들고 이미지와 질문을 전달한다.<br></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vqa</span> <span class="o">=</span> <span class="n">pipline</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="s">"vqa"</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">vqa</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">,</span> <span class="n">question</span><span class="o">=</span><span class="n">question</span><span class="p">)</span>
+<span class="n">preds</span> 
+<span class="p">[{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.44030314683914185</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'lynx, catamount'</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.034334052354097366</span><span class="p">,</span>
+  <span class="s">'label'</span><span class="p">:</span> <span class="s">'cougar, puma, catamount, mountain lion, painter, panther, Felis concolor'</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.03214803338050842</span><span class="p">,</span>
+  <span class="s">'label'</span><span class="p">:</span> <span class="s">'snow leopard, ounce, Panthera uncia'</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.02353905513882637</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'Egyptian cat'</span><span class="p">},</span>
+ <span class="p">{</span><span class="s">'score'</span><span class="p">:</span> <span class="mf">0.02303415723145008</span><span class="p">,</span> <span class="s">'label'</span><span class="p">:</span> <span class="s">'tiger cat'</span><span class="p">}]</span>
+</code></pre></div></div>
+<p>자연어, 비전, 다중태스크까지 추론과정이 코드 몇줄이면 끝나다. <br>
+정말 굉장하다.</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/code-example/2022/12/05/Image-segmentation-with-a-U-Net-like-architecture.html" title="(keras) Image segmentation with a U-Net-like architecture">(keras) Image segmentation with a U-Net-like...</a><a class="next" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-2.html" title="hugging face tutorials 2">hugging face tutorials 2</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-3.html" title="hugging face tutorials 3">
+            hugging face tutorials 3<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/adp/2022/04/07/ADP-statistics-3.html" title="ADP-Statistics-가설검정">
+            ADP-Statistics-가설검정<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/daily/2023/12/31/2023-Retrospective.html" title="Goodbye 2023, Welcome 2024">
+            Goodbye 2023, Welcome 2024<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-2.html" title="hugging face tutorials 2">
+            hugging face tutorials 2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

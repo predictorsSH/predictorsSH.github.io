@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>생성형 AI, VAE의 Loss Function | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="생성형 AI, VAE의 Loss Function">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="VAE를 공부하고 정리하였습니다. 아래의 자료들을 참고하였습니다.">
+<meta property="og:description" content="VAE를 공부하고 정리하였습니다. 아래의 자료들을 참고하였습니다.">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/ai-theory/2023/12/04/VAE.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/ai-theory/2023/12/04/VAE.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-12-04T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="생성형 AI, VAE의 Loss Function">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2023-12-04T00:00:00+00:00","datePublished":"2023-12-04T00:00:00+00:00","description":"VAE를 공부하고 정리하였습니다. 아래의 자료들을 참고하였습니다.","headline":"생성형 AI, VAE의 Loss Function","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/ai-theory/2023/12/04/VAE.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/ai-theory/2023/12/04/VAE.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/banners/sea-gec.jpg)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/banners/sea-gec.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">생성형 AI, VAE의 Loss Function</h1>
+  <h2 class="post-subtitle">VAE</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2023-12-04T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Dec 04, 2023
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 6 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#DataScience">#DataScience</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#AI">#AI</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#loss">#loss</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#function">#function</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#deeplearning">#deeplearning</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#generator">#generator</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p>VAE를 공부하고 정리하였습니다.  아래의 자료들을 참고하였습니다.</p>
+
+<p>참고 자료</p>
+
+<ul>
+  <li><a href="https://www.youtube.com/watch?v=GbCAwVVKaHY">강남우 교수님 유투브 강의 영상</a></li>
+  <li><a href="https://www.youtube.com/watch?v=rNh2CrTFpm4&t=2192s">오토인코더의 모든것 - 2/3</a></li>
+  <li>만들면서 배우는 생성 AI (도서)</li>
+</ul>
+
+<p>주요 내용</p>
+<ul>
+  <li>loss function</li>
+  <li>reparameteric trick</li>
+</ul>
+
+<h2 id="생성형-모델링">생성형 모델링</h2>
+
+<p>Variational AutoEncoder(VAE)는 생성형 AI다. 생성형 AI를 만든다는 것은 수학적으로 어떤 의미일까?
+먼저 더 익숙한 모델인 판별 모델의 수학적인 정의를 살펴보자. 판별 모델을 만든다는 것은 p(y|x)를 추정하겠다는 의미다.
+샘플 x가 주어졌을때 레이블 y의 확률을 모델링 하는 것이 판별 모델링의 목표이다.
+생성모델은 레이블이 없다. 생성 모델은 샘플 데이터 자체를 관측할 확률을 모델링 하는 것이 목표다.
+즉, p(x)를 추정하는 모델을 만드는 것이 생성 모델링이다.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>💡 판별 모델링 : p(y|x) 추정, 샘플 데이터 x가 주어졌을때 레이블 y를 관측할 확률을 모델링
+💡 생성 모델링 : p(x) 추정, 샘플 데이터를 관측할 확률을 모델링
+</code></pre></div></div>
+
+<h2 id="vae의-목적-함수">VAE의 목적 함수</h2>
+
+<p>그럼 생성형 AI인 VAE는 어떻게 모델링 할 수 있을까?
+먼저 VAE는 latent factors z 가 주어졌을때, 그 z로 부터 이미지 x를 생성하는 것이 목적이다. 
+AE(오토인코더)의 디코더를 떠올리면 된다.</p>
+
+<p><img src="/assets/images/contents/VAE/Untitled.png" alt="VAE 목표 그림"></p>
+
+<p>생성형 AI는 p(x)를 모델링 하는 것이라고 했다. VAE도 마찬가지로 p(x)를 모델링 해야한다.<br>
+위 그림에서 z의 확률 분포를 p(z)라 하고, z가 주어졌을 때 x의 조건부 확률분포가 p(x|z)라고 하자. 
+그럼 우리가 추정할 p(x)는 다음과 같이 표현 할 수있다.</p>
+
+<p>$$
+p(x) = \int p(z)p(x|z) dz
+$$</p>
+
+<p>그런데 이 때 우리는 실제 학습 데이터가 관측될 확률(가능도)을 최대로 하는 확률 분포 p(x) (data likelihood) 를 추정하고 싶을 것이다. 
+즉, 아래 수식을 최대화 하는 파라미터 <strong>θ를 찾는 것이 VAE(디코더)의 진짜 목표가 된다.</strong></p>
+
+<p>\begin{aligned}
+Maximize \; likelihood \; training \;  data \\ p_{\theta}(x) = \int p_{\theta}(z)p_{\theta}(x|z) dz
+\end{aligned}</p>
+
+<p>위 식에서 p_θ(x|z)는 디코더 네트워크에 해당하고,
+p_θ(z)는 가우시안 분포로 가정한다. 그런데 p_θ(x)모든 z에 대해서 적분 하는 것은 불가능하다.
+보통 이럴경우 몬테카를로 방법을 사용해 근사하려고 한다. 즉 z에 대해 적분하는 것이아니라, 
+랜덤하게 생성된 z에 대해서 Σp_θ(z)p_θ(x|z)를 구하는 것이다.
+하지만 이것 또한 계산하기 힘들다.
+미니배치마다 z를 샘플링하면서 θ를 업데이트 해야하기 때문에 계산 비용이 너무 많이 든다.</p>
+
+<p>이 문제를 해결하기위해 인코더가 필요하다. 
+인코더는 x가 주어졌을 때 z의 확률 분포 실제 사후 확률 p_θ(z|x)를 근사화하는 네트워크다. 
+그 인코더를 q_Φ(z|x)라고 정의하자.</p>
+
+<p><img src="/assets/images/contents/VAE/Untitled%20(1).png" alt="Untitled"></p>
+
+<p>먼저 p_θ(z|x)를 사용해서 p_θ(x)를
+다시 표현하면 아래와 같이 표현할 수 있다.</p>
+
+<p>$$
+p_{\theta}(x) = {p_{\theta}(x|z)p_{\theta}(x) \over p_{\theta}(z|x)}
+$$</p>
+
+<p>그럼 지금까지 내용을 정리하면, 
+우리는 인코더와 디코더 네트워크를 활용해서 위 식의 값을 높이는 쪽으로 θ를 업데이트 해야한다.
+직관적으로 위 식의 네거티브를 loss function으로 사용해서 네트워크를 학습 시킬 수 있겠다 싶다.</p>
+
+<p>아래는 위 식에서 VAE의 loss function을 유도하는 과정이다. (강남우 교수님 강의 슬라이드)</p>
+
+<p><img src="/assets/images/contents/VAE/Untitled%20(2).png" alt="Untitled"></p>
+
+<p>먼저 우리가 최대화 하려고 하는 data likelihood에 log를 취해주고, 
+z가 인코더의 확률분포를 따를때의 기대값 형태로 표현하였다.
+log는 단조 증가 함수기 때문에, 우리는 똑같은 최대화 문제를 푸는 것이다.</p>
+
+<p>그리고 해당 식을 쭉 풀어쓰면, 
+마지막 등식에서 두번째, 세번째 텀에 KL Divergence 형태가 나온다. 
+즉 두번째 텀은 q(z|x)와 p(z)의 거리, 세번째 텀은  q(z|x)와 p(z|x)의 거리를 나타낸다.</p>
+
+<p>마지막 등식의 첫번째 텀을 살펴보면 z가 주어졌을때 x가 나올 확률 즉, 
+디코드를 통해 데이터기 복원될 수 있도록 하는 것처럼 보이고</p>
+
+<p>두번째 텀은 인코더를 통과한 z가 z의 사전확률과 비슷하게 만드는 것처럼 보인다.</p>
+
+<p>마지막 세번째 텀에서 p_θ(z|x)는 우리가 계산할 수 없다.
+다만 KL Divergence는 항상 0보다 크므로, 세번째 텀은 0보다 큰 것을 알 수 있다.
+그래서 VAE는 첫번째, 두번째 텀을 lower bound로 정하고 두 텀을 maximize 할 수 있도록 학습한다.
+여기서 첫번째 두번째 텀을 ELBO(Variational Lower Bound)라고 부른다.</p>
+
+<p>결국 최종적인 Loss Function은 다음과 같이 정의된다. (min으로 바꿔주면서 -를 붙여줌)</p>
+
+<p>$$
+arg \, min_{\theta, \phi} \sum_{i} - \mathbb{E}_{q_{z}(z|x_{i})}[log(p(x_{i}|g_{\theta}(z)))] + KL(q_{\phi}(z|x_{i})||p(z))
+$$</p>
+
+<p>Loss function에서 첫번째 텀은 Reconstruction Error이다. 
+디코더가 z를 x_i로 복원할 확률을 Maximize하기 때문이다. 그리고 두번째 텀은 Regularization인데, 내가 가정한 z의 사전 분포가, x_i가 인코더를 통과해서 나온 출력값의 분포가 비슷하게 만들기 때문이다.</p>
+
+<h2 id="vae-optimization">VAE Optimization</h2>
+
+<p>이제 loss function을 어떻게 최적화할 수 있는지 알아보자.</p>
+
+<h3 id="regularization">Regularization</h3>
+
+<p>먼저 Refularizarion을 최적화하기 위해 두가지 가정이 필요하다.</p>
+
+<p>첫번째 가정은 인코더의 출력의 확률 분포가 multivariate gaussian 분포를 따르는 것이다.</p>
+
+<p>$$
+가정 1 \, \, \, \, q_{\phi}(z|x_{i})\sim N(\mu,\sigma_{i}^{2}I)
+$$</p>
+
+<p>두번쨰 가정은 z의 사전확률 분포는 multivariate normal 분포를 따르는 것이다.</p>
+
+<p>$$
+가정 2 \, \, \, \, q_{z}(z|x_{i})\sim N(0,I)
+$$</p>
+
+<p>위 두 가정을 가지고 KLD를 계산하면 다음과 같이 식이 정리된다.</p>
+
+<p>$$
+KL(q_{\phi}(z|x)||p(z)) = {1 \over 2}\sum_{j=1}^J (\mu_{i,j}^2 + \sigma_{i,j}^2 - ln(\sigma_{i,j}^2) -1)
+$$</p>
+
+<p>VAE의 인코더는 위 KL을 계산하기 위해서 µ, σ를 출력한다. 
+인코더가 출력한 µ, σ는 위 KL 식이 최소화하도록 
+즉, q_Φ가 normal distribution을 따르도록 업데이트 될 수 있다.</p>
+
+<p><img src="/assets/images/contents/VAE/Untitled%20(3).png" alt="Untitled"></p>
+
+<h3 id="reconstruction-error">Reconstruction Error</h3>
+
+<p>Reconstruction Errorsm 텀은 아래와 같이 표현할 수 있다. 기대값이니 확률을 곱해주고 적분해준 것과 같다.</p>
+
+<p>$$
+\mathbb{E}_{q_{z}(z|x_{i})}[log(p(x_{i}|g_{\theta}(z)))] = \int log(p_{\theta}(x_{i}|z))q_{\phi}(z|x_{i})dz
+$$</p>
+
+<p>그런데 여기서 모든 z에 대해서 적분하는것은 불가능하다. 
+위에서도 언급했지만, 이럴때 몬테카를로 방법을 사용할 수 있다.</p>
+
+<p>$$
+\approx {1 \over L}\sum_{z^{i,j}}log(p_{\theta}(x_{i}|z^{i,j}))
+$$</p>
+
+<p>z를 매우 많이 샘플링해서 디코더를 태워 log(p_θ(x|z))를 구하고 평균을 내면 기대값과 비슷해 질 것이라고 가정하는 것이다.
+그런데  이 방식은 딥러닝에 알맞지 않다. 계산량이 너무 많아지기 때문이다. 
+그래서 많은 양의 z를 sampling하지 않고 하나의 z 샘플만 사용한다.</p>
+
+<p>$$
+sampling \,\, z^{i,j} \sim N(\mu, \sigma_{i}^2I)
+$$</p>
+
+<p>그런데 여기 또 문제가 있다. 하나의 z를 샘플링한다고 하자. 
+랜덤한 샘플링에는 역전파를 쓸 수 없다는 것이다. 랜덤하게 추출하는데 어떻게 미분을 할 수 있겠는가.
+따라서 우리는 sampling 과정을 미분 가능한 식으로 바꿔야한다. 
+그 식은 아래와 같고 Reparametrization Trick이라고 부른다.</p>
+
+<p>$$
+sampling \,\, z^{i,j} = \mu_{i} + \sigma_{i}\odot\epsilon \\ \epsilon \sim N(0,I)
+$$</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>💡 실제 tensorflow에서 표준 정규 분포에서 랜덤한 값을 추출할때 
+내부적으로 Reparametrization Trick을 사용한다고 한다.
+</code></pre></div></div>
+
+<p>이때까지의 흐름을 정리하면 아래와 같다.</p>
+
+<p>\begin{aligned}
+\mathbb{E}_{q_{z}(z|x_{i})}[log(p(x_{i}|g_{\theta}(z)))] = \int log(p_{\theta}(x_{i}|z))q_{\phi}(z|x_{i})dz \ \approx {1 \over L}\sum_{z^{i,l}}log(p_{\theta}(x_{i}|z^{i,l})) \ \approx log(p_{\theta}(x_{i}|z^i))
+\end{aligned}</p>
+
+<p>그럼 이제 마지막 근사식 log liklighood를 풀면된다. 
+log liklihood는 디코더의 출력이다. 
+우리는 출력의 분포가 베르누이 분포를 가정할 것인지, 가우시안을 가정할 것인지에 따라
+loss function을 Cross Entropy 또는 MSE를 사용한다.</p>
+
+<p>출력이 베르누이를 따른다고 가정하고, log liklihood를 풀면 결국 Cross Entropy가 나온다.</p>
+
+<p>\begin{aligned}
+log(p_{\theta}(x_{i}|z^{i})) = log\prod_{j=1}^{D} p_{\theta}(x_{i,j}|z^i) \\ = \sum_{j=1}^D log(p_{\theta}(x_{i,j}|z^i) \\ =\sum_{j=1}^Dlog \, p_{i,j}^{x_{i,j}}(1-p_{i,j})^{1-x_{i,j}} \\ = \sum_{j=1}^{D} x_{i,j}logp_{i,j}+(1-x_{i,j})log(1-p_{i,j})
+\end{aligned}</p>
+
+<p>그리고 디코더 출력을 가우시안으로 가정할 수 도 있다. 그렇게 되면 Reconstruction Error는 MSE가 된다.</p>
+
+<h2 id="정리">정리</h2>
+
+<p>아래 그림은 VAE 의 전체적인 동작 과정을 보여준다. (강남우 교수님의 강의 슬라이드)</p>
+
+<p><img src="/assets/images/contents/VAE/Untitled%20(4).png" alt="Untitled"></p>
+
+<p>배웠던 내용을 간단하게 정리해보자</p>
+
+<ol>
+  <li>x 가 encoder에 투입되면, 인코더는 평균과 표준편차를 출력해준다.</li>
+  <li>출력된 평균과 표준편차에서 z를 샘플링한다. 이때 reparametrization trick을 사용한다.</li>
+  <li>z를 디코더에 투입하면, 디코더는 x’를 출력한다.</li>
+  <li>x 와 x’의 Reconstruction 에러와 인코더(q)가 표쥰 정규분포와 가까워지도록 하는 Regularization 에러를 계산한다.</li>
+  <li>에러를 역전파해 인코더와 디코더의 파라미터를 업데이트한다.</li>
+</ol>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/eda/2023/11/27/Dacon-Daegu-Traffic-Accidnet-Damage-Prediction-EDA.html" title="대구 교통사고 피해예측 EDA 코드">대구 교통사고 피해예측 EDA 코드</a><a class="next" href="/jekyll-theme-yat/code-example/2023/12/19/GPT-text-generation-from-scratch-with-KerasNLP.html" title="(keras) GPT text generation from scratch with KerasNLP">(keras) GPT text generation from scratch...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/practice/2022/06/23/transformer_code.html" title="Transformer 구현 코드로 이해하기 - Positional Encodig">
+            Transformer 구현 코드로 이해하기 - Positional Encodig<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/10/30/initialize.html" title="가중치 초기화를 상수로 하면 안되는 이유">
+            가중치 초기화를 상수로 하면 안되는 이유<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/06/10/recurrent_neuralnet.html" title="Recurrent neural network">
+            Recurrent neural network<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/code-example/2024/01/22/time-series-anomaly-detection-ae.html" title="(keras) Timeseries anomaly detection using an Autoencoder">
+            (keras) Timeseries anomaly detection using an Autoencoder<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

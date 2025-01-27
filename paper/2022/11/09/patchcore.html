@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Towards Total Recall in Industrial Anomaly Detection | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="Towards Total Recall in Industrial Anomaly Detection">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Towards Total Recall in Industrial Anomaly Detection">
+<meta property="og:description" content="Towards Total Recall in Industrial Anomaly Detection">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/paper/2022/11/09/patchcore.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/paper/2022/11/09/patchcore.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-11-09T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Towards Total Recall in Industrial Anomaly Detection">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2022-11-09T00:00:00+00:00","datePublished":"2022-11-09T00:00:00+00:00","description":"Towards Total Recall in Industrial Anomaly Detection","headline":"Towards Total Recall in Industrial Anomaly Detection","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/paper/2022/11/09/patchcore.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/paper/2022/11/09/patchcore.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/banners/book.jpg)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/banners/book.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Towards Total Recall in Industrial Anomaly Detection</h1>
+  <h2 class="post-subtitle">PatchCore paper</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2022-11-09T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Nov 09, 2022
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 7 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#DataScience">#DataScience</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#paper">#paper</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#patchcore">#patchcore</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="towards-total-recall-in-industrial-anomaly-detection">Towards Total Recall in Industrial Anomaly Detection</h2>
+
+<h2 id="paper"><a href="https://arxiv.org/abs/2106.08265">[paper]</a></h2>
+
+<p><img src="/assets/images/contents/paper/patchcore/patchcore.PNG" alt="PatchCore"></p>
+
+<h2 id="abstract">Abstract</h2>
+
+<p>이 논문의 과제는 정상데이터만을 사용하여 모델을 학습시키는 cold-start 문제이다.
+문제 해결을 위한 가장 좋은 접근법은, ImageNet으로 데이터를 Embedding하고 outlier detection 모델로 이상치를 탐지 하는 것이다.<br></p>
+
+<p>논문에서는 PatchCore를 제안한다.
+PatchCore는 Detection과, localization 에서 최첨단 성능을 달성하면서도 빠른 추론시간을 제공한다. *Localization(object가 이미지안의 어디 위치에 있는지 알려주는 것) 
+PatchCore는 image-level anomaly detection AUROC 점수를 99.6%까지 달성한다.</p>
+
+<h2 id="indroduction">Indroduction</h2>
+<p>인간의 적은수의 정상데이터만 보고도, 정상적인 편차를 가진 데이터와 이상치를 구별할 수 있다. 
+이 연구는, 컴퓨터가 인간처럼 적은 수의 산업용 부품 이미지만를 보고 부품의 결함을(이상치) 탐지하는 문제를 다룬다.<br></p>
+
+<p>기존 cold-start 문제에 대한 연구들은, 오토인코딩, GANs 와 같은 모델들로, 정상적인 분포를 학습하는 것에 의존한다.
+최근에는 target distribution 대한 adaptation 없이(target에 대한 추가적인 학습 없이?), ImageNet 분류모델로부터 common deep representations 활용하는 것이 제안된다.<br>
+<br>
+adaptation 생략하고도, 이러한 모델들은 강력한 이상탐지와 결함(이상치)의 localization에 강한 성능을 보여준다.<br>
+이런 테크닉의 핵심은 deep feature representations의 multiscale nature를 이용하면서, 테스트 샘플과 정상 샘플간의 특징을 대조하는 것이다.<br>
+<br>
+그런데 미묘한 결함(이상치)의 segmentation은  높은 해상도(high resolution, 입력층에 가까움) feature로 커버가 되는 반면, 
+구조적 편차와 전체 이미지 수준의 Anomaly Detection은 더 높은 추상화 feature(입력층으로부터 멈)에 의해 커버된다.
+따라서 이 접근법의 본질적인 단점은, target에 대한 adaption이 없기 때문에 높은 추상화 수준에서 특징을 대조하는 것에 대한 신뢰도가 제한적이라는 것이다.<br>
+(ImageNet의 높은 추상 특징은 산업환경에서 요구되는 추상 특징과 매우 다름. 사전학습모델을 학습시킨 데이터와 산업용 부품 이미지가 매우 다름)</p>
+
+<p>이 논문에서는 아래 3가지 효과적인 해결방법으로써 PatchCore를 제안한다. <br></p>
+<ol>
+  <li>maximizing nominal information available at test time. 테스트시 정상 정보를 가능한 최대화.</li>
+  <li>reducing biases towards ImageNet classes. ImageNet의 클래스로부터의 편향을 감소.</li>
+  <li>retaining high inference speeds. 높은 추론 속도 유지</li>
+</ol>
+
+<p>PatchCore는 mid-level network feature를 사용하여, ImageNet classes에 대한 편향을 최소화 하면서도, 
+이웃 지역에 대한 feature aggregation은 충분히 공간적 문맥 정보를 보장한다. 
+PatcCore는 광범위한 memory bank를 통해 테스트시 사용 가능한 정상 정보를 최적으로 활용할 수 있다.
+마지막으로, PatchCore는 추출된 패치 레벨 memory bank의 중복성을 줄이고, 스토리지 메모리와 추론 시간 단축을 위해 greedy coreset subsampling을 추가로 도입하였다.
+따라서 PatcCore는 매우 실용적이고, 산업에 활용하기에 매력적이다.</p>
+
+<h2 id="related-works">Related Works</h2>
+
+<p>PatchCore에서 사용한 특정 컴포넌트들은 SPADE와 PaDiM과 관련이 있다.<br>
+SPADE는 정상 feature의 memory bank를 사용하며, 정상 feature는 사전 학습된 모델에서 추출된다. 그리고 pixel-level과 image-level의 이상탐지에 대해 분리된 접근을 한다.<br>
+PatchCore또한 유사하게 memory bank를 사용하지만, neighbourhoodaware patch-level features를 사용하는 차이가 있다.<br>
+그리고 memory bank는 서브 샘플링된 coreset이다.(정상 데이터를 전부 활용하지 않음). 이 방식은 더 높은 성능에 더 낮은 추론 비용을 보장한다.<br>
+<br>
+PatchCore의 image-level의 anomaly detection과 segmentation 두가지 모두에 대한 patch-level의 접근은 PaDiM과 연관이있다.<br>
+PaDiM은 patch-level의 anomaly detection을, 각 patch의 고유한 마할라노비스 거리를 측정하는 것으로 제한하는 반면에, PatchCore는 모든 패치들에 대해 동일하게 접근 가능한
+효율적인 patch-feature memory bank를 활용한다. (아직 무슨말인지 모르겠지만, 아래 Method를 보며 이해해보자!)</p>
+
+<h2 id="method">Method</h2>
+
+<p>PatchCore는 아래 3가지 단계로 구성된다.<br></p>
+<ul>
+  <li>Locally aware patch features</li>
+  <li>Coreset-reduced patch-feature memory bank</li>
+  <li>Anomaly Detection with PatchCore</li>
+</ul>
+
+<h3 id="locally-aware-path-features-adaption-average-pooling-strides1">Locally aware path features (adaption average pooling, strides=1)</h3>
+
+<p><img src="/assets/images/contents/paper/patchcore/local_patch_feature.PNG" alt="local patch feature"></p>
+
+<p>PatchCore는 사전학습 모델 $\phi$ 을 사용하는데, 특정 네트워크 층의 feature가 중요한 역할을 한다.<br>
+이미지 $x_i$에 대해, $\phi$의 j번째층 피처를 아래와 같이 표현할 수 있다.<br></p>
+
+<p>$$ \phi_{i,j} = \phi_j(x_i) $$</p>
+
+<p>피처를 선택하는 한가지 방법으로, 마지막 층의 피처 표현을 사용할 수 있다.
+그러나 두가지 문제가 발생한다. <br>
+<br>
+첫째, 정상데이터의 지역적 정보를 잃는다<br>
+둘째,  ImageNet의 마지막 층 feature들은 이미지 분류 작업에 편향되어있으며, 이는 연구에서의 anomaly detection 작업과, 평가된 데이터 세트와는 많은 차이가 있다.<br>
+따라서 PatchCore는 midel-level 피처 표현을 사용한다.<br>
+<br>
+patch 표현을 공식화 하기 위해서 이전에 소개한 표현법을 확장한다.<br>
+피처맵 $\phi_{i,j}$이  depth $c^*$  heigjt $h^*$ 그리고 width $w^*$ 세가지 차원을 가진 텐서라고 가정하자<br>
+우리는, 특정 포지션(h,w)에서의 C차원 피처 slice를 아래와 같이 표현 할 수 있다.<br></p>
+
+<p>$$ \phi_{i,j}(h,w) = \phi_j(x_i,h,w) $$</p>
+
+<p>$$ h \in { 1,….h^* } $$</p>
+
+<p>$$ w \in { 1,….w^* } $$</p>
+
+<p>이상적으로는, 각 patch-representation은 지역 공간 변화에 강한 의미가 있는 anomalous context를 설명하기 위해 충분히 큰 receptive field size로 동작해야한다.<br>
+이는 신경망의 더 깊은 층으로 내려가면 가능하지만, 그렇게 되면 ImageNet에 편향되고, 당면한 이상탐지 작업과는 덜 관련이 있는 반면, 교육 비용이 증가하고, feature map 해상도는 떨어진다.<br></p>
+
+<p>따라서, 공간 해상도를 잃지 않으면서, 작은 spatial deviations에 견고한 feature를 구성하기 위해 local neighbourhood aggregation 기법을 사용한다.<br>
+먼저, neighbourhood feature vectors를 아래와 같이 정의하고,</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>$$ N_p^{(h,w)} = {(a,b)</td>
+      <td>a \in [h - [p/2], …,h+[p/2]], b \in [w-[p/2], …, w+[[p/2]]]} $$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>neighbourhood aggregation을 통한  local neigh locally aware features 는 아래와 같이 표현할 수 있다.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>$$ \phi_{i,j}(N_p^{(h,w)}) = f_{agg}({\phi_{i,j}(a,b)</td>
+      <td>(a,b) \in N_p^{(h,w)}}) $$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>$f_{agg}$는 aggregation function을 의미하며 PatchCore에서는 adaptive average pooling을 사용한다.
+adaptive average pooling은 각각의 feature map에 대해 local smoothing을 해주는 것과 비슷하다.<br>
+(복잡하게 설명했지만, 결국 feature map에 adaptive average pooling을 해준다는 말?)</p>
+
+<p>aggregation을 하고나면, d차원의 single representation이 생성되며 이 representation은 모든 쌍의 (h,w)에 대해 수행되므로 feature map의 해상도를 유지한다.<br>
+하나의 feature map $ \phi_{i,j} $ 에 대한 locally aware patch-feature 집합은 <br></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>$$ P_{s,p}(\phi_{i,j}(N_p^{(h,w)}))</td>
+      <td>h,w \, mod \, s = 0, h&lt;h^<em>, w&lt;w^</em>, h, w \in \mathbb{N} $$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>이렇게 표현한다.<br>
+s는 strinding 파라미터로, 해당 연구에서는 1로 설정하였다.<br></p>
+
+<p>경험적으로 여러층의 feature map을 사용하는 것이 benefit을 제공하는 것을 알아냈다.
+그러나 feature의 generality와 공간 해상도를 유지하기 위해, PatchCore는 오직 두 intermediate feature를 사용한다.<br></p>
+
+<p>j+1 번째 층에서 추출한 patch-features는 j층의 patch-features보다 size가 작기 때문에 bilinearly rescaling을하여 size를 맞춰준 후 합쳐준다.<br></p>
+
+<p>결과적으로 모든 정상 샘플에 대한, PatchCore memory bank $M$ 은 간단하게 정의된다.<br></p>
+
+<p>$$ M = 	\bigcup_{x_i \in x_n} P_{s,p}(\phi_j(x_i)). $$</p>
+
+<h3 id="coreset_reduced-patch-feature-memory-bank">Coreset_reduced patch-feature memory bank</h3>
+
+<p><img src="/assets/images/contents/paper/patchcore/subsampling.PNG" alt="코어샘플링"></p>
+
+<p>데이터 수가 많아지면, memory bank는 매우 커지고 추론 속도와 요구되는 storage 또한 매우 커진다.<br>
+이 연구에서는, coreset subsampling 메커니즘을 사용하여 M의 크기를 줄여서, 성능을 유지하면서 추론 시간을 줄였다.</p>
+
+<p>개념적으로, corset selection의 목표는 A에 대한 과제를 더 빠르게 해결하기 위한 subset $S \subset A$를 찾는 것이다.
+본 연구에서는 반복적인 greedy approximation를 제안한다. 그리고 코어세트 선택시간을 더 줄이기 위해 존슨 린덴스트라우스 정리를 활용하여 M의 차원을 줄인다.<br></p>
+
+<p><img src="/assets/images/contents/paper/patchcore/core_sampling_algorithms.PNG" alt="코어샘플링"></p>
+
+<h3 id="anomaly-detection-with-patchcore">Anomaly Detection with PatchCore</h3>
+
+<p><img src="/assets/images/contents/paper/patchcore/detection.PNG" alt="탐지"></p>
+
+<p>테스트 이미지 $x^{test}$ 에 대한 image-level의 score를 계산한다.<br>
+scores는 $P(x^{test} = P_{s,p}(\phi(x^{test})))$ 에 있는 test patch-features들과<br>
+메모리 뱅크에 있는 respective nearest neighbour $m^*$ in $M$의 최대 거리이다.</p>
+
+<p><img src="/assets/images/contents/paper/patchcore/score.PNG" alt="탐지"></p>
+
+<p>score를 얻기위해서 우리는 scaling $w$ 를 사용한다. <br>
+만약 memory bank features가 anomaly candidate $m^{test}$ 그리고 $m^*$와 가깝다면, 그들은  neighbouring samples과는 멀고, 그렇기 때문에 이미 정상적이지 않은 존재다.<br>
+그래서 우리는 test patch feature $m^*$에 대한 $M$ 안에서의 b nearest patch-feature $N_b(m^*)$ 와 함께 score를 증가시킨다.</p>
+
+<p><img src="/assets/images/contents/paper/patchcore/final_score.PNG" alt="탐지"></p>
+
+<p>우리는 이러한 방식이 단순 최대 패치 거리보다 더 강력하다는 것을 발견했다.<br></p>
+
+<p>Segmentation map은 다음 step으로 계산된다.<br>
+계산된 patch anomlay score를 각각의 공간 위치를 기반으로 재조정하고, 원본 이미지와 해상도를 맞추기 위해 upsclae한다. 이때 bi-linear interpolation 기법을 사용한다.<br>
+추가적으로 우리는 Gaussian of kernel를 사용하여 결과를 smooothed 했다.</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/ai-theory/2022/10/30/initialize.html" title="가중치 초기화를 상수로 하면 안되는 이유">가중치 초기화를 상수로 하면 안되는 이유...</a><a class="next" href="/jekyll-theme-yat/code-example/2022/11/20/2022-image-classification-from-scratch.html" title="(keras) image classification from scratch">(keras) image classification from scratch</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/paper/2023/04/19/paper-DeepLearningForAnomalyDetectioninTimeSeriesData.html" title="Anomaly Detection in Time-Series Data">
+            Anomaly Detection in Time-Series Data<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/paper/2022/03/23/Grad-CAM.html" title="간단하게 Grad-CAM 논문 이해하기">
+            간단하게 Grad-CAM 논문 이해하기<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/ai-theory/2023/12/04/VAE.html" title="생성형 AI, VAE의 Loss Function">
+            생성형 AI, VAE의 Loss Function<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/code-example/2022/12/05/Image-segmentation-with-a-U-Net-like-architecture.html" title="(keras) Image segmentation with a U-Net-like architecture">
+            (keras) Image segmentation with a U-Net-like architecture<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

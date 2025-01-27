@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>(keras) Image classification via fine-tuning with EfficientNet | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="(keras) Image classification via fine-tuning with EfficientNet">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="dark 모드로 보기">
+<meta property="og:description" content="dark 모드로 보기">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/code-example/2022/11/23/efficientnet_finetuning.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/code-example/2022/11/23/efficientnet_finetuning.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-11-23T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="(keras) Image classification via fine-tuning with EfficientNet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2022-11-23T00:00:00+00:00","datePublished":"2022-11-23T00:00:00+00:00","description":"dark 모드로 보기","headline":"(keras) Image classification via fine-tuning with EfficientNet","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/code-example/2022/11/23/efficientnet_finetuning.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/code-example/2022/11/23/efficientnet_finetuning.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/banners/solar-system.jpg)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/banners/solar-system.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">(keras) Image classification via fine-tuning with EfficientNet</h1>
+  <h2 class="post-subtitle">keras example - EfficientNet Fine-tuning</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2022-11-23T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Nov 23, 2022
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 23 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#EfficientNet">#EfficientNet</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#Fine-tuning">#Fine-tuning</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#transfer-learning">#transfer-learning</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p><strong>dark 모드로 보기</strong> <br></p>
+
+<p><a href="https://keras.io/examples/vision/image_classification_efficientnet_fine_tuning/">keras code example</a> 을 따라 공부한 것 입니다.</p>
+
+<h2 id="description">Description</h2>
+
+<p>EfficientNet을 사용한 개 사진 분류<br>
+사전학습된 가중치를 활용하지 않을때와, 활용하였을때를 비교</p>
+
+<h2 id="introductionwhat-is-efficientnet">Introduction:what is EfficientNet</h2>
+
+<p>EfficinetNet은 2019년 <a href="https://arxiv.org/abs/1905.11946">논문</a>에서 소개되었다.
+<br>이미지 분류와 전이학습 모두에서 SOTA에 도달한 모델들중 하나이다.</p>
+
+<h2 id="케라스-efficientnet-구현">케라스 EfficientNet 구현</h2>
+
+<p>TF2.3 이후로 EfficientNet이 tf.keras와 함께 제공된다.<br></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tensorflow.keras.applications</span> <span class="kn">import</span> <span class="n">EfficientNetB0</span>
+<span class="n">moidel</span> <span class="o">=</span> <span class="n">EfficientNetB0</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s">'imagenet'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>위 모델은 (224,224,3)크기의 이미지를 입력으로 받고, 입력 값의 크기는 [0,255] 범위이다.<br> Normalization은 모델 내부에 포함되어있다.</p>
+
+<p>ImageNet으로 EfficientNet을 학습시키는 것은 매우 큰 리소스와,<br>
+모델 아키텍처에는 포함되어있지 않은 몇몇 기술들을 필요로 한다.
+따라서 Keras의 구현은 기본적으로 사전학습된 가중치를 로드한다.</p>
+
+<p>아래 B0에서 B7까지 모델들의 입력 shape은 전부 다르다.<br></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Base model</th>
+      <th>resolution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>EfficientNetB0</td>
+      <td>224</td>
+    </tr>
+    <tr>
+      <td>EfficientNetB1</td>
+      <td>240</td>
+    </tr>
+    <tr>
+      <td>EfficientNetB2</td>
+      <td>260</td>
+    </tr>
+    <tr>
+      <td>EfficientNetB3</td>
+      <td>300</td>
+    </tr>
+    <tr>
+      <td>EfficientNetB4</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>EfficientNetB5</td>
+      <td>456</td>
+    </tr>
+    <tr>
+      <td>EfficientNetB6</td>
+      <td>528</td>
+    </tr>
+    <tr>
+      <td>EfficientNetB7</td>
+      <td>600</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>전이학습을 하고자 할때, Keras는 최상위 레이어를 제거하는 옵션을 제공한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">EfficientNetB0</span><span class="p">(</span><span class="n">include_top</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s">'imagenet'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>이 옵션은 마지막 Dense 레이어를 제외한다.<br>
+마지막 레이어를 사용자 정의 레이어로 대체하면, EfficientNet을 특징 추출기로 활용할 수 있게된다.</p>
+
+<p>drop_connect_rate는 학습시 확률적으로 layer를 스킵하는 옵션이다.<br>
+해당 옵션은 finetuning에서 정규화를 돕는다. 로드된 가중치에는 영향을 미치지 않는다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">EfficientNetB0</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s">'imagenet'</span><span class="p">,</span> <span class="n">drop_connect_rate</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="예제--staford-dog분류를-위한-efficientnetb0">예제 : Staford Dog분류를 위한 EfficientNetB0</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IMG_SIZE</span> <span class="o">=</span> <span class="mi">224</span>
+</code></pre></div></div>
+
+<h2 id="setup-and-data-loading">Setup and Data loading</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="n">tfds</span>
+
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
+
+<span class="n">dataset_name</span> <span class="o">=</span> <span class="s">"stanford_dogs"</span>
+<span class="p">(</span><span class="n">ds_train</span><span class="p">,</span> <span class="n">ds_test</span><span class="p">),</span> <span class="n">ds_info</span> <span class="o">=</span> <span class="n">tfds</span><span class="p">.</span><span class="n">load</span><span class="p">(</span>
+    <span class="n">dataset_name</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="p">[</span><span class="s">"train"</span><span class="p">,</span><span class="s">"test"</span><span class="p">],</span> <span class="n">with_info</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+
+<span class="n">NUM_CLASSES</span> <span class="o">=</span> <span class="n">ds_info</span><span class="p">.</span><span class="n">features</span><span class="p">[</span><span class="s">"label"</span><span class="p">].</span><span class="n">num_classes</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Downloading and preparing dataset 778.12 MiB (download: 778.12 MiB, generated: Unknown size, total: 778.12 MiB) to ~/tensorflow_datasets/stanford_dogs/0.2.0...
+
+
+Dl Completed...: 0 url [00:00, ? url/s]
+
+
+Dl Size...: 0 MiB [00:00, ? MiB/s]
+
+
+Dl Completed...: 0 url [00:00, ? url/s]
+
+
+Dl Size...: 0 MiB [00:00, ? MiB/s]
+
+
+Extraction completed...: 0 file [00:00, ? file/s]
+
+
+Generating splits...:   0%|          | 0/2 \[00:00&lt;?, ? splits/s]
+
+
+Generating train examples...:   0%|          | 0/12000 \[00:00&lt;?, ? examples/s]
+
+
+Shuffling ~/tensorflow\_datasets/stanford\_dogs/0.2.0.incompleteG6P1KZ/stanford\_dogs-train.tfrecord\*...:   0%|  …
+
+
+Generating test examples...:   0%|          | 0/8580 \[00:00&lt;?, ? examples/s]
+
+
+Shuffling ~/tensorflow\_datasets/stanford\_dogs/0.2.0.incompleteG6P1KZ/stanford\_dogs-test.tfrecord\*...:   0%|   …
+
+
+Dataset stanford_dogs downloaded and prepared to ~/tensorflow_datasets/stanford_dogs/0.2.0. Subsequent calls will reuse this data.
+</code></pre></div></div>
+
+<p>이미지가 다양한 크기를 가지고 있을때. 우리는 크기를 조정해야한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+
+<span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">IMG_SIZE</span><span class="p">,</span> <span class="n">IMG_SIZE</span><span class="p">)</span>
+<span class="n">ds_train</span> <span class="o">=</span> <span class="n">ds_train</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">image</span><span class="p">,</span><span class="n">label</span> <span class="p">:</span> <span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">size</span><span class="p">),</span> <span class="n">label</span><span class="p">))</span>
+<span class="n">ds_test</span> <span class="o">=</span> <span class="n">ds_test</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">image</span><span class="p">,</span><span class="n">label</span> <span class="p">:</span> <span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">size</span><span class="p">),</span> <span class="n">label</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="데이터-시각화">데이터 시각화</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c1"># 라벨에 대한 정보는 tfds를 로드할때 함께 가져온 ds_info.features['label']
+</span><span class="k">def</span> <span class="nf">format_label</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+  <span class="n">string_label</span> <span class="o">=</span> <span class="n">ds_info</span><span class="p">.</span><span class="n">features</span><span class="p">[</span><span class="s">'label'</span><span class="p">].</span><span class="n">int2str</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">string_label</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"-"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ds_train</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="mi">9</span><span class="p">)):</span>
+  <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">numpy</span><span class="p">().</span><span class="n">astype</span><span class="p">(</span><span class="s">"uint8"</span><span class="p">))</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">format_label</span><span class="p">(</span><span class="n">label</span><span class="p">)))</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">"off"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/keras-examples/Image%20classification%20via%20fine-tuning%20with%20EfficientNet/Image%20classification%20via%20fine-tuning%20with%20EfficientNet_16_0.png" alt="png"></p>
+
+<h2 id="데이터-증강">데이터 증강</h2>
+
+<p>전처리 layers API를 활용하여 이미지 증강을 할 수 있다.<br>
+아래 Sequential model은 분류 모델을 빌드할때 하나의 부품으로 사용할 수 있고<br>
+분류 모델에 입력하기전, 데이터를 전처리하는 기능으로 활용할수도 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">layers</span>
+<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+
+
+<span class="n">img_augmentation</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">(</span>
+    <span class="p">[</span>
+     <span class="n">layers</span><span class="p">.</span><span class="n">RandomRotation</span><span class="p">(</span><span class="n">factor</span><span class="o">=</span><span class="mf">0.15</span><span class="p">),</span>
+    <span class="c1">#  layers.RandomTranslation(height_factor=0.3, width_factor=0.3), # warning 발생
+</span>     <span class="n">layers</span><span class="p">.</span><span class="n">RandomFlip</span><span class="p">(),</span>
+    <span class="c1"># layers.RandomContrast(factor=0.1), # warning 발생
+</span>    <span class="p">],</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">"img_augmentation"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">ds_train</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">aug_img</span> <span class="o">=</span> <span class="n">img_augmentation</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">aug_img</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">numpy</span><span class="p">().</span><span class="n">astype</span><span class="p">(</span><span class="s">"uint8"</span><span class="p">))</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">format_label</span><span class="p">(</span><span class="n">label</span><span class="p">)))</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">"off"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/keras-examples/Image%20classification%20via%20fine-tuning%20with%20EfficientNet/Image%20classification%20via%20fine-tuning%20with%20EfficientNet_20_0.png" alt="png"></p>
+
+<h2 id="입력-데이터-준비">입력 데이터 준비</h2>
+
+<p>입력 데이터와 데이터 증강이 올바르게 동작하는지 확인하기 위해, 훈련 데이터 세트를 준비하자.<br></p>
+
+<p>입력 데이터의 크기는 IMG_SIZE로 표준화 되고 label은 one-hot 인코딩된다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">input_preprocess</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+  <span class="n">label</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">NUM_CLASSES</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span>
+
+<span class="c1"># num_parallel_calls : 병렬처리
+</span><span class="n">ds_train</span> <span class="o">=</span> <span class="n">ds_train</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">input_preprocess</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">AUTOTUNE</span><span class="p">)</span> 
+
+<span class="n">ds_train</span> <span class="o">=</span> <span class="n">ds_train</span><span class="p">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">drop_remainder</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">ds_train</span> <span class="o">=</span> <span class="n">ds_train</span><span class="p">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">AUTOTUNE</span><span class="p">)</span>
+
+<span class="c1"># 왜 test에서는 병렬처리와, prefetch를 사용하지 않는가?
+</span><span class="n">ds_test</span> <span class="o">=</span> <span class="n">ds_test</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">input_preprocess</span><span class="p">)</span>
+<span class="n">ds_test</span> <span class="o">=</span> <span class="n">ds_test</span><span class="p">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">drop_remainder</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="모델-학습">모델 학습</h2>
+
+<h3 id="사전학습된-가중치를-활용하지-않음">사전학습된 가중치를 활용하지 않음</h3>
+
+<p>원하는 데이터 세트에서 EfficientNet을 쉽게 교육할 수 있다.<br>
+그러나 소규모 데이터 세트, 특히 해상도가 낮은 데이터 세트에서 EfficientNet을 교육하게되면 과대적합이라는 중대한 과제에 직면할 것이다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tensorflow.python.distribute.distribute_lib</span> <span class="kn">import</span> <span class="n">Strategy</span>
+<span class="kn">from</span> <span class="nn">keras.applications</span> <span class="kn">import</span> <span class="n">EfficientNetB0</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">tpu</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="n">cluster_resolver</span><span class="p">.</span><span class="n">TPUClusterResolver</span><span class="p">.</span><span class="n">connect</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Device:"</span><span class="p">,</span> <span class="n">tpu</span><span class="p">.</span><span class="n">master</span><span class="p">())</span>
+    <span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="n">TPUStrategy</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">ValueError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Not connected to a TPU runtime. Using CPU/GPU strategy"</span><span class="p">)</span>
+    <span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">distribute</span><span class="p">.</span><span class="n">MirroredStrategy</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Not connected to a TPU runtime. Using CPU/GPU strategy
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">strategy</span><span class="p">.</span><span class="n">scope</span><span class="p">():</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">layers</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">IMG_SIZE</span><span class="p">,</span> <span class="n">IMG_SIZE</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">img_augmentation</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">EfficientNetB0</span><span class="p">(</span><span class="n">include_top</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">NUM_CLASSES</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># weights=None으로 사전학습된 가중치를 활용하지 않음
+</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span>
+        <span class="n">optimizer</span><span class="o">=</span><span class="s">"adam"</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">"categorical_crossentropy"</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">"accuracy"</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<span class="n">model</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">40</span>  
+<span class="n">hist</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ds_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="n">ds_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_1 (InputLayer)        [(None, 224, 224, 3)]     0         
+                                                                 
+ img_augmentation (Sequentia  (None, 224, 224, 3)      0         
+ l)                                                              
+                                                                 
+ efficientnetb0 (Functional)  (None, 120)              4203291   
+                                                                 
+=================================================================
+Total params: 4,203,291
+Trainable params: 4,161,268
+Non-trainable params: 42,023
+_________________________________________________________________
+Epoch 1/40
+187/187 [==============================] - 160s 753ms/step - loss: 4.9565 - accuracy: 0.0144 - val_loss: 5.0062 - val_accuracy: 0.0058
+Epoch 2/40
+187/187 [==============================] - 139s 744ms/step - loss: 4.5999 - accuracy: 0.0244 - val_loss: 4.9292 - val_accuracy: 0.0124
+Epoch 3/40
+187/187 [==============================] - 137s 735ms/step - loss: 4.4523 - accuracy: 0.0290 - val_loss: 4.8505 - val_accuracy: 0.0248
+Epoch 4/40
+187/187 [==============================] - 137s 731ms/step - loss: 4.3081 - accuracy: 0.0422 - val_loss: 4.6877 - val_accuracy: 0.0384
+Epoch 5/40
+187/187 [==============================] - 137s 732ms/step - loss: 4.1785 - accuracy: 0.0567 - val_loss: 4.6191 - val_accuracy: 0.0504
+Epoch 6/40
+187/187 [==============================] - 137s 735ms/step - loss: 4.0775 - accuracy: 0.0671 - val_loss: 4.7597 - val_accuracy: 0.0532
+Epoch 7/40
+187/187 [==============================] - 138s 737ms/step - loss: 3.9805 - accuracy: 0.0799 - val_loss: 6.0232 - val_accuracy: 0.0557
+Epoch 8/40
+187/187 [==============================] - 139s 741ms/step - loss: 3.8893 - accuracy: 0.0890 - val_loss: 4.4315 - val_accuracy: 0.0740
+Epoch 9/40
+187/187 [==============================] - 139s 742ms/step - loss: 3.8050 - accuracy: 0.1037 - val_loss: 4.6189 - val_accuracy: 0.0613
+Epoch 10/40
+187/187 [==============================] - 138s 740ms/step - loss: 3.7085 - accuracy: 0.1167 - val_loss: 4.0406 - val_accuracy: 0.0887
+Epoch 11/40
+187/187 [==============================] - 138s 740ms/step - loss: 3.6150 - accuracy: 0.1298 - val_loss: 4.6661 - val_accuracy: 0.0577
+Epoch 12/40
+187/187 [==============================] - 138s 740ms/step - loss: 3.5536 - accuracy: 0.1411 - val_loss: 4.0313 - val_accuracy: 0.0898
+Epoch 13/40
+187/187 [==============================] - 139s 741ms/step - loss: 3.4707 - accuracy: 0.1545 - val_loss: 3.6367 - val_accuracy: 0.1307
+Epoch 14/40
+187/187 [==============================] - 138s 740ms/step - loss: 3.3695 - accuracy: 0.1735 - val_loss: 3.9461 - val_accuracy: 0.1187
+Epoch 15/40
+187/187 [==============================] - 138s 738ms/step - loss: 3.2879 - accuracy: 0.1842 - val_loss: 3.6254 - val_accuracy: 0.1372
+Epoch 16/40
+187/187 [==============================] - 138s 738ms/step - loss: 3.1810 - accuracy: 0.2030 - val_loss: 4.1067 - val_accuracy: 0.1144
+Epoch 17/40
+187/187 [==============================] - 138s 737ms/step - loss: 3.0913 - accuracy: 0.2193 - val_loss: 3.3958 - val_accuracy: 0.1740
+Epoch 18/40
+187/187 [==============================] - 138s 736ms/step - loss: 3.0052 - accuracy: 0.2346 - val_loss: 3.4114 - val_accuracy: 0.1771
+Epoch 19/40
+187/187 [==============================] - 138s 739ms/step - loss: 2.9131 - accuracy: 0.2544 - val_loss: 3.4924 - val_accuracy: 0.1793
+Epoch 20/40
+187/187 [==============================] - 145s 777ms/step - loss: 2.8408 - accuracy: 0.2673 - val_loss: 3.5303 - val_accuracy: 0.1908
+Epoch 21/40
+187/187 [==============================] - 152s 811ms/step - loss: 2.8333 - accuracy: 0.2711 - val_loss: 3.6293 - val_accuracy: 0.1744
+Epoch 22/40
+187/187 [==============================] - 139s 741ms/step - loss: 2.6987 - accuracy: 0.2982 - val_loss: 3.6174 - val_accuracy: 0.1559
+Epoch 23/40
+187/187 [==============================] - 138s 736ms/step - loss: 2.6453 - accuracy: 0.3068 - val_loss: 3.1899 - val_accuracy: 0.2283
+Epoch 24/40
+187/187 [==============================] - 138s 739ms/step - loss: 2.5140 - accuracy: 0.3340 - val_loss: 3.2601 - val_accuracy: 0.2253
+Epoch 25/40
+187/187 [==============================] - 139s 741ms/step - loss: 2.4188 - accuracy: 0.3481 - val_loss: 3.2684 - val_accuracy: 0.2245
+Epoch 26/40
+187/187 [==============================] - 143s 763ms/step - loss: 2.3152 - accuracy: 0.3705 - val_loss: 3.5892 - val_accuracy: 0.2081
+Epoch 27/40
+187/187 [==============================] - 144s 767ms/step - loss: 2.2335 - accuracy: 0.3922 - val_loss: 3.5665 - val_accuracy: 0.2116
+Epoch 28/40
+187/187 [==============================] - 143s 762ms/step - loss: 2.1507 - accuracy: 0.4083 - val_loss: 3.4929 - val_accuracy: 0.2211
+Epoch 29/40
+187/187 [==============================] - 146s 779ms/step - loss: 2.0838 - accuracy: 0.4290 - val_loss: 3.5268 - val_accuracy: 0.2077
+Epoch 30/40
+187/187 [==============================] - 150s 804ms/step - loss: 1.9571 - accuracy: 0.4567 - val_loss: 3.5302 - val_accuracy: 0.2305
+Epoch 31/40
+187/187 [==============================] - 142s 757ms/step - loss: 1.8434 - accuracy: 0.4834 - val_loss: 3.8229 - val_accuracy: 0.2126
+Epoch 32/40
+187/187 [==============================] - 141s 753ms/step - loss: 1.7469 - accuracy: 0.5015 - val_loss: 3.9446 - val_accuracy: 0.1999
+Epoch 33/40
+187/187 [==============================] - 140s 750ms/step - loss: 1.6506 - accuracy: 0.5284 - val_loss: 3.9985 - val_accuracy: 0.2070
+Epoch 34/40
+187/187 [==============================] - 142s 758ms/step - loss: 1.5429 - accuracy: 0.5558 - val_loss: 4.8466 - val_accuracy: 0.1489
+Epoch 35/40
+187/187 [==============================] - 142s 759ms/step - loss: 1.4759 - accuracy: 0.5702 - val_loss: 4.2296 - val_accuracy: 0.2046
+Epoch 36/40
+187/187 [==============================] - 141s 754ms/step - loss: 1.3492 - accuracy: 0.6023 - val_loss: 4.2922 - val_accuracy: 0.2023
+Epoch 37/40
+187/187 [==============================] - 138s 740ms/step - loss: 1.3395 - accuracy: 0.6047 - val_loss: 4.3639 - val_accuracy: 0.2059
+Epoch 38/40
+187/187 [==============================] - 138s 737ms/step - loss: 1.1424 - accuracy: 0.6636 - val_loss: 4.2533 - val_accuracy: 0.2256
+Epoch 39/40
+187/187 [==============================] - 138s 738ms/step - loss: 1.0554 - accuracy: 0.6862 - val_loss: 4.5947 - val_accuracy: 0.2123
+Epoch 40/40
+187/187 [==============================] - 138s 736ms/step - loss: 0.9880 - accuracy: 0.7020 - val_loss: 4.7215 - val_accuracy: 0.2043
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">pyplot</span>
+
+<span class="k">def</span> <span class="nf">plot_hist</span><span class="p">(</span><span class="n">hist</span><span class="p">):</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">"accuracy"</span><span class="p">])</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">"val_accuracy"</span><span class="p">])</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"model accuracy"</span><span class="p">)</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"accuracy"</span><span class="p">)</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"epoch"</span><span class="p">)</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">"train"</span><span class="p">,</span><span class="s">"validation"</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s">"upper left"</span><span class="p">)</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_hist</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/keras-examples/Image%20classification%20via%20fine-tuning%20with%20EfficientNet/Image%20classification%20via%20fine-tuning%20with%20EfficientNet_28_0.png" alt="png"></p>
+
+<p>모델 정확도가 매우 느리게 상승하는 것을 볼 수 있고, 검증 정확도는 해당 모델이 과대적합 되고 있음을 보여준다.</p>
+
+<h3 id="사전학습-가중치를-활용한-전이학습">사전학습 가중치를 활용한 전이학습</h3>
+
+<p>최상위 레이어를 제외한 다른 모든 레이어를 동결하여(업데이트X) 전이학습 진행한다.<br>
+이런 경우 상대적으로 큰 학습률(1e-2)을 사용할수 있다.<br></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
+  <span class="n">inputs</span> <span class="o">=</span> <span class="n">layers</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">IMG_SIZE</span><span class="p">,</span><span class="n">IMG_SIZE</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">img_augmentation</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+  <span class="n">model</span> <span class="o">=</span> <span class="n">EfficientNetB0</span><span class="p">(</span><span class="n">include_top</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">input_tensor</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s">"imagenet"</span><span class="p">)</span>  <span class="c1"># include_top=False 옵션으로 최상위 레이어(classifier) 제거 
+</span>
+  <span class="n">model</span><span class="p">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="bp">False</span>                                                        <span class="c1"># Freeze the pretrained weights, 사전학습된 가중치는 업데이트 하지 않음
+</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">layers</span><span class="p">.</span><span class="n">GlobalAveragePooling2D</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"avg_pool"</span><span class="p">)(</span><span class="n">model</span><span class="p">.</span><span class="n">output</span><span class="p">)</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">layers</span><span class="p">.</span><span class="n">BatchNormalization</span><span class="p">()(</span><span class="n">x</span><span class="p">)</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="n">layers</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"top_dropout"</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">outputs</span> <span class="o">=</span> <span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">NUM_CLASSES</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">"softmax"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"pred"</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+
+  <span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="p">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"EfficientNet"</span><span class="p">)</span>
+  <span class="n">optimizer</span> <span class="o">=</span> <span class="n">keras</span><span class="p">.</span><span class="n">optimizers</span><span class="p">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">)</span>
+  <span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span>
+      <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">"categorical_crossentropy"</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">"accuracy"</span><span class="p">]</span>
+  <span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">model</span>
+</code></pre></div></div>
+
+<p>이 모델에서 include_top=False 옵션을 사용했다.<br>
+위에서 해당 옵션이 마지막 Dense 레이어를 제거한다고 설명하였는데, EfficientNet뒤에 Dense레이어만 추가로 이어 붙이는 것이 아니라
+GlobalAveragePooling층을 생성하여 붙이는 것을 볼 수 있다.<br>
+이는  include_top 옵션이 사실 마지막 Dense레이어만 아니라, GAP레이어, Dropout레이어, Dense레이어 이 세가지 레이어를 제거하는 것임을 알 수 있다.<br>
+게시글 제일 아래 참고할 이미지가 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">strategy</span><span class="p">.</span><span class="n">scope</span><span class="p">():</span>
+  <span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">NUM_CLASSES</span><span class="p">)</span>
+
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">hist</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ds_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="n">ds_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plot_hist</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Downloading data from https://storage.googleapis.com/keras-applications/efficientnetb0_notop.h5
+16705208/16705208 [==============================] - 0s 0us/step
+Epoch 1/25
+187/187 [==============================] - 59s 274ms/step - loss: 3.0716 - accuracy: 0.4476 - val_loss: 0.8643 - val_accuracy: 0.7435
+Epoch 2/25
+187/187 [==============================] - 49s 263ms/step - loss: 1.4652 - accuracy: 0.6220 - val_loss: 0.6771 - val_accuracy: 0.7963
+Epoch 3/25
+187/187 [==============================] - 49s 262ms/step - loss: 1.1839 - accuracy: 0.6654 - val_loss: 0.6558 - val_accuracy: 0.8003
+Epoch 4/25
+187/187 [==============================] - 49s 264ms/step - loss: 1.0481 - accuracy: 0.6945 - val_loss: 0.7162 - val_accuracy: 0.7898
+Epoch 5/25
+187/187 [==============================] - 50s 265ms/step - loss: 1.0021 - accuracy: 0.7073 - val_loss: 0.7262 - val_accuracy: 0.7830
+Epoch 6/25
+187/187 [==============================] - 51s 271ms/step - loss: 0.9573 - accuracy: 0.7195 - val_loss: 0.6945 - val_accuracy: 0.7964
+Epoch 7/25
+187/187 [==============================] - 55s 293ms/step - loss: 0.9472 - accuracy: 0.7213 - val_loss: 0.7157 - val_accuracy: 0.7933
+Epoch 8/25
+187/187 [==============================] - 57s 306ms/step - loss: 0.9525 - accuracy: 0.7196 - val_loss: 0.7164 - val_accuracy: 0.7983
+Epoch 9/25
+187/187 [==============================] - 56s 297ms/step - loss: 0.9479 - accuracy: 0.7274 - val_loss: 0.7623 - val_accuracy: 0.7871
+Epoch 10/25
+187/187 [==============================] - 56s 297ms/step - loss: 0.9270 - accuracy: 0.7279 - val_loss: 0.6931 - val_accuracy: 0.8007
+Epoch 11/25
+187/187 [==============================] - 54s 286ms/step - loss: 0.8885 - accuracy: 0.7356 - val_loss: 0.7967 - val_accuracy: 0.7868
+Epoch 12/25
+187/187 [==============================] - 55s 292ms/step - loss: 0.9245 - accuracy: 0.7350 - val_loss: 0.7469 - val_accuracy: 0.7968
+Epoch 13/25
+187/187 [==============================] - 51s 272ms/step - loss: 0.8948 - accuracy: 0.7418 - val_loss: 0.7850 - val_accuracy: 0.7902
+Epoch 14/25
+187/187 [==============================] - 51s 271ms/step - loss: 0.8829 - accuracy: 0.7441 - val_loss: 0.7671 - val_accuracy: 0.7944
+Epoch 15/25
+187/187 [==============================] - 51s 270ms/step - loss: 0.8895 - accuracy: 0.7411 - val_loss: 0.8210 - val_accuracy: 0.7842
+Epoch 16/25
+187/187 [==============================] - 50s 270ms/step - loss: 0.9051 - accuracy: 0.7377 - val_loss: 0.9133 - val_accuracy: 0.7698
+Epoch 17/25
+187/187 [==============================] - 50s 269ms/step - loss: 0.8964 - accuracy: 0.7409 - val_loss: 0.7984 - val_accuracy: 0.7878
+Epoch 18/25
+187/187 [==============================] - 50s 268ms/step - loss: 0.8880 - accuracy: 0.7436 - val_loss: 0.8293 - val_accuracy: 0.7924
+Epoch 19/25
+187/187 [==============================] - 50s 268ms/step - loss: 0.9058 - accuracy: 0.7409 - val_loss: 0.9220 - val_accuracy: 0.7675
+Epoch 20/25
+187/187 [==============================] - 50s 268ms/step - loss: 0.8772 - accuracy: 0.7461 - val_loss: 0.8364 - val_accuracy: 0.7851
+Epoch 21/25
+187/187 [==============================] - 51s 270ms/step - loss: 0.8937 - accuracy: 0.7487 - val_loss: 0.8493 - val_accuracy: 0.7854
+Epoch 22/25
+187/187 [==============================] - 50s 269ms/step - loss: 0.8969 - accuracy: 0.7442 - val_loss: 0.8614 - val_accuracy: 0.7826
+Epoch 23/25
+187/187 [==============================] - 49s 264ms/step - loss: 0.8597 - accuracy: 0.7530 - val_loss: 0.9160 - val_accuracy: 0.7845
+Epoch 24/25
+187/187 [==============================] - 51s 270ms/step - loss: 0.9021 - accuracy: 0.7512 - val_loss: 0.9065 - val_accuracy: 0.7835
+Epoch 25/25
+187/187 [==============================] - 51s 273ms/step - loss: 0.8675 - accuracy: 0.7574 - val_loss: 0.8605 - val_accuracy: 0.7916
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/keras-examples/Image%20classification%20via%20fine-tuning%20with%20EfficientNet/Image%20classification%20via%20fine-tuning%20with%20EfficientNet_33_1.png" alt="png"></p>
+
+<p>사전 학습된 가중치를 사용하기 전보다 훨씬 높은 정확도에서 학습을 시작할 수 있다.<br></p>
+
+<h3 id="사전학습-가중치를-활용한-전이학습---fine-tuning">사전학습 가중치를 활용한 전이학습 - fine tuning</h3>
+
+<p>fine tuning은 레이어의 동결을 해제하고, 더 작은 학습률로 모델을 학습한다.<br>
+이번 예제에서는 모든 레이어의 동결을 해제하지만, 데이터 세트에 따라 일부만 동결해제하는 것이 바람질할 수 있다.</p>
+
+<p>ImageNet과 다른 데이터 세트를 사용할때, feature extractor도 조정해야 하기 때문에, 이 미세조정 단계가 더욱 중요하다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">unfreeze_model</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">20</span><span class="p">:]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">layers</span><span class="p">.</span><span class="n">BatchNormalization</span><span class="p">):</span>                         <span class="c1"># BarchNormalization은 업데이트 X
+</span>      <span class="n">layer</span><span class="p">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="bp">True</span>
+
+  <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">optimizers</span><span class="p">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+  <span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span>
+      <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">"categorical_crossentropy"</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">"accuracy"</span><span class="p">]</span>
+  <span class="p">)</span>
+
+<span class="n">unfreeze_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="n">epochs</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">hist</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ds_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="n">ds_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plot_hist</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Epoch 1/10
+187/187 - 62s - loss: 0.5185 - accuracy: 0.8370 - val_loss: 0.7522 - val_accuracy: 0.8117 - 62s/epoch - 333ms/step
+Epoch 2/10
+187/187 - 52s - loss: 0.4729 - accuracy: 0.8511 - val_loss: 0.7391 - val_accuracy: 0.8170 - 52s/epoch - 277ms/step
+Epoch 3/10
+187/187 - 52s - loss: 0.4348 - accuracy: 0.8597 - val_loss: 0.7341 - val_accuracy: 0.8176 - 52s/epoch - 278ms/step
+Epoch 4/10
+187/187 - 52s - loss: 0.3972 - accuracy: 0.8712 - val_loss: 0.7538 - val_accuracy: 0.8141 - 52s/epoch - 279ms/step
+Epoch 5/10
+187/187 - 52s - loss: 0.3761 - accuracy: 0.8771 - val_loss: 0.7444 - val_accuracy: 0.8115 - 52s/epoch - 278ms/step
+Epoch 6/10
+187/187 - 52s - loss: 0.3450 - accuracy: 0.8878 - val_loss: 0.7707 - val_accuracy: 0.8095 - 52s/epoch - 279ms/step
+Epoch 7/10
+187/187 - 52s - loss: 0.3354 - accuracy: 0.8883 - val_loss: 0.7643 - val_accuracy: 0.8128 - 52s/epoch - 280ms/step
+Epoch 8/10
+187/187 - 53s - loss: 0.2918 - accuracy: 0.9046 - val_loss: 0.7674 - val_accuracy: 0.8130 - 53s/epoch - 281ms/step
+Epoch 9/10
+187/187 - 52s - loss: 0.2878 - accuracy: 0.9058 - val_loss: 0.7705 - val_accuracy: 0.8104 - 52s/epoch - 280ms/step
+Epoch 10/10
+187/187 - 54s - loss: 0.2725 - accuracy: 0.9068 - val_loss: 0.7731 - val_accuracy: 0.8116 - 54s/epoch - 288ms/step
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/keras-examples/Image%20classification%20via%20fine-tuning%20with%20EfficientNet/Image%20classification%20via%20fine-tuning%20with%20EfficientNet_36_1.png" alt="png"></p>
+
+<h2 id="efficientnet-미세조정을-위한-팁">EfficientNet 미세조정을 위한 팁</h2>
+
+<h3 id="on-unfreezing-layers">on unfreezing layers:</h3>
+
+<ul>
+  <li>BatchNormalization 레이어는 계속 동결시킬 필요가 있다. 만약 훈련가능한 상태로 전환한다면, 첫번째 에포크의 정확도를 크게 떨어뜨릴 것이다.</li>
+  <li>어떤 경우엔, 모든 레이어를 동결해제 하는 대신, 일부 레이어만 동결해제하는 것이 유익할 수 있다. B7과 같은 더 큰 모델에서 미세조정을 더 빠르게 할 수 있다.</li>
+  <li>각 블록은 모두 끄거나 켜야한다.(블록 단위로 레이어를 동결하거나 학습시켜야함) 이는 아케텍처가 첫번째 레이어에서 마지막 레이어까지의 shortcut을 포함하기 때문이다.</li>
+</ul>
+
+<h3 id="some-other-tips-for-utilizing-efficientnet">Some other tips for utilizing EfficientNet:</h3>
+
+<ul>
+  <li>RMSprop를 사용하지마라, momentum과 learnin rate가 너무 높기 때문이다. 이는 사전학습된 가중치를 쉽게 손상시킨다.</li>
+  <li>배치크기가 작으면 정규화에 효과적이므로 검증 정확도가 향상된다.</li>
+  <li>EfficinetNet의 큰 변형이 성능의 향상을 보장하지 않는다. 특히, 적은 데이터 또는 클래스를 가진 데이터 세트일수록 그렇다. EfficientNet이 크게 변형될 경우, 하이퍼파라미터 조정이 더욱 힘들어진다.</li>
+</ul>
+
+<h2 id="include_top-옵션비교">Include_top 옵션비교</h2>
+
+<p><img src="/assets/images/contents/keras-examples/Image%20classification%20via%20fine-tuning%20with%20EfficientNet/include_top.PNG" alt="png"></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/code-example/2022/11/20/2022-image-classification-from-scratch.html" title="(keras) image classification from scratch">(keras) image classification from scratch</a><a class="next" href="/jekyll-theme-yat/code-example/2022/12/05/Image-segmentation-with-a-U-Net-like-architecture.html" title="(keras) Image segmentation with a U-Net-like architecture">(keras) Image segmentation with a U-Net-like...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/paper/2023/10/31/paper-An-overview-of-gradient-descent-optimization-algorithms.html" title="An overview of gradient descent optimization algorithms">
+            An overview of gradient descent optimization algorithms<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/kafka/2022/08/22/kafka-basic.html" title="kafka 아키텍처 설명">
+            kafka 아키텍처 설명<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/practice/2022/06/23/transformer_code.html" title="Transformer 구현 코드로 이해하기 - Positional Encodig">
+            Transformer 구현 코드로 이해하기 - Positional Encodig<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/daily/2023/12/31/2023-Retrospective.html" title="Goodbye 2023, Welcome 2024">
+            Goodbye 2023, Welcome 2024<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

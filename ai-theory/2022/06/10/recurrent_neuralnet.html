@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Recurrent neural network | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="Recurrent neural network">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="*&lt;핸즈온 머신러닝 2판&gt;을 참고하였습니다. *위키독스를 참고 하였습니다. *참고블로그를 참고하였습니다.">
+<meta property="og:description" content="*&lt;핸즈온 머신러닝 2판&gt;을 참고하였습니다. *위키독스를 참고 하였습니다. *참고블로그를 참고하였습니다.">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/ai-theory/2022/06/10/recurrent_neuralnet.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/ai-theory/2022/06/10/recurrent_neuralnet.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-06-10T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Recurrent neural network">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2022-06-10T00:00:00+00:00","datePublished":"2022-06-10T00:00:00+00:00","description":"*&lt;핸즈온 머신러닝 2판&gt;을 참고하였습니다. *위키독스를 참고 하였습니다. *참고블로그를 참고하였습니다.","headline":"Recurrent neural network","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/ai-theory/2022/06/10/recurrent_neuralnet.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/ai-theory/2022/06/10/recurrent_neuralnet.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/banners/sea-gec.jpg)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/banners/sea-gec.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Recurrent neural network</h1>
+  <h2 class="post-subtitle">rnn, lstm</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2022-06-10T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Jun 10, 2022
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 8 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#DataScience">#DataScience</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#AI">#AI</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#rnn">#rnn</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#neuralnet">#neuralnet</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p>*&lt;핸즈온 머신러닝 2판&gt;을 참고하였습니다.<br>
+*<a href="https://wikidocs.net/106473">위키독스</a>를 참고 하였습니다.
+*<a href="https://excelsior-cjh.tistory.com/183">참고블로그</a>를 참고하였습니다.</p>
+
+<h2 id="순환-신경망">순환 신경망</h2>
+
+<p>순환신경망은 시퀀스 데이터를 다루는데 특화되어 있다. 대표적인 시퀀스 데이터는 언어이다. <br> 
+한장의 이미지에는 순서가 없다. 모든 픽셀값은 같은 시간에서의 데이터이다.  <br>
+그러나 하나의 문장에는 순서가 있다. 문장은 문장의 앞에서부터 뒤로, 순서대로 들어야 제대로 이해 할 수 있다.<br><br>
+이렇게 입력 순서가 예측이나, 분류에 중요한 영향을 주는 경우, DNN이나 CNN으로는 한계가 있을 수 있다. DNN과 CNN은 입력 순서를 고려하지 않기 때문이다.<br>
+<br>
+순환신경망(RNN)은 이전에 입력된 데이터를 <strong>‘기억’</strong>함으로써 입력 순서를 고려하게 된다. 이전에 입력된 데이터에 새로 입력되는 데이터들을 더하여 새로운 <strong>요약 정보</strong>를 생성한다.<br>
+이렇게 순환신경망의 순환층을 통과하여 나온 <strong>요약된 정보</strong>를 이용해 예측 또는 분류와 같은 태스크들을 수행하게 된다.<br></p>
+
+<h2 id="순환-층">순환 층</h2>
+<p>순환 뉴런은 이전에 입력된 데이터를 기억하고, 기억된 정보와 새로운 정보를 합하기위해 당음과 같은 구조를 가진다.<br></p>
+
+<p><img src="/assets/images/contents/NN/RNN/recurrent_unit.PNG" alt="순환뉴런"></p>
+
+<ul>
+  <li>t-1 시점의 입력 $X_{(t-1)}$가 RNN 셀을 통과하면 $h_{(t-1)}$ (hidden state)와 output 두가지를 각각 만들어낸다.<br>
+</li>
+  <li>그리고 t-1 시점의 hidden state는 다음 시점 t 에서 새로운 Input $X_t$ 와 함께 셀에 투입된다.<br>
+</li>
+  <li>그렇게되면 마찬가지로 $h_t$ (hidden state)와 output 두가지를 각각 만들어내고 이 과정을 하나의 시퀀스가 끝날때까지 반복하게 된다.<br>
+</li>
+</ul>
+
+<p>여기서 $h_t$ 가, 이전 시점의 input에 대한 정보를 계속 저장(기억)하고 있음을 알 수있다.<br>
+아래 그림은 위 설명한 과정을 시퀀스대로 펼친것을 표현한 그림이다.<br></p>
+
+<p>*아래 그림은 <a href="https://excelsior-cjh.tistory.com/183">참고블로그</a> 님의 블로그에서 다운받았습니다.<br></p>
+
+<p><img src="/assets/images/contents/NN/RNN/rnn_unrolled.PNG" alt="unrolled recurrent neurl network"></p>
+
+<ul>
+  <li>위 그림에서 왼쪽 그림을 타임 스텝에 따라 펼친 그림이 오른쪽 그림이다.</li>
+  <li><strong>순환신경망에서 순환 뉴런은 새로운 input 데이터 $x$와 함께 이전 타임스텝의 출력인 $y_{(t-1)}$ 을 받는다. (핸즈온 머신러닝에서는 $h_{(t-1)}$ 대신 $y_{(t-1)}$을 받는다고 하였지만, 일반적인 RNN은 $h_{(t-1)}$을 받는것이 맞음)</strong></li>
+  <li>각 순환뉴런은 두벌의 가중치를 가진다. 하나는 $x_{(t)}$를 위한 $w_x$이고 다른 하나는 $y_{(t-1)}$을 위한 $w_y$이다. (역시 $y_{(t-1)}$ 대신 $h_{(t-1)}$을 위한 $w_h$라고 표기하는 것이 일반적)</li>
+  <li>하나의 샘플에 대한 순환층의 출력은 아래 식과 같이 계산된다. $\phi$는 활성화 함수</li>
+</ul>
+
+<p>$$y_{(t)}= \phi(W_x^Tx_{(t)}+W_y^Ty_{(t-1)}+b)$$</p>
+
+<p>$$ or $$</p>
+
+<p>$$h_{(t)}= \phi(W_x^Tx_{(t)}+W_h^Th_{(t-1)}+b)$$</p>
+
+<p>$$Y_t = W^T_y \cdot h_t$$</p>
+
+<ul>
+  <li>
+    <p>타임 스텝 t에서의 모든 입력을 행렬 $X_{(t)}$로 만들어 미니배치 전체에 대해 순환층의 출력을 한번에 계산할 수 있다.</p>
+
+    <p>$$Y_{(t)} = \phi(X_{(t)}W_x+Y_{(t-1)}Wy+b)$$</p>
+  </li>
+</ul>
+
+<h2 id="메모리-셀">메모리 셀</h2>
+
+<ul>
+  <li>타임 스텝에 걸쳐서 어떤 상태를 보존하는 신경망의 구성 요소를 메모리 셀이라고 한다.</li>
+  <li>일반적으로 타임 스텝 t에서의 셀의 상태 $h_{(t)}$는 그 타임 스텝의 입력과 이전 타임 스텝의 상태에 대한 함수이다. 
+$h{(t)} = f(h_{(t-1)}, x{(t)})$</li>
+  <li>타임 스텝 t에서의 출력 $y_{(t)}$도 이전 상태와 현재 입력에 대한 함수이다.</li>
+</ul>
+
+<h2 id="lstm">LSTM</h2>
+<p><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">내용 참고 및 그림 출처</a></p>
+
+<p>LSTM은 RNN의 the problem of Long-Term Dependencies 문제를 해결하기 위해 고안 되었다.<br>
+LSTM의 구조는 아래와 같다. RNN의 구조와 비교해보자<br></p>
+
+<p><img src="/assets/images/contents/NN/RNN/lstm_rnn.PNG" alt="Lstm structure"></p>
+
+<p>한눈에 봐도 RNN보다 더 복잡해진 구조를 가지고 있는것을 알 수 있다.<br>
+가장 큰 차이를 간단하게 설명하면, LSTM에 Cell State, 그리고 gate들이 추가되었다는 점이다.<br></p>
+
+<h2 id="lstm-cell-state">LSTM Cell state</h2>
+<p>차이를 조금더 자세히 살펴보자.<br>
+LSTM의 핵심은 cell state이다.<br></p>
+
+<h3 id="삭제-게이트">삭제 게이트</h3>
+
+<p><img src="/assets/images/contents/NN/RNN/delete_cell.PNG" alt="Lstm structure"></p>
+
+<p>*그림출처: https://dgkim5360.tistory.com/entry/understanding-long-short-term-memory-lstm-kr</p>
+
+<p>forget gate layer라고 부르는 이 단계에서는 $h_{t-1}$ 와 $x_t$로 이루어진 시그모이드를 통해 0에서 1사이의 값을 내보낸다.<br> 
+이 값을 cell state($C_{t-1}$)에 곱하게 되는데, 이때 값이 1이면 모든 정보를 기억하는 것이고, 0이면 모든 정보를 잊게(삭제하게) 된다.</p>
+
+<h3 id="입력-게이트">입력 게이트</h3>
+
+<p><img src="/assets/images/contents/NN/RNN/input_cell.PNG" alt="Lstm structure"></p>
+
+<p>*그림출처: https://dgkim5360.tistory.com/entry/understanding-long-short-term-memory-lstm-kr</p>
+
+<p>다음으로 입력게이트는 현재 정보를 기억하기 위한 게이트이다.<br>
+현재 시점의 데이터 $x_t$와 이전 시점의 은닉상태 $h_{t-1}$가 시그모이드 함수와 하이퍼볼릭탄젠트 레이어를 통과하여 $i_t$ 와 $\tilde{C}$ 를 생성하고 <br>
+$i_t * \tilde{C}$를, 삭제 게이트를 지나고 난 cell state($C_{t-1}$)에 더해준다.</p>
+
+<h3 id="출력-게이트">출력 게이트</h3>
+
+<p><img src="/assets/images/contents/NN/RNN/output_cell.PNG" alt="Lstm structure"></p>
+
+<p>*그림출처 : https://dgkim5360.tistory.com/entry/understanding-long-short-term-memory-lstm-kr</p>
+
+<p>마지막은 출력게이트이다. $h_{t-1}$ 와 $x_t$를 받아 시그모드 함수를 취한 값이 출력게이트이고, <br>
+cell state에 하이퍼볼릭 탄젠트를 취한 값이 출력게이트와 연산되면서 값이 걸러지는 효과가 발생하여 은닉상태가 된다.</p>
+
+<h2 id="코드테스트">코드테스트</h2>
+
+<p>순환신경망 rnn과 lstm에 대해서 간단하게 살펴보았다.<br>
+하나의 샘플 데이터로 간단하게 테스트 해보고 이번  포스팅을 마치려고 한다.<br>
+먼저, 필요한 라이브러리를 임포트 해주자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">SimpleRNN</span><span class="p">,</span> <span class="n">LSTM</span>
+</code></pre></div></div>
+
+<h3 id="샘플-데이터생성">샘플 데이터생성</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#A sample text
+</span><span class="n">text</span><span class="o">=</span><span class="s">'나는 사과 딸기 바나나 좋아'</span>
+<span class="n">word_dict</span><span class="o">=</span><span class="p">{</span><span class="s">'나는'</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="s">'사과'</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="s">'딸기'</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="s">'바나나'</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="s">'좋아'</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]}</span>
+
+<span class="n">text_vector</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">text_vector</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1">#(5, 5)
+</span></code></pre></div></div>
+<p>위와 같은 텍스트가 있고, 텍스트안의 워드의 벡터가 word_dict의 value와 같다면
+text_vector는 위와 같이 (5,5) shape의 배열로 표현 될 수 있다.</p>
+
+<p>보통 text data를 벡터로 바꾸는 방법으로는 Word2Vec, 원핫인코딩, tfdf 등을 활용한다.</p>
+
+<h3 id="rnn-layer">RNN Layer</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#rnn layer 생성
+</span><span class="n">rnn_layer</span> <span class="o">=</span> <span class="n">SimpleRNN</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+<p>rnn_layer에 text vector를 넣어보자! <br>
+rnn은 input 데이터의 shape이 (배치크기, length, embedding_dim) 이렇게 3차원이 되어야함으로 text_vector의 차원을 늘려줄 필요가 있다.<br>
+그리고 배열안의 데이터 타입은 실수여야한다.<br>
+하나의 샘플데이터를 가지고 있기 때문에, 배치크기는 1로 한다</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text_vector</span> <span class="o">=</span> <span class="n">text_vector</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="s">'float32'</span><span class="p">)</span>
+<span class="n">text_vector</span><span class="p">.</span><span class="n">shape</span>
+<span class="n">hidden_state</span> <span class="o">=</span> <span class="n">rnn_layer</span><span class="p">(</span><span class="n">text_vector</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span> 
+</code></pre></div></div>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tf.Tensor([[ 0.7944882  -0.42401734]], shape=(1, 2), dtype=float32)
+</code></pre></div></div>
+<p>(1,2) 크기의 텐서가 출력되었다.
+이 텐서는 마지막 시점 즉, text_vector의 마지막 벡터까지 계산을 끝마친 시점의 은닉상태이다.<br>
+그림으로 보면 다음과 같다.</p>
+
+<p><img src="/assets/images/contents/NN/RNN/sequence_vector.PNG" alt="Lstm structure"></p>
+
+<p>마지막 시점에 대한 출력값만 필요하면 이렇게 return_sequences를 False로 주면 된다.<br></p>
+
+<p>모든 시점에서의 은닉상태도 출력할 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rnn_layer</span> <span class="o">=</span> <span class="n">SimpleRNN</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">hidden_state</span> <span class="o">=</span> <span class="n">rnn_layer</span><span class="p">(</span><span class="n">text_vector</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+</code></pre></div></div>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tf.Tensor(
+[[[ 0.          0.        ]
+  [ 0.40843144 -0.57421684]
+  [-0.67309624  0.8136229 ]
+  [ 0.9253792  -0.84764284]
+  [-0.95517516  0.8988166 ]]], shape=(1, 5, 2), dtype=float32)
+</code></pre></div></div>
+<p>(1,5,2) 크기의 텐서가 출력되었다. 총 5번의 입력이 있었으니 5개의 은닉 상태값이 출력 되었음을 알 수 있다.<br>
+그림으로 보면 다음과 같다.</p>
+
+<p><img src="/assets/images/contents/NN/RNN/sequence_sequence.PNG" alt="Lstm structure"></p>
+
+<p>위 그림처럼 모든 시점에 대한 출력이 필요하면 return_sequences를 True로 주면 된다.</p>
+
+<h3 id="lstm-layer">LSTM Layer</h3>
+
+<p>마찬가지로 LSTM Layer에도 입력해보자!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lstm_layer</span> <span class="o">=</span> <span class="n">LSTM</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">return_state</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">hidden_state</span><span class="p">,</span> <span class="n">last_state</span><span class="p">,</span><span class="n">last_cell_state</span> <span class="o">=</span> <span class="n">lstm_layer</span><span class="p">(</span><span class="n">text_vector</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'hidden state : {}, shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">,</span> <span class="n">hidden_state</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'last hidden state : {}, shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">last_state</span><span class="p">,</span> <span class="n">last_state</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'last cell state : {}, shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">last_cell_state</span><span class="p">,</span> <span class="n">last_cell_state</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+</code></pre></div></div>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hidden state : [[[ 0.          0.        ]
+  [ 0.01993797  0.07217623]
+  [-0.06435854  0.04204876]
+  [ 0.04638523  0.13807252]
+  [ 0.07843614  0.15157618]]], shape: (1, 5, 2)
+last hidden state : [[0.07843614 0.15157618]], shape: (1, 2)
+last cell state : [[0.1976986  0.28913993]], shape: (1, 2)
+</code></pre></div></div>
+<p>위 last cell state를 주목하자. LSTM의 가장 큰 특징중 하나는 Cell State(삭제, 입력, 출력게이트로 이루어진)라고 했었다.<br>
+LSTM Layer는 return_state를 True로 했을때, hidden state 뿐 아니라, last cell state까지 출력할 수 있다.</p>
+
+<h2 id="마무리">마무리</h2>
+<p>이번 포스팅은 순환신경망에 대해서 간단하게 정리해봤다.<br>
+RNN은 Neural Network의 꽃이라고 한다.<br>
+인간의 말을 이해하고 구사하는 AI를 만들기 위해서는 RNN의 역할이 필수적일 수 있다.<br></p>
+
+<p>최근 시퀀스 데이터 처리에 많이 사용하는 Transformer, bert 모델은, rnn 계열의 모델의 성능을 압도한다고 한다.<br>
+그러나 결국 transformer, bert 모델은 순환신경망 모델을 개선하기 위한 모델들이고<br>
+이러한 모델을 제대로 이해하려면 순환신경망에 대한 이해도 필요할 것이다.</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/adp/2022/06/09/ADP-LinearRegressors.html" title="ADP-linear-regression">ADP-linear-regression</a><a class="next" href="/jekyll-theme-yat/practice/2022/06/23/transformer_code.html" title="Transformer 구현 코드로 이해하기 - Positional Encodig">Transformer 구현 코드로 이해하기 - Positional...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/kafka/2022/08/22/kafka-basic.html" title="kafka 아키텍처 설명">
+            kafka 아키텍처 설명<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/paper/2023/10/31/paper-An-overview-of-gradient-descent-optimization-algorithms.html" title="An overview of gradient descent optimization algorithms">
+            An overview of gradient descent optimization algorithms<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/13/hugging-face-tutorials.html" title="hugging face tutorials 1">
+            hugging face tutorials 1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/practice/2022/06/23/transformer_code.html" title="Transformer 구현 코드로 이해하기 - Positional Encodig">
+            Transformer 구현 코드로 이해하기 - Positional Encodig<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

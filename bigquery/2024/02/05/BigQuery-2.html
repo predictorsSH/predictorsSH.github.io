@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>BigQuery 쿼리 필수 요소 | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="BigQuery 쿼리 필수 요소">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="🧑 도서 [발리아파 락쉬마난,조던 티가니 “구글 빅쿼리 완벽 가이드” O’Reilly]를 개인적으로 공부한 것입니다.">
+<meta property="og:description" content="🧑 도서 [발리아파 락쉬마난,조던 티가니 “구글 빅쿼리 완벽 가이드” O’Reilly]를 개인적으로 공부한 것입니다.">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/bigquery/2024/02/05/BigQuery-2.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/bigquery/2024/02/05/BigQuery-2.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-02-05T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="BigQuery 쿼리 필수 요소">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2024-02-05T00:00:00+00:00","datePublished":"2024-02-05T00:00:00+00:00","description":"🧑 도서 [발리아파 락쉬마난,조던 티가니 “구글 빅쿼리 완벽 가이드” O’Reilly]를 개인적으로 공부한 것입니다.","headline":"BigQuery 쿼리 필수 요소","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/bigquery/2024/02/05/BigQuery-2.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/bigquery/2024/02/05/BigQuery-2.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/banners/squirrel.jpg)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/banners/squirrel.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">BigQuery 쿼리 필수 요소</h1>
+  <h2 class="post-subtitle">도서 구글 빅쿼리 완벽 가이드 스터디</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2024-02-05T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Feb 05, 2024
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 10 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#BigQuery">#BigQuery</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%EB%B9%85%EC%BF%BC%EB%A6%AC">#빅쿼리</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <blockquote>
+  <p>🧑 도서 [발리아파 락쉬마난,조던 티가니 “구글 빅쿼리 완벽 가이드” O’Reilly]를 개인적으로 공부한 것입니다.</p>
+</blockquote>
+
+<h2 id="쿼리-필수-요소-정리">쿼리 필수 요소 정리</h2>
+
+<h3 id="with-절">WITH 절</h3>
+
+<blockquote>
+  <p>⛳️ 빅쿼리에서 WITH 구문은 임시 테이블을 생성하지 않는다!</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT * FROM (
+  SELECT
+    gender, tripduration / 60 AS minutes
+  FROM
+    `bigquery-public-data`.new_york_citibike.citibike_trips
+)
+
+WHERE minutes &lt; 10 -- 바깥쪽의 SELECT는 안쪽의 서브 쿼리의 결과를 참조하기 때문에, 서브쿼리가 사용한 별칭을 WHERE절에도 사용 가능하다.
+LIMIT 5   
+</code></pre></div></div>
+
+<p>위와 같은 서브쿼리 대신 WITH절을 사용할 수 있다. <br>
+WITH절을 사용하면 가독성이 높아지고, 재사용 가능하다는 장점이 있다.<br></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WITH all_trips AS (
+  SELECT
+    gender, tripduration / 60 AS minutes
+  FROM
+    `bigquery-public-data`.new_york_citibike.citibike_trips
+)
+
+SELECT * FROM all_trips
+WHERE minutes &lt; 10 
+LIMIT 5   
+</code></pre></div></div>
+
+<p>일반적으로 사용하는 많은 DB들이 위와 같은 WITH 구문을 지원한다.
+그런데 WITH 구문는 가상의 테이블을 생성하여 메모리에 할당하기 떄문에 성능 문제가 발생할수도 있다.</p>
+
+<p>하지만, 
+빅쿼리에서 WITH 구문은 이름이 있는 서브쿼리 처럼 작동하며 임시 테이블을 생성하지 않기 때문에(p62)<br>
+성능이슈를 크게 걱정하지 않아도 된다고 한다.</p>
+
+<h3 id="order-by-group-by">ORDER BY, GROUP BY</h3>
+
+<blockquote>
+  <p>⛳️ ORDER BY는 SELECT절이 실행된 이후에 실행 되므로 별칭을 사용할 수 있다.<br>
+⛳️ GROUP BY는 집계할때 효율적으로 사용</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT
+  gender, AVG(tripduration / 60) AS avg_trip_duration
+FROM
+  `bigquery-public-data`.new_york_citibike.citibike_trips
+WHERE
+  tripduration is not NULL
+GROUP BY
+  gender
+ORDER BY
+  avg_trip_duration
+</code></pre></div></div>
+
+<p>남녀 평균 tripduration을 구할때, 각각 집계하면 데이터셋에 2번 접근하면서 그만큼 비용을 낭비한다.
+이때 위와 같이 GROUP BY 절을 사용하면 된다.</p>
+
+<h3 id="having">HAVING</h3>
+<blockquote>
+  <p>⛳️ HAVING 절을 사용하면 그룹화 연산 이후에 필터링을 할 수 있다.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT
+  gender, AVG(tripduration / 60) AS avg_trip_duration
+FROM
+  `bigquery-public-data`.new_york_citibike.citibike_trips
+WHERE
+  tripduration is not NULL
+GROUP BY
+  gender
+HAVING 
+  avg_trip_duration &gt; 14
+ORDER BY
+  avg_trip_duration
+</code></pre></div></div>
+<p>WHERE 절에서는 당연히 avg_trip_duration에 대한 필터링을 할 수 없다.</p>
+
+<h3 id="array_agg로-배열-만들기">ARRAY_AGG로 배열 만들기</h3>
+<blockquote>
+  <p>⛳️ ARRAY_AGG를 사용하면 순서가 있는 리스트 또는 ARRAY를 얻을 수 있다.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT 
+  gender
+  ,ARRAY_AGG(numtrips order by year) AS numtrips
+FROM (
+  SELECT
+    gender
+    , EXTRACT(YEAR FROM starttime) AS year
+    , COUNT(*) AS numtrips
+  FROM
+    `bigquery-public-data`.new_york_citibike.citibike_trips
+  WHERE
+    gender != 'unknown' AND starttime IS NOT NULL
+  GROUP BY
+    gender, year
+  HAVING year &gt; 2016
+)
+GROUP BY
+  gender
+</code></pre></div></div>
+<p>위 쿼리는 성별에 따른 대여 횟수를 연도별로 정렬한 ARRAY를 얻기 위한 쿼리다. 
+결과는 아래와 같다. <br>
+numtrips 컬럼이 배열로 들어가 있음을 알 수 있다.</p>
+
+<p><img src="/assets/images/contents/%EB%B9%85%EC%BF%BC%EB%A6%AC/2%EC%9E%A5/arr_agg.png" alt="arr"></p>
+
+<p>위 테이블을 json으로 변환하면 아래와 같다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{
+  "gender": "male",
+  "numtrips": ["9306602", "3955871"]
+}, {
+  "gender": "female",
+  "numtrips": ["3236735", "1260893"]
+}]
+</code></pre></div></div>
+
+<h3 id="구조체의-배열struct">구조체의 배열(STRUCT)</h3>
+<blockquote>
+  <p>⛳️ 구조체는 순서를 갖는 필드의 그룹이다.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT
+  [
+    STRUCT('male' AS gender,[930, 395] AS numtrips)
+    ,STRUCT('female' AS gender, [323,126] AS numtrips)
+  ] AS bikerides
+</code></pre></div></div>
+
+<p>이 쿼리의 실행 결과는 아래와 같다. 위 ARRAY_AGG와 행의 표현이 조금 다르다.<br>
+위 커리에서 SELECT 절은 배열을 포함하는 행 1개만을 반환하므로, 두 성별 데이터가 하나의 행에 반환된다.</p>
+
+<p><img src="/assets/images/contents/%EB%B9%85%EC%BF%BC%EB%A6%AC/2%EC%9E%A5/struct.png" alt="struct"></p>
+
+<p>json으로 변환한 결과도, 구조체의 이름(bikerides)이 지정된 것 빼고는 동일한 형태로 출력된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{
+  "bikerides": [{
+    "gender": "male",
+    "numtrips": ["930", "395"]
+  }, {
+    "gender": "female",
+    "numtrips": ["323", "126"]
+  }]
+}]
+</code></pre></div></div>
+
+<h3 id="배열-풀기unnest">배열 풀기(UNNEST)</h3>
+<blockquote>
+  <p>⛳️ UNNEST는 배열의 요소를 행으로 반환하는 함수다.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT * FROM UNNEST(
+  [
+    STRUCT('male' AS gender,[930, 395] AS numtrips)
+    ,STRUCT('female' AS gender, [323,126] AS numtrips)
+  ])
+</code></pre></div></div>
+<p>결과는 아래와 같다.</p>
+
+<p><img src="/assets/images/contents/%EB%B9%85%EC%BF%BC%EB%A6%AC/2%EC%9E%A5/unnest.png" alt="unnest"></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{
+  "gender": "male",
+  "numtrips": ["930", "395"]
+}, {
+  "gender": "female",
+  "numtrips": ["323", "126"]
+}]
+</code></pre></div></div>
+
+<h3 id="튜플">튜플</h3>
+<blockquote>
+  <p>⛳️ STRUCT 키워드와 필드 이름을 생략하면 튜플 또는 익명 구조체가 생성된다.<br>
+⛳️ 빅쿼리는 쿼리 결과에서 이름이 지정되지 않은 컬럼 및 구조체 필드에 임의의 이름을 할당한다.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT
+  [
+    STRUCT('male',[930, 395])
+    ,STRUCT('female', [323,126])
+  ] 
+</code></pre></div></div>
+<p>이 쿼리의 결과는 다음과 같다.</p>
+
+<p><img src="/assets/images/contents/%EB%B9%85%EC%BF%BC%EB%A6%AC/2%EC%9E%A5/tuple.png" alt="tuple"></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{
+  "f0_": [{
+    "_field_1": "male",
+    "_field_2": ["930", "395"]
+  }, {
+    "_field_1": "female",
+    "_field_2": ["323", "126"]
+  }]
+}]
+</code></pre></div></div>
+<p>컬럼 이름의 뱔칭을 생략하면 복잡한 쿼리를 이해하기 힘들고 유지보수도 어려워진다.
+일회성 쿼리를 작성하는 것이 아니라면 반드시 컬럼 이름을 사용한다.</p>
+
+<h3 id="배열-활용하기">배열 활용하기</h3>
+
+<blockquote>
+  <p>⛳️ 배열의 길이 측정, 배열 내의 개별 요소 탐색 등을 할 수 있다.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT
+  ARRAY_LENGTH(bikerides) AS num_items # 출력 결과 : 2
+  ,bikerides[OFFSET(0)].gender AS first_gender # 출력 결과 : male
+FROM
+  (SELECT
+    [
+      STRUCT('male' AS gender,[930, 395] AS numtrips)
+      ,STRUCT('female' AS gender, [323,126] AS numtrips)
+    ] AS bikerides)
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{
+  "num_items": "2",
+  "first_gender": "male"
+}]
+</code></pre></div></div>
+
+<h3 id="테이블-조인">테이블 조인</h3>
+
+<blockquote>
+  <p>⛳️ 조인을 하려면 from_item을 작성할 때 사용하는 모든 데이터셋이 동일한 리전(region)에 있어야 한다.</p>
+</blockquote>
+
+<p>아래 쿼리는 비가 오는날과 오지 않은 날의 대여 횟수를 비교하기 위해서 테이블을 조인하는 예제다.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-- 일별 대여 건수를 가져오는 from_item 생성
+WITH bicycle_rental AS (
+  SELECT
+    COUNT(starttime) AS num_trips,
+    EXTRACT(DATE FROM starttime) AS trip_date
+  FROM 
+    `bigquery-public-data`.new_york_citibike.citibike_trips
+  GROUP BY trip_date
+),
+
+-- 5mm이상 강수량이 관측된 날 from_item 생성
+rainy_days AS (
+  SELECT
+    date,
+    (MAX(prcp) &gt; 5 ) AS rainy
+  FROM(
+    SELECT
+      wx.date AS date,
+      IF (wx.element = 'PRCP', wx.value/10, NULL) AS prcp
+    FROM
+      `bigquery-public-data`.ghcn_d.ghcnd_2016 AS wx
+    WHERE
+      wx.id = 'USW00094728'
+  )
+  GROUP BY
+    date
+)
+
+-- 두 테이블 조인
+SELECT 
+  bk.trip_date,
+  bk.num_trips,
+  wx.rainy
+FROM
+  bicycle_rental AS bk
+JOIN
+  rainy_days AS wx
+ON 
+  wx.date = bk.trip_date
+LIMIT 10
+
+</code></pre></div></div>
+
+<p>위 쿼리 결과는 다음과 같다.</p>
+
+<p><img src="/assets/images/contents/%EB%B9%85%EC%BF%BC%EB%A6%AC/2%EC%9E%A5/join.png" alt="join"></p>
+
+<p>num_trips 컬럼에 대여 횟수가 기록되어있고, rainy 컬럼에 강수 유무가 표시되어있다. 조인된 테이블을 집계하여 비가 온 날과 오지 않은 날의 대여 평균 차이를 확인 할 수 있을 것 이다. <br></p>
+
+<p>조인의 작동 방식은 다음과 같다.</p>
+<ul>
+  <li>from_item을 2개 만든다. 2개의 테이블, 서브쿼리, 배열 또는 SELECT 할 수 있는 WITH문 어떤 것이든 from_item이 될 수 있다.</li>
+  <li>조인 조건을 결정한다. 조인 조건은 반드시 동등 조건일 필요는 없다.</li>
+  <li>원하는 컬럼을 선탣한다. 이때 별칭을 사용해 어떤 from_item을 읽을 것인지 명확하게 지정한다.</li>
+  <li>이너 조인을 사용하지 않으면 원하는 조인 유형을 선택한다.</li>
+</ul>
+
+<h3 id="inner-join">INNER JOIN</h3>
+
+<blockquote>
+  <p>⛳️ 조인의 기본값은 이너 조인이다.<br>
+⛳️ 조인 조건을 만족하는 공통 행의 집합을 생성한다(교집합).<br>
+⛳️ 조인 조건이 언제너 동등 조건일 필요는 없다!<br></p>
+</blockquote>
+
+<p>city, state 와 state, country로 이루어진 두 테이블을 Inner Join하는 예제 쿼리다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-- city, state 테이블
+WITH from_item_a AS (
+  SELECT 'Dalles' AS city, 'OR' AS state
+  UNION ALL SELECT 'Tokyo', 'Tokyo'
+  UNION ALL SELECT 'Mumbai', 'Maharashtra'
+),
+
+-- state, country 테이블
+from_item_b AS (
+  SELECT 'OR' AS state, 'USA' AS country
+  UNION ALL SELECT 'Tokyo', 'Japan'
+  UNION ALL SELECT 'Seoul', 'Korea'
+)
+
+-- state 기준으로 이너 조인
+SELECT 
+  from_item_a.*, country
+FROM 
+  from_item_a
+JOIN 
+  from_item_b
+ON from_item_a.state = from_item_b.state
+</code></pre></div></div>
+<p>쿼리 결과는 아래와 같다. state Maharashtra와 Seoul은 교집합이 아니기 때문에 제외된 것을 알 수 있다.</p>
+
+<p><img src="/assets/images/contents/%EB%B9%85%EC%BF%BC%EB%A6%AC/2%EC%9E%A5/inner.png" alt="inner"></p>
+
+<h3 id="cross-join곱집합">CROSS JOIN(곱집합)</h3>
+
+<blockquote>
+  <p>⛳️ 크로스 조인은 조인 조건이 없다. 즉 2개의 from_item의 모든 행이 결합된다.</p>
+</blockquote>
+
+<p>토너먼트에서 각 경기의 우승자를 저장하는 테이블과, 각 경기의 상품에 대한 테이블이 있다고 가정하자.
+각 이벤트의 우승자에게 줄 선물을 쿼리 하려면 다음과 같이 INNER JOIN을 사용해야 한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WITH winners AS (
+  SELECT 'John' as person, '100m' as event
+  UNION ALL SELECT 'Hiroshi', '200m'
+  UNION ALL SELECT 'Sita', '400m'
+),
+gifts AS (
+  SELECT 'Google Home' as gift, '100m' as event
+  UNION ALL SELECT 'Google Hub', '200m'
+  UNION ALL SELECT 'Pixel3', '400m'
+)
+SELECT winners.*, gifts.gift
+FROM winners
+JOIN gifts 
+USING (event)
+</code></pre></div></div>
+<p>쿼리 결과를 json으로 표현하면 아래와 같다. 각 우승자가 정해진 상품을 받는다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[{
+  "person": "John",
+  "event": "100m",
+  "gift": "Google Home"
+}, {
+  "person": "Hiroshi",
+  "event": "200m",
+  "gift": "Google Hub"
+}, {
+  "person": "Sita",
+  "event": "400m",
+  "gift": "Pixel3"
+}]
+</code></pre></div></div>
+
+<p>반면에 우승자에게 모든 상품을 주려면 다음과 같이 CROSS JOIN을 사용하면 된다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WITH winners AS (
+  SELECT 'John' as person, '100m' as event
+  UNION ALL SELECT 'Hiroshi', '200m'
+  UNION ALL SELECT 'Sita', '400m'
+),
+gifts AS (
+  SELECT 'Google Home' as gift, '100m' as event
+  UNION ALL SELECT 'Google Hub', '200m'
+  UNION ALL SELECT 'Pixel3', '400m'
+)
+SELECT winners.*, gifts.gift
+FROM winners
+CROSS JOIN gifts 
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/%EB%B9%85%EC%BF%BC%EB%A6%AC/2%EC%9E%A5/cross.png" alt="cross"></p>
+
+<h3 id="outer-join">OUTER JOIN</h3>
+
+<blockquote>
+  <p>⛳️ 아우터 조인은 조건이 충족되지 않을 때 발생하는 상황을 제어한다.</p>
+</blockquote>
+
+<p>이번에는 상품이 없는 경기와, 경기가 없는 상품이 있다고 가정하자.<br>
+이때 아래와 같이 아우터 조인으로 쿼리하면, 조건을 만족하지 않아도 모든 우승자와 상품을 출력한다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WITH winners AS (
+  SELECT 'John' as person, '100m' as event
+  UNION ALL SELECT 'Hiroshi', '200m'
+  UNION ALL SELECT 'Sita', '400m'
+  UNION ALL SELECT 'Kwame', '50m'
+),
+gifts AS (
+  SELECT 'Google Home' as gift, '100m' as event
+  UNION ALL SELECT 'Google Hub', '200m'
+  UNION ALL SELECT 'Pixel3', '400m'
+  UNION ALL SELECT 'Google Mini', '5000m'
+)
+SELECT person, gift, winners.event AS w_event, gifts.event AS g_event
+FROM winners
+FULL OUTER JOIN gifts 
+ON winners.event = gifts.event
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/%EB%B9%85%EC%BF%BC%EB%A6%AC/2%EC%9E%A5/outer.png" alt="outer"></p>
+
+<p>OUTER JOIN은 위 쿼리와 같이 FULL OUTER JOIN 뿐만 아니라, 
+LEFT OUTER JOIN, RIGHT OUTER JOIN이 존재한다. LEFT OUTER JOIN을 사용하면, 경기가 없었던 5000m는 출력 되지 않는다.
+RIGHT OUTER JOIN을 사용하면, 모든 상품이 출력되지만 상품이 없었던 50m 경기가 출력 되지 않는다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WITH winners AS (
+  SELECT 'John' as person, '100m' as event
+  UNION ALL SELECT 'Hiroshi', '200m'
+  UNION ALL SELECT 'Sita', '400m'
+  UNION ALL SELECT 'Kwame', '50m'
+),
+gifts AS (
+  SELECT 'Google Home' as gift, '100m' as event
+  UNION ALL SELECT 'Google Hub', '200m'
+  UNION ALL SELECT 'Pixel3', '400m'
+  UNION ALL SELECT 'Google Mini', '5000m'
+)
+SELECT person, gift, winners.event AS w_event, gifts.event AS g_event
+FROM winners
+LEFT OUTER JOIN gifts 
+ON winners.event = gifts.event
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/%EB%B9%85%EC%BF%BC%EB%A6%AC/2%EC%9E%A5/left.png" alt="left"></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WITH winners AS (
+  SELECT 'John' as person, '100m' as event
+  UNION ALL SELECT 'Hiroshi', '200m'
+  UNION ALL SELECT 'Sita', '400m'
+  UNION ALL SELECT 'Kwame', '50m'
+),
+gifts AS (
+  SELECT 'Google Home' as gift, '100m' as event
+  UNION ALL SELECT 'Google Hub', '200m'
+  UNION ALL SELECT 'Pixel3', '400m'
+  UNION ALL SELECT 'Google Mini', '5000m'
+)
+SELECT person, gift, winners.event AS w_event, gifts.event AS g_event
+FROM winners
+RIGHT OUTER JOIN gifts 
+ON winners.event = gifts.event
+
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/%EB%B9%85%EC%BF%BC%EB%A6%AC/2%EC%9E%A5/right.png" alt="right"></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/code-example/2024/01/22/time-series-anomaly-detection-ae.html" title="(keras) Timeseries anomaly detection using an Autoencoder">(keras) Timeseries anomaly detection using an...</a><a class="next" href="/jekyll-theme-yat/docker/2024/04/09/docker-jupyterlab.html" title="주피터랩 컨테이너화 기본">주피터랩 컨테이너화 기본</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/kafka/2022/08/22/kafka-basic.html" title="kafka 아키텍처 설명">
+            kafka 아키텍처 설명<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-3.html" title="hugging face tutorials 3">
+            hugging face tutorials 3<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/code-example/2023/12/19/GPT-text-generation-from-scratch-with-KerasNLP.html" title="(keras) GPT text generation from scratch with KerasNLP">
+            (keras) GPT text generation from scratch with KerasNLP<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/paper/2023/10/31/paper-An-overview-of-gradient-descent-optimization-algorithms.html" title="An overview of gradient descent optimization algorithms">
+            An overview of gradient descent optimization algorithms<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,3054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Tags | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="Tags">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/tags.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/tags.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Tags">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"san9hyun"},"description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Tags","url":"https://predictorssh.github.io//jekyll-theme-yat/tags.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <div class="page-segments">
+  <ul class="page-segments-list">
+    
+    <h2 id="ADP" class="segment-name">ADP</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jun 09, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/06/09/ADP-LinearRegressors.html">
+    ADP-linear-regression<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Apr 07, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/04/07/ADP-statistics-3.html">
+    ADP-Statistics-가설검정<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 31, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/31/ADP-statistics-2.html">
+    ADP-Statistics-상관분석<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 13, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/13/ADP-statistics-1.html">
+    ADP-Statistics-기초통계량-2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html">
+    ADP-Statistics-기초통계량-1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 06, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/06/ADP-start.html">
+    ADP Study List<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="AI" class="segment-name">AI</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Dec 04, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2023/12/04/VAE.html">
+    생성형 AI, VAE의 Loss Function<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jul 04, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/07/04/CrossEntropy.html">
+    비용함수로써 크로스엔트로피<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jun 10, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/06/10/recurrent_neuralnet.html">
+    Recurrent neural network<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="AUC" class="segment-name">AUC</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Nov 20, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2023/11/20/An-introduction-to-ROC-analysis.html">
+    An introduction to ROC analysis<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="BigQuery" class="segment-name">BigQuery</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Feb 05, 2024</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/bigquery/2024/02/05/BigQuery-2.html">
+    BigQuery 쿼리 필수 요소<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="DataScience" class="segment-name">DataScience</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Dec 04, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2023/12/04/VAE.html">
+    생성형 AI, VAE의 Loss Function<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Nov 20, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2023/11/20/An-introduction-to-ROC-analysis.html">
+    An introduction to ROC analysis<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Oct 31, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2023/10/31/paper-An-overview-of-gradient-descent-optimization-algorithms.html">
+    An overview of gradient descent optimization algorithms<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Apr 19, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2023/04/19/paper-DeepLearningForAnomalyDetectioninTimeSeriesData.html">
+    Anomaly Detection in Time-Series Data<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Nov 09, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2022/11/09/patchcore.html">
+    Towards Total Recall in Industrial Anomaly Detection<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Oct 30, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/10/30/initialize.html">
+    가중치 초기화를 상수로 하면 안되는 이유<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Oct 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/10/23/vetorization.html">
+    수많은 데이터에 대한 경사 하강을 어떻게 빠르게 할수 있을까?<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Sep 18, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/interview/2022/09/18/Graph-Data.html">
+    회귀와 상관분석의 차이<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jul 04, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/07/04/CrossEntropy.html">
+    비용함수로써 크로스엔트로피<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jun 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/practice/2022/06/23/transformer_code.html">
+    Transformer 구현 코드로 이해하기 - Positional Encodig<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jun 10, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/06/10/recurrent_neuralnet.html">
+    Recurrent neural network<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Apr 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2022/04/11/transformer.html">
+    간단하게 Transformer 논문 이해하기<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 27, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/practice/2022/03/27/MNIST-Grad-CAM.html">
+    MNIST데이터셋 Grad-CAM 적용<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2022/03/23/Grad-CAM.html">
+    간단하게 Grad-CAM 논문 이해하기<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 06, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/06/ADP-start.html">
+    ADP Study List<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="Docker" class="segment-name">Docker</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Apr 09, 2024</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/docker/2024/04/09/docker-jupyterlab.html">
+    주피터랩 컨테이너화 기본<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="EDA" class="segment-name">EDA</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jan 16, 2024</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/eda/2024/01/16/store-sales-eda1.html">
+    시계열 데이터 시각화 with seaborn<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Nov 27, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/eda/2023/11/27/Dacon-Daegu-Traffic-Accidnet-Damage-Prediction-EDA.html">
+    대구 교통사고 피해예측 EDA 코드<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 13, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/13/ADP-statistics-1.html">
+    ADP-Statistics-기초통계량-2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html">
+    ADP-Statistics-기초통계량-1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="EfficientNet" class="segment-name">EfficientNet</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Nov 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2022/11/23/efficientnet_finetuning.html">
+    (keras) Image classification via fine-tuning with EfficientNet<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="Fine-tuning" class="segment-name">Fine-tuning</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Nov 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2022/11/23/efficientnet_finetuning.html">
+    (keras) Image classification via fine-tuning with EfficientNet<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="Grad-CAM" class="segment-name">Grad-CAM</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Mar 27, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/practice/2022/03/27/MNIST-Grad-CAM.html">
+    MNIST데이터셋 Grad-CAM 적용<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="JupyterLab" class="segment-name">JupyterLab</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Apr 09, 2024</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/docker/2024/04/09/docker-jupyterlab.html">
+    주피터랩 컨테이너화 기본<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="NLP" class="segment-name">NLP</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jun 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/practice/2022/06/23/transformer_code.html">
+    Transformer 구현 코드로 이해하기 - Positional Encodig<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Apr 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2022/04/11/transformer.html">
+    간단하게 Transformer 논문 이해하기<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="ROC" class="segment-name">ROC</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Nov 20, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2023/11/20/An-introduction-to-ROC-analysis.html">
+    An introduction to ROC analysis<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="ResidualNetwork" class="segment-name">ResidualNetwork</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Nov 20, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2022/11/20/2022-image-classification-from-scratch.html">
+    (keras) image classification from scratch<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="Segmentation" class="segment-name">Segmentation</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Dec 05, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2022/12/05/Image-segmentation-with-a-U-Net-like-architecture.html">
+    (keras) Image segmentation with a U-Net-like architecture<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="TimeSeries" class="segment-name">TimeSeries</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Apr 19, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2023/04/19/paper-DeepLearningForAnomalyDetectioninTimeSeriesData.html">
+    Anomaly Detection in Time-Series Data<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="U-Net" class="segment-name">U-Net</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Dec 05, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2022/12/05/Image-segmentation-with-a-U-Net-like-architecture.html">
+    (keras) Image segmentation with a U-Net-like architecture<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="XAI" class="segment-name">XAI</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Mar 27, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/practice/2022/03/27/MNIST-Grad-CAM.html">
+    MNIST데이터셋 Grad-CAM 적용<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2022/03/23/Grad-CAM.html">
+    간단하게 Grad-CAM 논문 이해하기<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="Xception" class="segment-name">Xception</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Nov 20, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2022/11/20/2022-image-classification-from-scratch.html">
+    (keras) image classification from scratch<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="book" class="segment-name">book</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Mar 06, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/book/2022/03/06/pale-blue-dot.html">
+    창백한 푸른점-칼세이건<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="classification" class="segment-name">classification</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jul 04, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/07/04/CrossEntropy.html">
+    비용함수로써 크로스엔트로피<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="daily" class="segment-name">daily</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jan 27, 2025</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/daily/2025/01/27/2024-Retrospective.html">
+    Goodbye 2024, Welcome 2025<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Dec 31, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/daily/2023/12/31/2023-Retrospective.html">
+    Goodbye 2023, Welcome 2024<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Feb 21, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/daily/2022/02/21/welcome.html">
+    Welcome my new hompage!<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="deeplearning" class="segment-name">deeplearning</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Dec 04, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2023/12/04/VAE.html">
+    생성형 AI, VAE의 Loss Function<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jul 04, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/07/04/CrossEntropy.html">
+    비용함수로써 크로스엔트로피<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="function" class="segment-name">function</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Dec 04, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2023/12/04/VAE.html">
+    생성형 AI, VAE의 Loss Function<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jul 04, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/07/04/CrossEntropy.html">
+    비용함수로써 크로스엔트로피<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="generator" class="segment-name">generator</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Dec 04, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2023/12/04/VAE.html">
+    생성형 AI, VAE의 Loss Function<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="gradient" class="segment-name">gradient</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Oct 31, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2023/10/31/paper-An-overview-of-gradient-descent-optimization-algorithms.html">
+    An overview of gradient descent optimization algorithms<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="huggingface" class="segment-name">huggingface</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Feb 07, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/02/07/hugging-face-tutorial-4.html">
+    hugging face tutorials 4<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jan 17, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-3.html">
+    hugging face tutorials 3<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jan 17, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-2.html">
+    hugging face tutorials 2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jan 13, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/13/hugging-face-tutorials.html">
+    hugging face tutorials 1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="initialize" class="segment-name">initialize</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Oct 30, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/10/30/initialize.html">
+    가중치 초기화를 상수로 하면 안되는 이유<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="interview" class="segment-name">interview</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Sep 18, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/interview/2022/09/18/Graph-Data.html">
+    회귀와 상관분석의 차이<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="kafka" class="segment-name">kafka</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Aug 22, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/kafka/2022/08/22/kafka-basic.html">
+    kafka 아키텍처 설명<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="keras" class="segment-name">keras</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jan 22, 2024</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2024/01/22/time-series-anomaly-detection-ae.html">
+    (keras) Timeseries anomaly detection using an Autoencoder<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Dec 19, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/12/19/GPT-text-generation-from-scratch-with-KerasNLP.html">
+    (keras) GPT text generation from scratch with KerasNLP<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="keras-nlp" class="segment-name">keras-nlp</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Dec 19, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/12/19/GPT-text-generation-from-scratch-with-KerasNLP.html">
+    (keras) GPT text generation from scratch with KerasNLP<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="loss" class="segment-name">loss</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Dec 04, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2023/12/04/VAE.html">
+    생성형 AI, VAE의 Loss Function<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jul 04, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/07/04/CrossEntropy.html">
+    비용함수로써 크로스엔트로피<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="neuralnet" class="segment-name">neuralnet</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Oct 30, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/10/30/initialize.html">
+    가중치 초기화를 상수로 하면 안되는 이유<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Oct 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/10/23/vetorization.html">
+    수많은 데이터에 대한 경사 하강을 어떻게 빠르게 할수 있을까?<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jun 10, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/06/10/recurrent_neuralnet.html">
+    Recurrent neural network<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="optimizer" class="segment-name">optimizer</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Oct 31, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2023/10/31/paper-An-overview-of-gradient-descent-optimization-algorithms.html">
+    An overview of gradient descent optimization algorithms<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="paper" class="segment-name">paper</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Apr 19, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2023/04/19/paper-DeepLearningForAnomalyDetectioninTimeSeriesData.html">
+    Anomaly Detection in Time-Series Data<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Nov 09, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2022/11/09/patchcore.html">
+    Towards Total Recall in Industrial Anomaly Detection<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jun 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/practice/2022/06/23/transformer_code.html">
+    Transformer 구현 코드로 이해하기 - Positional Encodig<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Apr 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2022/04/11/transformer.html">
+    간단하게 Transformer 논문 이해하기<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2022/03/23/Grad-CAM.html">
+    간단하게 Grad-CAM 논문 이해하기<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="patchcore" class="segment-name">patchcore</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Nov 09, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2022/11/09/patchcore.html">
+    Towards Total Recall in Industrial Anomaly Detection<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="python" class="segment-name">python</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jun 09, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/06/09/ADP-LinearRegressors.html">
+    ADP-linear-regression<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Apr 07, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/04/07/ADP-statistics-3.html">
+    ADP-Statistics-가설검정<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 31, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/31/ADP-statistics-2.html">
+    ADP-Statistics-상관분석<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="rnn" class="segment-name">rnn</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jun 10, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/ai-theory/2022/06/10/recurrent_neuralnet.html">
+    Recurrent neural network<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="seaborn" class="segment-name">seaborn</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jan 16, 2024</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/eda/2024/01/16/store-sales-eda1.html">
+    시계열 데이터 시각화 with seaborn<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="statistics" class="segment-name">statistics</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jun 09, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/06/09/ADP-LinearRegressors.html">
+    ADP-linear-regression<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Apr 07, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/04/07/ADP-statistics-3.html">
+    ADP-Statistics-가설검정<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 31, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/31/ADP-statistics-2.html">
+    ADP-Statistics-상관분석<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 13, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/13/ADP-statistics-1.html">
+    ADP-Statistics-기초통계량-2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html">
+    ADP-Statistics-기초통계량-1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="study" class="segment-name">study</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Aug 22, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/kafka/2022/08/22/kafka-basic.html">
+    kafka 아키텍처 설명<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="time-series" class="segment-name">time-series</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jan 22, 2024</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2024/01/22/time-series-anomaly-detection-ae.html">
+    (keras) Timeseries anomaly detection using an Autoencoder<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="transfer-learning" class="segment-name">transfer-learning</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Nov 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2022/11/23/efficientnet_finetuning.html">
+    (keras) Image classification via fine-tuning with EfficientNet<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="transformer" class="segment-name">transformer</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jun 23, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/practice/2022/06/23/transformer_code.html">
+    Transformer 구현 코드로 이해하기 - Positional Encodig<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Apr 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/paper/2022/04/11/transformer.html">
+    간단하게 Transformer 논문 이해하기<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="tutorial" class="segment-name">tutorial</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jan 16, 2024</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/eda/2024/01/16/store-sales-eda1.html">
+    시계열 데이터 시각화 with seaborn<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Nov 27, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/eda/2023/11/27/Dacon-Daegu-Traffic-Accidnet-Damage-Prediction-EDA.html">
+    대구 교통사고 피해예측 EDA 코드<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Feb 07, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/02/07/hugging-face-tutorial-4.html">
+    hugging face tutorials 4<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jan 17, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-3.html">
+    hugging face tutorials 3<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jan 17, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-2.html">
+    hugging face tutorials 2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jan 13, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/13/hugging-face-tutorials.html">
+    hugging face tutorials 1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="기초통계량" class="segment-name">기초통계량</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Mar 13, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/13/ADP-statistics-1.html">
+    ADP-Statistics-기초통계량-2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html">
+    ADP-Statistics-기초통계량-1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="문장기록" class="segment-name">문장기록</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Mar 06, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/book/2022/03/06/pale-blue-dot.html">
+    창백한 푸른점-칼세이건<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="번역" class="segment-name">번역</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Feb 07, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/02/07/hugging-face-tutorial-4.html">
+    hugging face tutorials 4<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jan 17, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-3.html">
+    hugging face tutorials 3<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jan 17, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-2.html">
+    hugging face tutorials 2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Jan 13, 2023</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/code-example/2023/01/13/hugging-face-tutorials.html">
+    hugging face tutorials 1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="빅쿼리" class="segment-name">빅쿼리</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Feb 05, 2024</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/bigquery/2024/02/05/BigQuery-2.html">
+    BigQuery 쿼리 필수 요소<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="상관계수" class="segment-name">상관계수</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Mar 31, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/31/ADP-statistics-2.html">
+    ADP-Statistics-상관분석<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="상관분석" class="segment-name">상관분석</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Mar 31, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/31/ADP-statistics-2.html">
+    ADP-Statistics-상관분석<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="시각화" class="segment-name">시각화</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jan 16, 2024</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/eda/2024/01/16/store-sales-eda1.html">
+    시계열 데이터 시각화 with seaborn<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="시계열" class="segment-name">시계열</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Jan 16, 2024</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/eda/2024/01/16/store-sales-eda1.html">
+    시계열 데이터 시각화 with seaborn<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="왜도" class="segment-name">왜도</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Mar 13, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/13/ADP-statistics-1.html">
+    ADP-Statistics-기초통계량-2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html">
+    ADP-Statistics-기초통계량-1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="중앙" class="segment-name">중앙</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Mar 13, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/13/ADP-statistics-1.html">
+    ADP-Statistics-기초통계량-2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html">
+    ADP-Statistics-기초통계량-1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="첨도" class="segment-name">첨도</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Mar 13, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/13/ADP-statistics-1.html">
+    ADP-Statistics-기초통계량-2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html">
+    ADP-Statistics-기초통계량-1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+    <h2 id="평균" class="segment-name">평균</h2>
+      
+      
+        <li class="">
+<span class="post-meta">Mar 13, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/13/ADP-statistics-1.html">
+    ADP-Statistics-기초통계량-2<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+        <li class="">
+<span class="post-meta">Mar 11, 2022</span>
+<span>
+  <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html">
+    ADP-Statistics-기초통계량-1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+</span>
+</li>
+        
+      
+    
+  </ul>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="common-list">
+  <ul>
+    <li>
+      <a href="/jekyll-theme-yat/index.html">
+        All<span>38</span>
+      </a>
+    </li>
+
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-ADP">
+          ADP <span>6</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-AI">
+          AI <span>3</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-AUC">
+          AUC <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-BigQuery">
+          BigQuery <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-DataScience">
+          DataScience <span>15</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-Docker">
+          Docker <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-EDA">
+          EDA <span>4</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-EfficientNet">
+          EfficientNet <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-Fine-tuning">
+          Fine-tuning <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-Grad-CAM">
+          Grad-CAM <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-JupyterLab">
+          JupyterLab <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-NLP">
+          NLP <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-ROC">
+          ROC <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-ResidualNetwork">
+          ResidualNetwork <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-Segmentation">
+          Segmentation <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-TimeSeries">
+          TimeSeries <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-U-Net">
+          U-Net <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-XAI">
+          XAI <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-Xception">
+          Xception <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-book">
+          book <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-classification">
+          classification <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-daily">
+          daily <span>3</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-deeplearning">
+          deeplearning <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-function">
+          function <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-generator">
+          generator <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-gradient">
+          gradient <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-huggingface">
+          huggingface <span>4</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-initialize">
+          initialize <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-interview">
+          interview <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-kafka">
+          kafka <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-keras">
+          keras <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-keras-nlp">
+          keras-nlp <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-loss">
+          loss <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-neuralnet">
+          neuralnet <span>3</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-optimizer">
+          optimizer <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-paper">
+          paper <span>5</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-patchcore">
+          patchcore <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-python">
+          python <span>3</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-rnn">
+          rnn <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-seaborn">
+          seaborn <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-statistics">
+          statistics <span>5</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-study">
+          study <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-time-series">
+          time-series <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-transfer-learning">
+          transfer-learning <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-transformer">
+          transformer <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-tutorial">
+          tutorial <span>6</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%EA%B8%B0%EC%B4%88%ED%86%B5%EA%B3%84%EB%9F%89">
+          기초통계량 <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%EB%AC%B8%EC%9E%A5%EA%B8%B0%EB%A1%9D">
+          문장기록 <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%EB%B2%88%EC%97%AD">
+          번역 <span>4</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%EB%B9%85%EC%BF%BC%EB%A6%AC">
+          빅쿼리 <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%EC%83%81%EA%B4%80%EA%B3%84%EC%88%98">
+          상관계수 <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%EC%83%81%EA%B4%80%EB%B6%84%EC%84%9D">
+          상관분석 <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%EC%8B%9C%EA%B0%81%ED%99%94">
+          시각화 <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%EC%8B%9C%EA%B3%84%EC%97%B4">
+          시계열 <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%EC%99%9C%EB%8F%84">
+          왜도 <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%EC%A4%91%EC%95%99">
+          중앙 <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%EC%B2%A8%EB%8F%84">
+          첨도 <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/jekyll-theme-yat/tags.html#h-%ED%8F%89%EA%B7%A0">
+          평균 <span>2</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

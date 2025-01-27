@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>hugging face tutorials 3 | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="hugging face tutorials 3">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Preprocess">
+<meta property="og:description" content="Preprocess">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-3.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-3.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-01-17T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="hugging face tutorials 3">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2023-01-17T00:00:00+00:00","datePublished":"2023-01-17T00:00:00+00:00","description":"Preprocess","headline":"hugging face tutorials 3","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-3.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-3.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/banners/squirrel.jpg)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/banners/squirrel.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">hugging face tutorials 3</h1>
+  <h2 class="post-subtitle">Preprocess</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2023-01-17T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Jan 17, 2023
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 20 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#huggingface">#huggingface</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#tutorial">#tutorial</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#%EB%B2%88%EC%97%AD">#번역</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="preprocess">Preprocess</h2>
+
+<p>모델을 학습시키기 전에, 데이터를 모델에 입력하기 알맞은 형태로 변환해야한다.<br>
+데이터가 텍스트, 이미지, 오디오 등 무엇이든지 텐서 배치로 변환되어야 한다.<br>
+Transformers는 모델을 위한 데이터를 준비하는데 도움이 되는 전처리 클래스를 제공한다.<br>
+이 튜토리얼에서는 다음을 배운다.<br></p>
+
+<ul>
+  <li>토크나이저를 사용해 텍스트를 토큰으로 이루어진 시퀀스로 변환한다. 그리고 숫자로 표현(변환)하고 텐서로 변환한다.</li>
+  <li>이미지는 이미지프로세서를 이용해 텐서로 변환한다.</li>
+  <li>음성데이터는 Feature extractor(특징 추출기)를 사용해 오디오 파형에서 순차적 특징을 추출하고 텐서로 변환한다.(생략)</li>
+  <li>다중모드 입력은 프로세서를 사용하여 토크나이저와 특징 추출기 또는 이미지 프로세서를 결합한다.(생략)</li>
+</ul>
+
+<h2 id="natural-language-processing">Natural Language Processing</h2>
+
+<p>토크나이저는 텍스트 데이터를 처리하는데 주요한 도구다.<br>
+토크나이저는 정해진 규칙에 따라 텍스트를 토큰으로 분리(split)한다.<br>
+그 토큰들은 숫자로 변환되고 텐서로 변환된다. 그리고 모델에 입력된다. <br></p>
+
+<p>사전학습 모델을 사용할 때는, 연관된 사전학습 토크나이저를 사용하는 것이 중요하다.<br>
+그래야 텍스트가 사전 훈련 말뭉치(corpus)와 동일한 방식으로 분할되고, 사전 훈련 중에 동일한 vocab을 사용한다.</p>
+
+<p>AutoTokenizer.from_pretrained() 메서드로 사전학습된 토크나이저를 로드하면, 사전 훈련된 어휘가 다운로드 된다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"bert-base-cased"</span><span class="p">)</span>
+
+<span class="n">encoded_input</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="s">"Do not meddle in the affairs of wizards, for they are subtle and quick to anger."</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">encoded_input</span><span class="p">)</span>
+<span class="p">{</span><span class="s">'input_ids'</span><span class="p">:</span> <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">2079</span><span class="p">,</span> <span class="mi">2025</span><span class="p">,</span> <span class="mi">19960</span><span class="p">,</span> <span class="mi">10362</span><span class="p">,</span> <span class="mi">1999</span><span class="p">,</span> <span class="mi">1996</span><span class="p">,</span> <span class="mi">3821</span><span class="p">,</span> <span class="mi">1997</span><span class="p">,</span> <span class="mi">16657</span><span class="p">,</span> <span class="mi">1010</span><span class="p">,</span> <span class="mi">2005</span><span class="p">,</span> <span class="mi">2027</span><span class="p">,</span> <span class="mi">2024</span><span class="p">,</span> <span class="mi">11259</span><span class="p">,</span> <span class="mi">1998</span><span class="p">,</span> <span class="mi">4248</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">4963</span><span class="p">,</span> <span class="mi">1012</span><span class="p">,</span> <span class="mi">102</span><span class="p">],</span>
+ <span class="s">'token_type_ids'</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+ <span class="s">'attention_mask'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]}</span>
+</code></pre></div></div>
+<p>토크나이저는 3가지 중요한 아이템 사전을 리턴한다.</p>
+
+<ul>
+  <li>input_ids는 문장의 각 토큰에 대응하는 인덱스이다.</li>
+  <li>attention_mask는 토큰이 attended 되어야할지 여부를 나타낸다.</li>
+  <li>token_type_ids는 둘 이상의 시퀀스가 있을 때, 토큰이 속한 시퀀스를 식별한다.</li>
+</ul>
+
+<p>input_ids를 디코딩하여 입력을 반환할 수 있다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tokenizer</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoded_input</span><span class="p">[</span><span class="s">"input_ids"</span><span class="p">])</span>
+<span class="s">'[CLS] Do not meddle in the affairs of wizards, for they are subtle and quick to anger. [SEP]'</span>
+</code></pre></div></div>
+<p>[CLS], [SEP]를 토크나이저가 추가한 것을 알 수 있다.<br>
+모든 모델에 위와같은 특수토큰이 필요한 것은 아니지만, 필요한 경우 토크나이저가 자동으로 토큰을 추가한다.<br></p>
+
+<p>전처리할 문장이 여러개인 경우 토크나이저에 list로 전달한다.<br></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">batch_sentences</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">"But what about second breakfast?"</span><span class="p">,</span>
+    <span class="s">"Don't think he knows about second breakfast, Pip."</span><span class="p">,</span>
+    <span class="s">"What about elevensies?"</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">encoded_inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">batch_sentences</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">encoded_inputs</span><span class="p">)</span>
+<span class="p">{</span><span class="s">'input_ids'</span><span class="p">:</span> <span class="p">[[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1252</span><span class="p">,</span> <span class="mi">1184</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">1248</span><span class="p">,</span> <span class="mi">6462</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">102</span><span class="p">],</span> 
+               <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1790</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">1341</span><span class="p">,</span> <span class="mi">1119</span><span class="p">,</span> <span class="mi">3520</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">1248</span><span class="p">,</span> <span class="mi">6462</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">21902</span><span class="p">,</span> <span class="mi">1643</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">102</span><span class="p">],</span> 
+               <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1327</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">5450</span><span class="p">,</span> <span class="mi">23434</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">102</span><span class="p">]],</span> 
+ <span class="s">'token_type_ids'</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> 
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> 
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> 
+ <span class="s">'attention_mask'</span><span class="p">:</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> 
+                    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> 
+                    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]}</span>
+</code></pre></div></div>
+
+<h3 id="pad">pad</h3>
+
+<p>문장은 항상 같은 길이가 아니다. 모델에 입력되는 텐서가 일정한 shape을 가져야하기 때문에, 길이가 다른것은 문제가 될 수 있다.<br>
+패딩(Padding)은 짧은 문장에 특별한 패딩 토큰을 추가해 텐서가 직사각형이 되도록 하는 전략이다.</p>
+
+<p>padding 파라미터를 True로 설정하면, 가장 긴 시퀀스와 일치하도록 배치에서 패딩을 수행한다.<br></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">batch_sentences</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">"But what about second breakfast?"</span><span class="p">,</span>
+    <span class="s">"Don't think he knows about second breakfast, Pip."</span><span class="p">,</span>
+    <span class="s">"What about elevensies?"</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">encoded_input</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">batch_sentences</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">encoded_input</span><span class="p">)</span>
+<span class="p">{</span><span class="s">'input_ids'</span><span class="p">:</span> <span class="p">[[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1252</span><span class="p">,</span> <span class="mi">1184</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">1248</span><span class="p">,</span> <span class="mi">6462</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> 
+               <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1790</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">1341</span><span class="p">,</span> <span class="mi">1119</span><span class="p">,</span> <span class="mi">3520</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">1248</span><span class="p">,</span> <span class="mi">6462</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">21902</span><span class="p">,</span> <span class="mi">1643</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">102</span><span class="p">],</span> 
+               <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1327</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">5450</span><span class="p">,</span> <span class="mi">23434</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> 
+ <span class="s">'token_type_ids'</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> 
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> 
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> 
+ <span class="s">'attention_mask'</span><span class="p">:</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> 
+                    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> 
+                    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]}</span>
+</code></pre></div></div>
+<h3 id="truncation">truncation</h3>
+
+<p>시퀀스가 때로는 너무 길 수 있다. 이 경우 시퀀스를 잘라야한다.<br>
+truncaiton = True로 설정하면 허용하는 최대길이를 넘지않도록 시퀀스를 자를 수 있다.<br></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">batch_sentences</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s">"But what about second breakfast?"</span><span class="p">,</span>
+  <span class="s">"Don't think he knows about second breakfast, Pip."</span><span class="p">,</span>
+  <span class="s">"What about elevensies?"</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">encoded_input</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">batch_sentences</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">encoded_input</span><span class="p">)</span>
+<span class="p">{</span><span class="s">'input_ids'</span><span class="p">:</span> <span class="p">[[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1252</span><span class="p">,</span> <span class="mi">1184</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">1248</span><span class="p">,</span> <span class="mi">6462</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1790</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">1341</span><span class="p">,</span> <span class="mi">1119</span><span class="p">,</span> <span class="mi">3520</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">1248</span><span class="p">,</span> <span class="mi">6462</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">21902</span><span class="p">,</span> <span class="mi">1643</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">102</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1327</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">5450</span><span class="p">,</span> <span class="mi">23434</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span>
+ <span class="s">'token_type_ids'</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span>
+ <span class="s">'attention_mask'</span><span class="p">:</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]}</span>
+</code></pre></div></div>
+
+<h3 id="build-tensor">build tensor</h3>
+
+<p>마지막으로, 토크나이저가 tensor를 리턴하도록 하자.<br>
+return_tensors 파라미터를 pt 또는 tf로 세팅하면 된다. pt:pytorch, tf:tensorflow</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">batch_sentences</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">"But what about second breakfast?"</span><span class="p">,</span>
+    <span class="s">"Don't think he knows about second breakfast, Pip."</span><span class="p">,</span>
+    <span class="s">"What about elevensies?"</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">encoded_input</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">batch_sentences</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s">"pt"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">encoded_input</span><span class="p">)</span>
+<span class="p">{</span><span class="s">'input_ids'</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1252</span><span class="p">,</span> <span class="mi">1184</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">1248</span><span class="p">,</span> <span class="mi">6462</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                      <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1790</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">1341</span><span class="p">,</span> <span class="mi">1119</span><span class="p">,</span> <span class="mi">3520</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">1248</span><span class="p">,</span> <span class="mi">6462</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">21902</span><span class="p">,</span> <span class="mi">1643</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">102</span><span class="p">],</span>
+                      <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">1327</span><span class="p">,</span> <span class="mi">1164</span><span class="p">,</span> <span class="mi">5450</span><span class="p">,</span> <span class="mi">23434</span><span class="p">,</span> <span class="mi">136</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]),</span> 
+ <span class="s">'token_type_ids'</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]),</span> 
+ <span class="s">'attention_mask'</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])}</span>
+</code></pre></div></div>
+
+<h2 id="computer-vison">Computer vison</h2>
+
+<p>비전 태스크에서는 이미지 프로세서가 필요하다. 이미지 프로세서는 이미지를 처리하고 텐서로 변환하도록 설계되어있다.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s">"food101"</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s">"train[:100]"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Datasets의 Image기능을 사용해 이미지를 살펴보자.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">"image"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/huggingface/sample.png" alt="png"></p>
+
+<p>AutoImageProcessor.from_pretrained()로 이미지 프로세서를 로드할 수 있다.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoImageProcessor</span>
+
+<span class="n">image_processor</span> <span class="o">=</span> <span class="n">AutoImageProcessor</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"google/vit-base-patch16-224"</span><span class="p">)</span>
+</code></pre></div></div>
+<p>비전 태스크에서는, 일부 유형의 데이터를 증강하는 것이 흔한 처리 방법이다.<br>
+데이터 증강을 위한 여러 라이브러리가 있지만, 이 튜토리얼에서는 torchvision의 transforms 모듈을 사용한다.<br></p>
+
+<p>1.이미지 프로세서로 이미지를 정규화하고, Compose를 사용해 RandomResizedCrop과 ColorJitter를 연결해서 변환한다.<br></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">Compose</span><span class="p">,</span> <span class="n">Normalize</span><span class="p">,</span> <span class="n">RandomResizedCrop</span><span class="p">,</span> <span class="n">ColorJitter</span><span class="p">,</span> <span class="n">ToTensor</span>
+
+<span class="n">normalize</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">image_processor</span><span class="p">.</span><span class="n">image_mean</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">image_processor</span><span class="p">.</span><span class="n">image_std</span><span class="p">)</span>
+<span class="n">size</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">image_processor</span><span class="p">.</span><span class="n">size</span><span class="p">[</span><span class="s">"shortest_edge"</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s">"shortest_edge"</span> <span class="ow">in</span> <span class="n">image_processor</span><span class="p">.</span><span class="n">size</span>
+    <span class="k">else</span> <span class="p">(</span><span class="n">image_processor</span><span class="p">.</span><span class="n">size</span><span class="p">[</span><span class="s">"height"</span><span class="p">],</span> <span class="n">image_processor</span><span class="p">.</span><span class="n">size</span><span class="p">[</span><span class="s">"width"</span><span class="p">])</span>
+<span class="p">)</span>
+    
+<span class="n">_transforms</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">([</span><span class="n">RandomResizedCrop</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="n">ColorJitter</span><span class="p">(</span><span class="n">brightness</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">ToTensor</span><span class="p">(),</span> <span class="n">normalize</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>2.모델은 입력값으로 pixel_values를 받는다. pixel_values를 생성하는 함수를 만들자.<br></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">transforms</span><span class="p">(</span><span class="n">examples</span><span class="p">):</span>
+  <span class="n">examples</span><span class="p">[</span><span class="s">"pixel_values"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">_transforms</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">convert</span><span class="p">(</span><span class="s">"RGB"</span><span class="p">))</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">[</span><span class="s">"image"</span><span class="p">]]</span>
+  <span class="k">return</span> <span class="n">examples</span>
+</code></pre></div></div>
+
+<p>3.Datasets의 set_transform을 사용하면 transforms 함수를 적용할 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span><span class="p">.</span><span class="n">set_transform</span><span class="p">(</span><span class="n">transforms</span><span class="p">)</span>
+</code></pre></div></div>
+<p>4.이제 이미지에 접근하면, pixel_value가 추가되었음을 알 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">{</span><span class="s">'image'</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">PIL</span><span class="p">.</span><span class="n">JpegImagePlugin</span><span class="p">.</span><span class="n">JpegImageFile</span> <span class="n">image</span> <span class="n">mode</span><span class="o">=</span><span class="n">RGB</span> <span class="n">size</span><span class="o">=</span><span class="mi">384</span><span class="n">x512</span> <span class="n">at</span> <span class="mh">0x7F1A7B0630D0</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="s">'label'</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+ <span class="s">'pixel_values'</span><span class="p">:</span> <span class="n">tensor</span><span class="p">([[[</span> <span class="mf">0.0353</span><span class="p">,</span>  <span class="mf">0.0745</span><span class="p">,</span>  <span class="mf">0.1216</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.9922</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9922</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9922</span><span class="p">],</span>
+          <span class="p">[</span><span class="o">-</span><span class="mf">0.0196</span><span class="p">,</span>  <span class="mf">0.0667</span><span class="p">,</span>  <span class="mf">0.1294</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.9765</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9843</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9922</span><span class="p">],</span>
+          <span class="p">[</span> <span class="mf">0.0196</span><span class="p">,</span>  <span class="mf">0.0824</span><span class="p">,</span>  <span class="mf">0.1137</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.9765</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9686</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8667</span><span class="p">],</span>
+          <span class="p">...,</span>
+          <span class="p">[</span> <span class="mf">0.0275</span><span class="p">,</span>  <span class="mf">0.0745</span><span class="p">,</span>  <span class="mf">0.0510</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.1137</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1216</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0824</span><span class="p">],</span>
+          <span class="p">[</span> <span class="mf">0.0667</span><span class="p">,</span>  <span class="mf">0.0824</span><span class="p">,</span>  <span class="mf">0.0667</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.0588</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0745</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0980</span><span class="p">],</span>
+          <span class="p">[</span> <span class="mf">0.0353</span><span class="p">,</span>  <span class="mf">0.0353</span><span class="p">,</span>  <span class="mf">0.0431</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.0039</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0039</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0588</span><span class="p">]],</span>
+ 
+         <span class="p">[[</span> <span class="mf">0.2078</span><span class="p">,</span>  <span class="mf">0.2471</span><span class="p">,</span>  <span class="mf">0.2863</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.9451</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9373</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9451</span><span class="p">],</span>
+          <span class="p">[</span> <span class="mf">0.1608</span><span class="p">,</span>  <span class="mf">0.2471</span><span class="p">,</span>  <span class="mf">0.3098</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.9373</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9451</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9373</span><span class="p">],</span>
+          <span class="p">[</span> <span class="mf">0.2078</span><span class="p">,</span>  <span class="mf">0.2706</span><span class="p">,</span>  <span class="mf">0.3020</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.9608</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9373</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8275</span><span class="p">],</span>
+          <span class="p">...,</span>
+          <span class="p">[</span><span class="o">-</span><span class="mf">0.0353</span><span class="p">,</span>  <span class="mf">0.0118</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0039</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.2392</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2471</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2078</span><span class="p">],</span>
+          <span class="p">[</span> <span class="mf">0.0196</span><span class="p">,</span>  <span class="mf">0.0353</span><span class="p">,</span>  <span class="mf">0.0196</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.1843</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2000</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2235</span><span class="p">],</span>
+          <span class="p">[</span><span class="o">-</span><span class="mf">0.0118</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0039</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0039</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.0980</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0980</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1529</span><span class="p">]],</span>
+ 
+         <span class="p">[[</span> <span class="mf">0.3961</span><span class="p">,</span>  <span class="mf">0.4431</span><span class="p">,</span>  <span class="mf">0.4980</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.9216</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9137</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9216</span><span class="p">],</span>
+          <span class="p">[</span> <span class="mf">0.3569</span><span class="p">,</span>  <span class="mf">0.4510</span><span class="p">,</span>  <span class="mf">0.5216</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.9059</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9137</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9137</span><span class="p">],</span>
+          <span class="p">[</span> <span class="mf">0.4118</span><span class="p">,</span>  <span class="mf">0.4745</span><span class="p">,</span>  <span class="mf">0.5216</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.9137</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8902</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7804</span><span class="p">],</span>
+          <span class="p">...,</span>
+          <span class="p">[</span><span class="o">-</span><span class="mf">0.2314</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1922</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2078</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.4196</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4275</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3882</span><span class="p">],</span>
+          <span class="p">[</span><span class="o">-</span><span class="mf">0.1843</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1686</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2000</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.3647</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3804</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4039</span><span class="p">],</span>
+          <span class="p">[</span><span class="o">-</span><span class="mf">0.1922</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1922</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1922</span><span class="p">,</span>  <span class="p">...,</span> <span class="o">-</span><span class="mf">0.2941</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2863</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3412</span><span class="p">]]])}</span>
+</code></pre></div></div>
+<p>변환이 적용된 이미지는 다음과 같이 무작위로 잘렸으며, 색상이 다르다.<br></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">"pixel_values"</span><span class="p">]</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/huggingface/sample_transformed.PNG" alt="png"></p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/code-example/2023/01/17/hugging-face-tutorial-2.html" title="hugging face tutorials 2">hugging face tutorials 2</a><a class="next" href="/jekyll-theme-yat/code-example/2023/02/07/hugging-face-tutorial-4.html" title="hugging face tutorials 4">hugging face tutorials 4</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/eda/2024/01/16/store-sales-eda1.html" title="시계열 데이터 시각화 with seaborn">
+            시계열 데이터 시각화 with seaborn<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/adp/2022/06/09/ADP-LinearRegressors.html" title="ADP-linear-regression">
+            ADP-linear-regression<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/daily/2025/01/27/2024-Retrospective.html" title="Goodbye 2024, Welcome 2025">
+            Goodbye 2024, Welcome 2025<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/06/ADP-start.html" title="ADP Study List">
+            ADP Study List<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

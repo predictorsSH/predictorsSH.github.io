@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>An overview of gradient descent optimization algorithms | san9hyun</title>
+<meta name="generator" content="Jekyll v4.0.1">
+<meta property="og:title" content="An overview of gradient descent optimization algorithms">
+<meta name="author" content="san9hyun">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="1. Introduction">
+<meta property="og:description" content="1. Introduction">
+<link rel="canonical" href="https://predictorssh.github.io//jekyll-theme-yat/paper/2023/10/31/paper-An-overview-of-gradient-descent-optimization-algorithms.html">
+<meta property="og:url" content="https://predictorssh.github.io//jekyll-theme-yat/paper/2023/10/31/paper-An-overview-of-gradient-descent-optimization-algorithms.html">
+<meta property="og:site_name" content="san9hyun">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-10-31T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="An overview of gradient descent optimization algorithms">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"san9hyun"},"dateModified":"2023-10-31T00:00:00+00:00","datePublished":"2023-10-31T00:00:00+00:00","description":"1. Introduction","headline":"An overview of gradient descent optimization algorithms","mainEntityOfPage":{"@type":"WebPage","@id":"https://predictorssh.github.io//jekyll-theme-yat/paper/2023/10/31/paper-An-overview-of-gradient-descent-optimization-algorithms.html"},"url":"https://predictorssh.github.io//jekyll-theme-yat/paper/2023/10/31/paper-An-overview-of-gradient-descent-optimization-algorithms.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="icon" href="/assets/images/favicon.ico">
+  <link rel="canonical" href="https://predictorssh.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://predictorssh.github.io//jekyll-theme-yat/feed.xml" title="san9hyun">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe-lightbox.umd.min.js" async></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/umd/photoswipe.umd.min.js" async></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/5.3.7/photoswipe.min.css" rel="stylesheet">
+<style>
+  .pswp .pswp__container .pswp__img {
+    background-color: white;
+  }
+</style>
+
+<script>
+  function initPhotoSwipe() {
+    let customOptions = {};
+
+    try {
+      const data = ``.replaceAll("=>", ":");
+      customOptions = JSON.parse(data);
+    } catch (e) {
+      console.info("Invalid custom photo previewer options! " + e.message);
+    }
+
+    // Define object and gallery options
+    const options = Object.assign(
+      {
+        gallery: "section.main",
+        children: "a.photo-swipe",
+        photo_scale: 2,
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe,
+      },
+      customOptions
+    );
+
+    const galleryEl = document.querySelector(options.gallery);
+    if (!galleryEl) {
+      return;
+    }
+
+    const imgEls = [];
+    const els = galleryEl.querySelectorAll("img:not(.emoji)");
+    els.forEach((el) => {
+      if (el.src.trim() == "") {
+        return;
+      }
+      if (!imgEls.includes(el)) {
+        imgEls.push(el);
+      }
+    });
+
+    if (imgEls.length === 0) {
+      return;
+    }
+
+    imgEls.forEach((imgEl) => {
+      imgEl.outerHTML = `
+      <a class="photo-swipe"
+        href="${imgEl.src}"
+        data-pswp-width="${
+          Math.max(imgEl.naturalWidth, imgEl.width) * options.photo_scale
+        }"
+        data-pswp-height="${
+          Math.max(imgEl.naturalHeight, imgEl.height) * options.photo_scale
+        }"
+        data-pswp-caption="${imgEl.getAttribute("caption") || imgEl.alt}"
+        target="_blank">
+        ${imgEl.outerHTML}
+      </a>`;
+    });
+
+    // Initialize PhotoSwipe 5
+    var lightbox = new PhotoSwipeLightbox(options);
+
+    lightbox.init();
+  }
+
+  window.addEventListener("load", initPhotoSwipe);
+</script>
+<script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="san9hyun" src="/assets/images/favicon.ico" onerror="this.style.display='none'">
+  san9hyun
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/jekyll-theme-yat/assets/images/banners/book.jpg)"></div>
+        <img class="img-placeholder" src="/jekyll-theme-yat/assets/images/banners/book.jpg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner">
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">An overview of gradient descent optimization algorithms</h1>
+  <h2 class="post-subtitle">경사하강법 최적화 알고리즘</h2>
+
+  <div class="post-meta">
+    <time class="dt-published" datetime="2023-10-31T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Oct 31, 2023
+    </time><span class="post-author left-vsplit"><i class="fa fa-pencil"></i> san9hyun</span>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 11 mins</span>
+  </div>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#DataScience">#DataScience</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#gradient">#gradient</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#optimizer">#optimizer</a>
+</div></header>
+</div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+      </script>
+
+      <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="1-introduction">1. Introduction</h2>
+
+<h4 id="논문의-목적">논문의 목적</h4>
+<ul>
+  <li>다양한 경사하강법 최적화 알고리즘들을 <strong>직관적</strong>으로 이해</li>
+</ul>
+
+<h4 id="논문-내용">논문 내용</h4>
+<ul>
+  <li>경사하강법 최적화를 다루는 다양한 알고리즘 소개</li>
+  <li>각 알고리즘별 특징 설명</li>
+</ul>
+
+<h2 id="2-gradient-descent-variants">2. Gradient descent variants</h2>
+<p>목적함수의 경사도를 계산할 때 사용하는 데이터의 양에 따라 3가지 종류의 경사하강법이 있다.</p>
+
+<h3 id="21-batch-gradient-descent">2.1 Batch gradient descent</h3>
+<p>Batch gradient descent는 모든 학습 데이터를 사용해 비용함수의 경사를 계산한다.</p>
+
+<ul>
+  <li>θ = θ − η · $∇_{θ}$J(θ)</li>
+</ul>
+
+<h4 id="문제점">문제점</h4>
+
+<ul>
+  <li>메모리에 모든 데이터를 올려야함</li>
+  <li>새로운 데이터를 실시간으로 학습하는 것이 불가능(온라인 학습 불가능)</li>
+  <li>한번의 업데이트가 매우 느림</li>
+  <li>데이터셋에 유사한 데이터가 있을경우 중복 계산 수행(크리티컬한 문제로 보이지 않는다)</li>
+</ul>
+
+<h3 id="22-stochastic-gradient-descent">2.2 Stochastic gradient descent</h3>
+
+<p>각 샘플 $ x^{(i)} $, $ y^{(i)} $ 을 사용해 파라미터 업데이트 수행한다. 
+실제 구현 시 매 에포크마다 훈련 데이터를 섞는다.</p>
+
+<ul>
+  <li>θ = θ − η · $∇_{θ}$J(θ; $ x^{(i)} $ ; $ y^{(i)}$)</li>
+</ul>
+
+<h4 id="특징">특징</h4>
+
+<ul>
+  <li>목적함수의 변동이 큼</li>
+  <li>변동이 커서 local minimum에서 빠져나올 수 있음(장점)</li>
+  <li>변동이 커서 목적함수 수렴이 오래 걸릴 수 있음(단점, 아래 그림 참고)</li>
+  <li>벡터 연산의 장점을 활용 못함(각 샘플 데이터를 순회하면서 gradient를 계산해야함)</li>
+</ul>
+
+<p><img src="/assets/images/contents/paper/gradient%20descent%20optimizer/SGD.PNG" alt="SGD fluctuation"></p>
+
+<h3 id="23-mini-batch-gradient-descent">2.3 Mini-batch gradient descent</h3>
+
+<p>미니배치 경사하강법은 n개 학습 데이터를 가진 미니배치에 대해서 gradient를 계산하고 업데이틀 수행한다.</p>
+
+<ul>
+  <li>θ = θ − η · $∇_{θ}$J(θ; $ x^{(i:i+n)} $ ; $ y^{(i:i+n)}$)</li>
+</ul>
+
+<h4 id="특징-1">특징</h4>
+
+<ul>
+  <li>업데이트의 분산을 줄여서 더 안정적인 수렴을 도와즘.</li>
+  <li>적절한 batch 크기 적용시 속도가 가장 빠름.(행렬 연산 사용해서 여러 샘플에 대해 한번에 계산)</li>
+  <li>미니배치를 사용할때도 SGD 라는 용어가 일반적으로 사용됨</li>
+</ul>
+
+<h2 id="3-challenges">3. Challenges</h2>
+
+<p>위 경사 하강법에서 해결이 필요한 몇가지 도전과제가 있다.</p>
+
+<ul>
+  <li>적절한 학습률 선택이 어려움
+    <ul>
+      <li>learning rate schedule는 사전에 정의된 알고리즘으로, dataset 특성에 스스로 적응하는 알고리즘이 아님.</li>
+      <li>learning rate schedule은 모든 파라미터에 같은 학습률을 적용 시킴</li>
+    </ul>
+  </li>
+  <li>local minima와  saddle point에 빠질 위험이 있다.</li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>잠깐!
+
+saddle point(안정점은) 도함수가 0이지만 극값을 가지지 않는 점을 말한다.
+어느 방향에서 보면 극대값이지만, 다른 방향에서 보면 극소값이 되는 점이다.
+아래 그림에서 빨간선에선 극소값 파란선에는 극대값을 가지는 점이 안정점이다. 
+</code></pre></div></div>
+
+<p><img src="/assets/images/contents/paper/gradient%20descent%20optimizer/saddlepoint.PNG" alt="saddlepoint"></p>
+
+<h2 id="4-gradient-descent-optimization-algorithms">4. Gradient descent optimization algorithms</h2>
+
+<h3 id="41-momentum">4.1 Momentum</h3>
+
+<p>SGD는 샘플데이터 하나에 대해서 목적함수의 기울기를 계산하고 파라미터를 업데이트 하기 때문에, 최적해로 빠르게 수렴하지 못한다.
+그리고 local minima에 빠질 우려가 있다. (기울기가 0에 가까운 평탄한 지역에서 느리게 벗어남)</p>
+
+<p>아래 그림에서 우리는 수직축으로는 더 작은 학습율을 원하고, 수평 축에 대해서는 더 빠르게 학습하길 원한다.</p>
+
+<p>momentum은 최적해의 방향으로 SGD를 <strong>가속</strong>시켜준다.</p>
+
+<p><img src="/assets/images/contents/paper/gradient%20descent%20optimizer/momentum.PNG" alt="momentum"></p>
+
+<ul>
+  <li>$ v_t = \gamma v_{t−1}$ + $η∇_{θ}$J(θ)</li>
+  <li>$ θ = θ − v_{t} $</li>
+  <li>여기서 $ \gamma $는 1이하의 값을 가진다.(논문에서는 0.9)</li>
+</ul>
+
+<p>momentum의 식을 보면, 기존 경사하강법 보다 $ \gamma v_{t−1}$ 만큼 추가적으로 더 이동 하는 것을 알 수 있다.
+$ \gamma v_{t−1} $ 는 이전 step 에서의 기울기 누적이므로 이전에 이동하던 방향으로 조금 더 이동 하는 것이라 볼 수 있다.
+정리하면 현재 gradient와 이전의 Gradient 경향(방향)을 모두 감안하여 현재 업데이트 방향과 크기를 결정하는 것이다.</p>
+
+<p>결과적으로 위 두번째 그림과 같이 그래디언트가 동일한 방향을 가리키는 차원에 대한 모멘텀항은 증가하고, 그래디언트 방향이 변경되는 차원에
+대한 업데이트는 감소한다.</p>
+
+<h4 id="문제점-1">문제점</h4>
+<ul>
+  <li>momentum 영향으로 최적해를 지나칠 수 있음(아래 그림 참고)</li>
+</ul>
+
+<p><img src="/assets/images/contents/paper/gradient%20descent%20optimizer/Momentum_issue.PNG" alt="Momentum_issue"></p>
+
+<h5 id="그림의-수식은-의미만-알-수-있게-간단하게-작성하였습니다">그림의 수식은 의미만 알 수 있게 간단하게 작성하였습니다.</h5>
+
+<h3 id="42-nesterov-accelerated-gradient">4.2 Nesterov accelerated gradient</h3>
+
+<p>NAG는 gradient 계산 순서를 바꿔서 Momentum의 문제를 해결하려고했다.</p>
+
+<ul>
+  <li>$ v_t = \gamma v_{t−1}$ + $η∇_{θ}J(θ- \gamma v_{t-1})$</li>
+  <li>$ θ = θ − v_{t} $</li>
+</ul>
+
+<p>위 식 NAG 식에서 Momentum과 차이는 $ η∇_{θ}J(θ- \gamma v_{t-1}) $ 부분이다.
+Gradient를 구할 때 momentum term 크기 만큼 먼저 이동한 후 구하겠다는 것이다. 
+그러면 아래 오른 쪽 그림과 같이 최적해에 조금 더 잘 수렴할 수 있다.</p>
+
+<p><img src="/assets/images/contents/paper/gradient%20descent%20optimizer/Momentum_NAG.PNG" alt="momentum_NAG"></p>
+
+<h3 id="43-adagrad">4.3 Adagrad</h3>
+
+<p>이전에는 모든 파라미터에 대해 동일한 학습률을 사용해 학습했다.
+그런데 어떤 파라미터는 최적값에 거의 도달했고, 다른 값은 최적해로부터 멀리 떨어져있을 수 있다.</p>
+
+<p>그래서 Adagrad는 지금까지 많이 업데이트된 파라미터에 대해서는 작은 업데이트를 수행하고, 적게 업데이트 된 파라미터에 
+대해서는 큰 업데이트를 수행한다.</p>
+
+<p><strong>Adagrad는 희소한 데이터를 처리하는데 적합하다.</strong></p>
+
+<ul>
+  <li>$ g_{t,i} = ∇_{θ}J(θ_{t,i}) $</li>
+</ul>
+
+<p>Adagrad는 위 식 처럼 gradient를 구할 때 각 parameter $ θ_{i} $ 마다 gradient를 계산한다.<br></p>
+
+<ul>
+  <li>$θ_{t+1,i} = θ_{t,i} - { η \over \sqrt{G_{t,ii} + \epsilon} } · g_{t,i} $</li>
+</ul>
+
+<p>위 식에서 Adagrad가 파라미터를 어떻게 업데이트 하는지 볼 수 있다.
+학습률의 분모에 $ \sqrt{G_{t,ii} + \epsilon} $이 들어가는 것 빼고는 SGD와 같은 방법이다.</p>
+
+<p>여기서 $ G_{t,ii} $ 는 t 시점까지 $ θ_{i} $ 에 적용된 gradient의 제곱합이다.
+아래 식을 보면 이해하기 쉽다.</p>
+
+<ul>
+  <li>$ G_{t} = G_{t-1} + (∇_{θ}J(θ))^2 $</li>
+</ul>
+
+<p>$ G_{t,ii} $ 가 크다는 말은 이때까지 파라미터의 gradient가 크게 변화해왔단 의미이다.
+따라서 학습률에 $ G_{t,ii} $ 의 역수를 곱해주면, 그동안 많이 변해온 파라미터의 학습률은 줄어들게 된다.
+반대의 경우엔 학습률이 늘어난다.</p>
+
+<p>Adagrad의 식을 행렬연산으로 표현하면 아래와 같다.<br></p>
+
+<ul>
+  <li>$θ_{t+1} = θ_{t} - { η \over \sqrt{G_{t} + \epsilon} }  \bigodot  g_{t} $</li>
+</ul>
+
+<p>$ G_{t} $는 대각행렬로, 각 대각(i,i)원소에 $ θ_{i} $의 gradient 합이 누적된다.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>잠깐!
+
+내 질문 : "Momentum과 Adagrad가 gradient를 누적해서 다음 스텝이 영향을 미친다는게 비슷한데?"
+
+내 답 :
+" Momentum은 gradient를 누적하고, Adagrad는 gradient의 제곱을 누적한다.
+다시 말해, Momentum은 방향 정보까지 누적하고 Adagrad는 변화량만 누적하여 다음 스텝에 활용한다." 
+</code></pre></div></div>
+
+<h3 id="44-rmspropadadelta">4.4 RMSprop/Adadelta</h3>
+
+<p>Adagrad는 학습 할수록 학습률이 작아지는 현상이 발생한다. <br></p>
+
+<p>이 문제를 해결하기 위해, RMSprop는 지수 가중 평균을 사용해 gradient를 누적한다.
+지수 가중 평균을 사용하면, 과거의 gradient의 영향이 지수적으로 감소하게 된다.</p>
+
+<p>그리고 과거의 모든 gradients를 계산하는 대신에, 누적되는 과거 그레디언트의 window를 일정한 크기로 제한하게 된다.
+이때 w개 이전의 제곱 그레디언트를 저장하는 대신, 지수가중평균으로 구현한다.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>잠깐!
+
+내 질문 : "gradient의 window 크기를 제한한다는게 무슨 말이지?"
+
+내 답 : 
+"모든 gradient를 사용해 누적하는 대신, 이전 w번 스텝까지의 gradient만 다음 스텝에 영향을 미치도록 하겠다."
+"쉽게 말해 최신 gradient 경향만 반영하겠단 이야기"
+"그런데 그 방법이, 실제 w개의 gradient를 저장하는 대신 지수 가중평균으로 구현하겠다는 뜻"
+"실제로 지수가중평균은 지난 n 번의 데이터의 평균을 구할 때 사용되곤 한다." 
+"지수가중평균은 이전 1/1-β 개의 평균과 값이 비슷, β가 0.9 이면 과거 10개 데이터의 평균과 비슷" 
+</code></pre></div></div>
+
+<ul>
+  <li>$ E[g^2]_{t} = \gamma E[g^2]_{t-1} + (1- \gamma)g^2_{t} $</li>
+  <li>$ \gamma =0.9 $</li>
+</ul>
+
+<p>위와 같이 gradient 제곱의 가중 평균을 구하면, 먼 과거의 gradient에는 작은 가중치가 곱해진다.</p>
+
+<ul>
+  <li>$θ_{t+1} = θ_{t} - { η \over \sqrt{E[g^2]_{t} + \epsilon} } · g_{t} $</li>
+</ul>
+
+<h3 id="45-adadelta">4.5 Adadelta</h3>
+
+<p>Adadelta는 RMSprop와 같이 지수가중평균을 사용해 gradient를 누적한다.<br>
+RMSprop와의 차이점은 <strong>가중치 업데이터 단위를 맞추는 작업이 더해진다는 것이다.</strong></p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>잠깐!
+
+이 부분은 솔직히 무슨 말인지 잘 모르겠습니다.
+다음에 다시 읽어보겠습니다 ㅎ..
+</code></pre></div></div>
+
+<h3 id="46-adam">4.6 Adam</h3>
+
+<p>Adam은 이전에 보았던 좋은 알고리즘 momentum과 adaptive 모두 사용하는 옵티마이저이다.</p>
+
+<ul>
+  <li>$ m_{t} = β_{1}m_{t−1} + (1 − β_{1})g_{t} $</li>
+</ul>
+
+<p>Adam의 momentum 식이다. 앞서 Momentum 공식과 유사하지만, 지수 가중 평균이 적용 된 것을 볼 수 있다.
+momentum에도 adagrad처럼 최근 경향을 더 많이 반영하는 장점을 가져왔다.</p>
+
+<ul>
+  <li>$ v_{t} = β_{2}v_{t−1} + (1 − β_{2})g_{t}^2 $</li>
+</ul>
+
+<p>위 식은 Adative learning rate를 적용하는 것으로 RMSprop 나 adadelta와 동일하다.</p>
+
+<p>Adam의 파라미터 업데이트를 보면 아래와 같다.</p>
+<ul>
+  <li>$θ_{t+1} = θ_{t} - { η \over \sqrt{ \hat{v}_{t} + \epsilon} } · \hat{m}_{t} $</li>
+  <li>$ \hat{m}_{t} = {m_{t} \over 1-β_{1}^t}  $</li>
+  <li>$ \hat{v}_{t} = {v_{t} \over 1-β_{2}^t}  $</li>
+</ul>
+
+<p>$ \hat{m}_{t} \hat{v}_{t} $ 이 사용된 이유는, 편향을 보정하기 위해서이다.<br></p>
+
+<p>$ v_{t} $ 로 예를 들면, $ v_{0} $ 은 0으로 초기화 되고, $ v_{1} $ 은 $ 0.999*v_{0} + 0.001*v_{1} $ 이 된다.
+이렇게 되면 $ v_{t} $ 의 초기 값들이 매우 작아지게 되는데 이를 보정하기 위해 $ v_{t} $ 를 $ 1-β_{2}^t  $ 로 나눠준다.
+t가 커질수록 $ 1-β_{2}^t $ 값은 1에 가까워지기 때문에 t가 충분히 커지면 편향 보정의 효과는 거의 사라진다.</p>
+
+<h3 id="47-adamx">4.7 AdamX</h3>
+
+<p>Adam 에서 $ v_{t} $ 를 계산할때 아래 식 처럼 gradient의 L2 norm을 이용한다.<br></p>
+
+<ul>
+  <li>$ v_{t} = β_{2}v_{t−1} + (1 − β_{2})g_{t}^2 $</li>
+</ul>
+
+<p>이떄 L2 norm 대신 p norm으로 일반화할 수 있다.</p>
+<ul>
+  <li>$ v_{t} = β_{2}^pv_{t−1} + (1 − β^p_{2}) \left| g_{t} \right| ^p $</li>
+</ul>
+
+<p>큰 p 값에 대한 놈(norm)은 일반적으로 수치적으로 불안정해지는 경향이 있어서 실무에서는 1과 2 놈이 가장 일반적이다.
+그러나 ∞ 놈도 일반적으로 안정적인 동작을 보여준다.</p>
+
+<ul>
+  <li>$ u_{t} = β_{2}^\infty v_{t−1} + (1 − β^\infty_{2}) \left| g_{t} \right| ^\infty $ <br>
+       $= max(β_{2} · v_{t-1}, \left| g_{t} \right|) $</li>
+</ul>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>잠깐!
+norm은 벡터의 길이를 측정하는 방법이다.
+L_∞ norm은 벡터 성문들의 절대값 중에서 가장 큰 값으로 계산된다. x = [-3,5,9] 이면 L_∞ 은 9다.
+그래서 위와 같이 max norm 식으로 바뀐다.
+</code></pre></div></div>
+
+<ul>
+  <li>$θ_{t+1} = θ_{t} - { η \over u_{t} } · \hat{m}_{t} $</li>
+</ul>
+
+<h3 id="48-nadam">4.8 Nadam</h3>
+
+<p>momentum 대신 NAG와 adaptive를 결합하면 성능이 더 좋지 않을까?</p>
+
+<p>먼저 NAG의 파라미터 업데이트를 보자<br></p>
+
+<ul>
+  <li>$ g_{t} = ∇θ_{t}J(θ_{t}- \gamma m_{t-1} )  $</li>
+  <li>$ m_{t} = \gamma m_{t-1} + ηg_{t}  $</li>
+  <li>$ θ_{t+1} = θ_{t} - m_{t} $</li>
+</ul>
+
+<p>Nadma에서는 NAG를 아래와 같이 수정한다.<br></p>
+
+<p>$$ g_{t} = ∇θ_{t}J(θ_{t})  $$</p>
+
+<p>$$ m_{t} = \gamma m_{t-1} + ηg_{t}  $$</p>
+
+<p>$$ θ_{t+1} = θ_{t} - (\gamma m_{t} + ηg_{t} ) $$</p>
+
+<p>위에 두 식은 NAG방식이 아닌 Momentum 방식을 사용했고,
+마지막 파라미터를 업데이트 할때 $ \gamma m_{t-1} $ 대신 $ \gamma m_{t} $를 적용한다. 
+Adam에 Nesterov momentum을 적용시키기 위해, 이전 momentum vector를 현재 momentum vector로 바꿔준 것이다.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>잠깐!
+
+이 부분도 100% 이해가 되지 않네요
+</code></pre></div></div>
+
+<p>최종적으로 Nadam 식은 다음과 같이 정리할 수 있다.</p>
+
+<ul>
+  <li>$ θ_{t+1} =  θ_{t} - {η \over { \sqrt{\hat{v}_{t} } +\epsilon }} (β_{1} \hat{m}_{t} +  { (1- β_{1})g_{t} \over (1-β^t_{1})})   $</li>
+</ul>
+
+<h3 id="49-visualization-of-algorithms">4.9 Visualization of algorithms</h3>
+
+<p>아래 그림에서 gradient 최적화 알고리즘의 동작을 직관적으로 볼 수 있다.</p>
+
+<p><img src="/assets/images/contents/paper/gradient%20descent%20optimizer/visualize.PNG" alt="visualize"></p>
+
+<p>오른쪽 그림(a)</p>
+<ul>
+  <li>Adagrad, Adadelta, RMSporp은 즉히 올바른 방향으로 빠르게 수렴</li>
+  <li>Momentum과 NAG는 초반에 최적해와 다른 방향으로 한번 빠짐</li>
+  <li>그래도 NAG가 더 빠르게 경로를 수정함</li>
+</ul>
+
+<p>왼쪽 그림(b)</p>
+<ul>
+  <li>두번쨰 사진은 안장지점에서의 동작을 보여준다.</li>
+  <li>SGD, Momentum, NAG는 안장지점에서 벗어나기 힘들다.</li>
+  <li>Adagrad, RMSprop, Adadelta는 빠르게 최적해로 향한다.</li>
+</ul>
+
+<h3 id="410-which-optimizer-to-use">4.10 Which optimizer to use?</h3>
+
+<ul>
+  <li>입력데이터가 희소하면 Adaptive 알고리즘을 사용해라. 학습률을 조절할 필요가 없음</li>
+  <li>Adam, RMSprop, Adadleta는 유사하지만 알고리즘이지만 전반적으로 Adam이 최선의 선택</li>
+  <li>SGD는 minimum을 찾지만 최적화하는데 매우 오래 걸리고 learning rate schedule에 크게 의존적</li>
+</ul>
+
+<h2 id="5-parallelizing-and-distributing-sgd">5. Parallelizing and distributing SGD</h2>
+
+<p>SGD를 더 빠르게 수행하기 위해서 병렬화,분산이 필요하다.</p>
+
+<p>(생략)</p>
+
+<h2 id="6-additional-strategies-for-optimizing-sgd">6. Additional strategies for optimizing SGD</h2>
+
+<p>SGD 성능을 개선하기 위한 추가적인 전략들을 소개한다.</p>
+
+<h3 id="61-shuffling-and-curriculum-learning">6.1 Shuffling and Curriculum Learning</h3>
+<p>학습 시 데이터를 특정 순서대로 투입하면, 편향을 일으킬 수 있다. 
+따라서 매 에포크 이후 훈련 데이터를 섞는것이 좋다.</p>
+
+<p>그러나 의미 있는 순서를 설정해서 학습 시킬 때도 있다.
+이러한 학습을 커리큘럼 학습이라고 한다.</p>
+
+<p>Zaremba와 Sutskever는 LSTM을 사용하여 간단한 프로그램을 평가하기 위해 커리큘럼 학습을 적용하고, 
+난이도가 증가하는 순서대로 예제를 정렬하는 단순한 방법보다 결합된 또는 혼합된 전략이 더 좋다는 것을 보여 
+주었다.</p>
+
+<h3 id="62-batch-normalization">6.2 Batch normalization</h3>
+
+<p>일반적으로 학습 전 파라미터의 초기값을 평균이 0이고 분산이 1인 값으로 정규화하는데 학습이 진행되면서 
+파라미터를 서로 다른 정도로 업데이트 하면서 이 정규화를 잃게 된다.</p>
+
+<p>배치 정규화는 매 배치마다 입력을 평균과 분산으로 정규화한다. 그렇게 되면 파라미터 초기화에 덜 신경 쓸 수 있다.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>배치 정규화
+- 내부 공변량 변화(Internal Covariate Shift), 층 별로 입력 데이터 분포가 달라지는 현상을 해소
+- 기우기 소실/폭주 등 모델의 불안전성 완화(배치 정규화를 제안한 논문에서 주장했지만, 이후에 반박들이 나옴)
+- 학습 속도 빠르게 함 (상대적으로 큰 학습률 사용 가능해짐)
+- 배치 정규화가 왜 학습에 도움되는지는 의견이 좀 갈리지만/ 학습에 도움이 되는건 명백하다고 함
+</code></pre></div></div>
+<h3 id="63-early-stopping">6.3 Early Stopping</h3>
+
+<p>validation 성능이 나아지지 않으면 학습 중지</p>
+
+<h3 id="64-gradient-noise">6.4 Gradient noise</h3>
+
+<p>각 기울기 업데이트에 가우시안 분포를 따르는 노이즈 추가</p>
+<ul>
+  <li>깊고 복잡한 네트워크 훈련에 도움이 됨</li>
+  <li>새로운 지역 최소값 탐색 가능성이 높아짐(더 좋은 최솟값을 찾을 수 있게 도와줌)</li>
+</ul>
+
+<h2 id="7-conclusion">7. Conclusion</h2>
+
+<p>Adam을 쓰자! (내 결론)</p>
+
+<p>논문 결론은,<br>
+미니 배치 경사하강법이 세가지 경사하강법중 가장 인기가 많다.지금까지 Momentum, Nesterov, Adagrad, adadelta,
+RMSprop, Adam, AdamX, Nadam 등 알고리즘을 살펴봤다. 그리고 SGD를 개선하기 위한 다른 전략들을 살펴봤다.</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/paper/2023/04/19/paper-DeepLearningForAnomalyDetectioninTimeSeriesData.html" title="Anomaly Detection in Time-Series Data">Anomaly Detection in Time-Series Data</a><a class="next" href="/jekyll-theme-yat/paper/2023/11/20/An-introduction-to-ROC-analysis.html" title="An introduction to ROC analysis">An introduction to ROC analysis</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li class="">
+          <a class="post-link" href="/jekyll-theme-yat/book/2022/03/06/pale-blue-dot.html" title="창백한 푸른점-칼세이건">
+            창백한 푸른점-칼세이건<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/paper/2023/11/20/An-introduction-to-ROC-analysis.html" title="An introduction to ROC analysis">
+            An introduction to ROC analysis<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/adp/2022/03/11/ADP-statistics-0.html" title="ADP-Statistics-기초통계량-1">
+            ADP-Statistics-기초통계량-1<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+<li class="">
+          <a class="post-link" href="/jekyll-theme-yat/code-example/2023/12/19/GPT-text-generation-from-scratch-with-KerasNLP.html" title="(keras) GPT text generation from scratch with KerasNLP">
+            (keras) GPT text generation from scratch with KerasNLP<span class="post-badges">
+  <span class="post-badge badge-top">TOP</span>
+  <span class="post-badge badge-new">NEW</span>
+</span>
+</a>
+        </li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2025 san9hyun</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
